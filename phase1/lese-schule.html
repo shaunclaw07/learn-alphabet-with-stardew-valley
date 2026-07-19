@@ -877,21 +877,21 @@
           const bezug = document.createElement("div");
           bezug.className = "bezug";
           const p = new DOMParser().parseFromString(l.bezug, "text/html");
-          bezug.appendChild(document.createTextNode(p.body.textContent || ""));
-          if (p.body.querySelector("strong")) {
-            const s = document.createElement("strong");
-            s.textContent = p.body.querySelector("strong")?.textContent || "";
+          const strongEl = p.body.querySelector("strong");
+          if (strongEl) {
             const txt = p.body.textContent || "";
+            const s = document.createElement("strong");
+            s.textContent = strongEl.textContent || "";
             const idx = txt.indexOf(s.textContent);
             if (idx >= 0) {
               bezug.appendChild(document.createTextNode(txt.slice(0, idx)));
               bezug.appendChild(s);
-              bezug.appendChild(
-                document.createTextNode(txt.slice(idx + s.textContent.length)),
-              );
+              bezug.appendChild(document.createTextNode(txt.slice(idx + s.textContent.length)));
             } else {
               bezug.textContent = txt;
             }
+          } else {
+            bezug.textContent = p.body.textContent || "";
           }
           info.appendChild(bezug);
 

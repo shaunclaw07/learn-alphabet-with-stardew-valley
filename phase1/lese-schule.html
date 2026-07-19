@@ -513,6 +513,59 @@
           font-size: 0.6rem;
         }
       }
+
+      /* ===== QUIZ SECTION ===== */
+      .quiz-section {
+        background: linear-gradient(135deg, #fff8e7, #ffe4b5);
+        border: 4px solid #c49a2a; border-radius: 24px;
+        padding: 32px 24px; text-align: center;
+        margin: 40px 0; position: relative;
+        box-shadow: 0 8px 30px rgba(0,0,0,.1);
+      }
+      .quiz-section h2 {
+        font-family: 'Press Start 2P', cursive; font-size: .7rem;
+        color: #c49a2a; margin-bottom: 8px;
+      }
+      .quiz-section .quiz-subtitle {
+        font-size: 1rem; color: #8b6914; font-weight: 700; margin-bottom: 20px;
+      }
+      .quiz-score {
+        display: flex; gap: 30px; justify-content: center; flex-wrap: wrap;
+        margin-bottom: 20px; font-weight: 800; font-size: 1rem; color: #4a3728;
+      }
+      .quiz-score span { color: #5da03c; }
+      .quiz-letter-display {
+        width: 160px; height: 160px; margin: 0 auto 20px;
+        background: #fffaf0; border: 5px solid #c49a2a; border-radius: 24px;
+        display: flex; align-items: center; justify-content: center;
+        font-family: 'Press Start 2P', cursive; font-size: 5rem;
+        color: #4a3728; box-shadow: 0 6px 20px rgba(0,0,0,.08);
+        transition: transform .3s;
+      }
+      .quiz-letter-display.revealed { transform: scale(1.08); border-color: #ff6b35; }
+      .quiz-answer {
+        display: none; margin: 12px 0 20px;
+        font-size: 1.3rem; font-weight: 800; color: #4a3728;
+      }
+      .quiz-answer.show { display: block; animation: popIn .3s ease; }
+      .quiz-answer .quiz-emoji { font-size: 2rem; }
+      .quiz-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+      .quiz-btn {
+        font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem;
+        padding: 12px 28px; border-radius: 14px; cursor: pointer;
+        border: 3px solid #5da03c; transition: all .2s;
+      }
+      .quiz-btn.reveal-btn { background: #ffd700; color: #4a3728; border-color: #c49a2a; }
+      .quiz-btn.reveal-btn:hover { background: #ffe55c; transform: scale(1.05); }
+      .quiz-btn.next-btn { background: #7ec850; color: #fff; border-color: #3d6b22; }
+      .quiz-btn.next-btn:hover { background: #6ab83e; transform: scale(1.05); }
+      .quiz-btn.reset-btn { background: #fffaf0; color: #8b6914; border-color: #8b6914; }
+      .quiz-done {
+        display: none; font-size: 1.1rem; font-weight: 800; color: #5da03c;
+        margin-top: 16px;
+      }
+      .quiz-done.show { display: block; animation: popIn .3s ease; }
+      @keyframes popIn { 0% { transform: scale(.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
     </style>
   </head>
   <body>
@@ -544,6 +597,34 @@
 
     <!-- ===== MAIN CONTENT ===== -->
     <div class="main-wrap" id="mainContent"></div>
+
+    <!-- ===== QUIZ ===== -->
+    <div class="main-wrap" id="quizWrap" style="display:none;">
+      <div class="quiz-section">
+        <h2>🎮 Buchstaben-Quiz</h2>
+        <div class="quiz-subtitle">Kennst du alle Buchstaben?</div>
+        <div class="quiz-score">
+          <div>👍 Richtig: <span id="quizCorrect">0</span></div>
+          <div>📝 Noch üben: <span id="quizRemain">14</span></div>
+          <div>🎯 Runde: <span id="quizRound">1</span> / 14</div>
+        </div>
+        <div class="quiz-letter-display" id="quizLetter">?</div>
+        <div class="quiz-answer" id="quizAnswer">
+          <span class="quiz-emoji"></span>
+          <span class="quiz-word"></span>
+        </div>
+        <div class="quiz-buttons">
+          <button class="quiz-btn reveal-btn" id="quizRevealBtn" onclick="revealQuiz()">🔍 Auflösen</button>
+          <button class="quiz-btn next-btn" id="quizCorrectBtn" onclick="markCorrect()" style="display:none;">⭐ Richtig!</button>
+          <button class="quiz-btn reset-btn" id="quizAgainBtn" onclick="markAgain()" style="display:none;">🔄 Nochmal üben</button>
+          <button class="quiz-btn reset-btn" id="quizRestartBtn" onclick="restartQuiz()" style="display:none;">🔁 Neues Quiz</button>
+        </div>
+        <div class="quiz-done" id="quizDone">
+          🎉🎉🎉 ALLE GESCHAFFT! 🎉🎉🎉<br>
+          <span style="font-size:.9rem;color:#8b6914;">Du bist ein echter Buchstaben-Meister!</span>
+        </div>
+      </div>
+    </div>
 
     <!-- ===== CERTIFICATE ===== -->
     <div id="certSection" style="display: none">
@@ -886,7 +967,9 @@
             if (idx >= 0) {
               bezug.appendChild(document.createTextNode(txt.slice(0, idx)));
               bezug.appendChild(s);
-              bezug.appendChild(document.createTextNode(txt.slice(idx + s.textContent.length)));
+              bezug.appendChild(
+                document.createTextNode(txt.slice(idx + s.textContent.length)),
+              );
             } else {
               bezug.textContent = txt;
             }
@@ -954,6 +1037,128 @@
           .getElementById("certSection")
           .scrollIntoView({ behavior: "smooth" });
       }
+
+      // ===== QUIZ LOGIC =====
+      let quizDeck = [];
+      let quizIndex = 0;
+      let quizCorrectCount = 0;
+      let quizAgainPile = [];
+
+      function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+      function startQuiz() {
+        quizDeck = shuffle([...letters]);
+        quizIndex = 0;
+        quizCorrectCount = 0;
+        quizAgainPile = [];
+        document.getElementById('quizWrap').style.display = 'block';
+        document.getElementById('quizDone').classList.remove('show');
+        document.getElementById('quizRestartBtn').style.display = 'none';
+        showQuizCard();
+        document.getElementById('quizWrap').scrollIntoView({ behavior: 'smooth' });
+      }
+
+      function showQuizCard() {
+        const l = quizDeck[quizIndex];
+        const letterEl = document.getElementById('quizLetter');
+        const answerEl = document.getElementById('quizAnswer');
+        const revealBtn = document.getElementById('quizRevealBtn');
+        const correctBtn = document.getElementById('quizCorrectBtn');
+        const againBtn = document.getElementById('quizAgainBtn');
+        const restartBtn = document.getElementById('quizRestartBtn');
+        const doneEl = document.getElementById('quizDone');
+
+        letterEl.textContent = l.id;
+        letterEl.classList.remove('revealed');
+        answerEl.classList.remove('show');
+        answerEl.querySelector('.quiz-emoji').textContent = l.emoji;
+        answerEl.querySelector('.quiz-word').textContent = l.id + ' wie ' + l.merkwort + '!';
+        revealBtn.style.display = 'inline-block';
+        correctBtn.style.display = 'none';
+        againBtn.style.display = 'none';
+        restartBtn.style.display = 'none';
+        doneEl.classList.remove('show');
+
+        document.getElementById('quizRound').textContent = (quizIndex + 1);
+        document.getElementById('quizRemain').textContent = quizDeck.length - quizIndex;
+      }
+
+      function revealQuiz() {
+        const letterEl = document.getElementById('quizLetter');
+        const answerEl = document.getElementById('quizAnswer');
+        letterEl.classList.add('revealed');
+        answerEl.classList.add('show');
+        document.getElementById('quizRevealBtn').style.display = 'none';
+        document.getElementById('quizCorrectBtn').style.display = 'inline-block';
+        document.getElementById('quizAgainBtn').style.display = 'inline-block';
+      }
+
+      function markCorrect() {
+        quizCorrectCount++;
+        document.getElementById('quizCorrect').textContent = quizCorrectCount;
+        advanceQuiz();
+      }
+
+      function markAgain() {
+        quizAgainPile.push(quizDeck[quizIndex]);
+        advanceQuiz();
+      }
+
+      function advanceQuiz() {
+        quizIndex++;
+        if (quizIndex < quizDeck.length) {
+          showQuizCard();
+        } else {
+          finishQuiz();
+        }
+      }
+
+      function finishQuiz() {
+        document.getElementById('quizLetter').textContent = '🏆';
+        document.getElementById('quizLetter').classList.add('revealed');
+        document.getElementById('quizAnswer').classList.remove('show');
+        document.getElementById('quizRevealBtn').style.display = 'none';
+        document.getElementById('quizCorrectBtn').style.display = 'none';
+        document.getElementById('quizAgainBtn').style.display = 'none';
+        document.getElementById('quizDone').classList.add('show');
+        document.getElementById('quizRestartBtn').style.display = 'inline-block';
+      }
+
+      function restartQuiz() {
+        if (quizAgainPile.length > 0) {
+          quizDeck = shuffle([...quizAgainPile]);
+          quizAgainPile = [];
+        } else {
+          quizDeck = shuffle([...letters]);
+        }
+        quizIndex = 0;
+        quizCorrectCount = 0;
+        document.getElementById('quizCorrect').textContent = '0';
+        document.getElementById('quizDone').classList.remove('show');
+        document.getElementById('quizRestartBtn').style.display = 'none';
+        showQuizCard();
+      }
+
+      // Show quiz link when all 14 are done
+      const origRender = render;
+      render = function() {
+        origRender();
+        const quizWrap = document.getElementById('quizWrap');
+        if (completed.size >= 14 && quizWrap.style.display === 'none') {
+          // Don't auto-show quiz, but make the cert 🏆 button also trigger quiz
+        }
+        // Add quiz button to nav if not there
+        if (completed.size >= 3 && !document.getElementById('quizNavBtn')) {
+          const navRow = document.getElementById('navRow');
+          const qbtn = document.createElement('button');
+          qbtn.id = 'quizNavBtn';
+          qbtn.className = 'nav-btn special';
+          qbtn.textContent = '🎮';
+          qbtn.title = 'Buchstaben-Quiz starten';
+          qbtn.addEventListener('click', startQuiz);
+          navRow.appendChild(qbtn);
+        }
+      };
 
       render();
     </script>

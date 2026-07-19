@@ -1,462 +1,1206 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐔 Lesen lernen mit Stardew Valley – Der komplette Lehrplan</title>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:'Nunito',sans-serif;background:#f5eedc;color:#4a3728;line-height:1.7}
-body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:0;
-  background:radial-gradient(ellipse at 10% 10%,#e8d5a3 0%,transparent 40%),
-    radial-gradient(ellipse at 90% 80%,#c8e6a5 0%,transparent 40%);}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🐔 Lesen lernen mit Stardew Valley – Der komplette Lehrplan</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Nunito", sans-serif;
+        background: #f5eedc;
+        color: #4a3728;
+        line-height: 1.7;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        pointer-events: none;
+        z-index: 0;
+        background:
+          radial-gradient(ellipse at 10% 10%, #e8d5a3 0%, transparent 40%),
+          radial-gradient(ellipse at 90% 80%, #c8e6a5 0%, transparent 40%);
+      }
 
-/* Header */
-.hero{background:linear-gradient(180deg,#7ec850 0%,#5da03c 100%);border-bottom:6px solid #3d6b22;
-  padding:40px 16px 36px;text-align:center;position:relative;box-shadow:0 4px 30px rgba(0,0,0,.2);z-index:1}
-.hero::after{content:'';position:absolute;bottom:-12px;left:0;right:0;height:12px;
-  background:repeating-linear-gradient(90deg,#8b6914 0,#8b6914 8px,#c49a2a 8px,#c49a2a 16px)}
-.hero-icons{font-size:2.5rem;letter-spacing:6px;margin-bottom:10px;display:block}
-.hero h1{font-family:'Press Start 2P',cursive;font-size:clamp(.8rem,3vw,1.3rem);color:#fff;
-  text-shadow:2px 2px 0 #3d6b22,0 0 20px rgba(255,255,255,.2);line-height:1.7}
-.hero .sub{font-size:1.1rem;color:#e8f5e0;font-weight:700;margin-top:8px}
-.hero .source{font-size:.8rem;color:#c8e6a5;margin-top:8px;font-style:italic}
-.hero .source a{color:#fff}
+      /* Header */
+      .hero {
+        background: linear-gradient(180deg, #7ec850 0%, #5da03c 100%);
+        border-bottom: 6px solid #3d6b22;
+        padding: 40px 16px 36px;
+        text-align: center;
+        position: relative;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+      }
+      .hero::after {
+        content: "";
+        position: absolute;
+        bottom: -12px;
+        left: 0;
+        right: 0;
+        height: 12px;
+        background: repeating-linear-gradient(
+          90deg,
+          #8b6914 0,
+          #8b6914 8px,
+          #c49a2a 8px,
+          #c49a2a 16px
+        );
+      }
+      .hero-icons {
+        font-size: 2.5rem;
+        letter-spacing: 6px;
+        margin-bottom: 10px;
+        display: block;
+      }
+      .hero h1 {
+        font-family: "Press Start 2P", cursive;
+        font-size: clamp(0.8rem, 3vw, 1.3rem);
+        color: #fff;
+        text-shadow:
+          2px 2px 0 #3d6b22,
+          0 0 20px rgba(255, 255, 255, 0.2);
+        line-height: 1.7;
+      }
+      .hero .sub {
+        font-size: 1.1rem;
+        color: #e8f5e0;
+        font-weight: 700;
+        margin-top: 8px;
+      }
+      .hero .source {
+        font-size: 0.8rem;
+        color: #c8e6a5;
+        margin-top: 8px;
+        font-style: italic;
+      }
+      .hero .source a {
+        color: #fff;
+      }
 
-/* Nav */
-.phase-nav{position:sticky;top:0;z-index:10;background:#f5eedcf5;backdrop-filter:blur(8px);
-  border-bottom:3px solid #c49a2a;padding:10px 16px;display:flex;gap:8px;justify-content:center;
-  flex-wrap:wrap}
-.phase-nav a{font-family:'Press Start 2P',cursive;font-size:.5rem;padding:10px 16px;
-  border-radius:10px;border:2px solid #8b6914;background:#fffaf0;color:#4a3728;
-  text-decoration:none;transition:all .2s}
-.phase-nav a:hover,.phase-nav a:focus{background:#7ec850;color:#fff;border-color:#3d6b22;transform:scale(1.05)}
-.phase-nav a.link-html{background:#ff6b35;color:#fff;border-color:#c44220}
+      /* Nav */
+      .phase-nav {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: #f5eedcf5;
+        backdrop-filter: blur(8px);
+        border-bottom: 3px solid #c49a2a;
+        padding: 10px 16px;
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .phase-nav a {
+        font-family: "Press Start 2P", cursive;
+        font-size: 0.5rem;
+        padding: 10px 16px;
+        border-radius: 10px;
+        border: 2px solid #8b6914;
+        background: #fffaf0;
+        color: #4a3728;
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .phase-nav a:hover,
+      .phase-nav a:focus {
+        background: #7ec850;
+        color: #fff;
+        border-color: #3d6b22;
+        transform: scale(1.05);
+      }
+      .phase-nav a.link-html {
+        background: #ff6b35;
+        color: #fff;
+        border-color: #c44220;
+      }
 
-/* Container */
-.container{max-width:880px;margin:0 auto;padding:32px 20px 80px;position:relative;z-index:1}
+      /* Container */
+      .container {
+        max-width: 880px;
+        margin: 0 auto;
+        padding: 32px 20px 80px;
+        position: relative;
+        z-index: 1;
+      }
 
-/* Phase sections */
-.phase{border:4px solid #8b6914;border-radius:24px;background:#fffaf0;padding:32px 24px;
-  margin-bottom:40px;box-shadow:0 8px 30px rgba(0,0,0,.08);position:relative}
-.phase-icon{font-size:2.8rem;position:absolute;top:-28px;left:20px;background:#fffaf0;
-  padding:0 10px;border-radius:12px;border:3px solid #c49a2a}
-.phase h2{font-family:'Press Start 2P',cursive;font-size:.75rem;color:#5da03c;
-  padding-left:50px;margin-bottom:8px}
-.phase .phase-duration{color:#8b6914;font-weight:700;font-size:.9rem;margin-bottom:20px;padding-left:50px}
-.phase h3{font-family:'Press Start 2P',cursive;font-size:.55rem;color:#c49a2a;
-  margin:24px 0 12px;padding-bottom:6px;border-bottom:2px dashed #e8d5a3}
+      /* Phase sections */
+      .phase {
+        border: 4px solid #8b6914;
+        border-radius: 24px;
+        background: #fffaf0;
+        padding: 32px 24px;
+        margin-bottom: 40px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        position: relative;
+      }
+      .phase-icon {
+        font-size: 2.8rem;
+        position: absolute;
+        top: -28px;
+        left: 20px;
+        background: #fffaf0;
+        padding: 0 10px;
+        border-radius: 12px;
+        border: 3px solid #c49a2a;
+      }
+      .phase h2 {
+        font-family: "Press Start 2P", cursive;
+        font-size: 0.75rem;
+        color: #5da03c;
+        padding-left: 50px;
+        margin-bottom: 8px;
+      }
+      .phase .phase-duration {
+        color: #8b6914;
+        font-weight: 700;
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+        padding-left: 50px;
+      }
+      .phase h3 {
+        font-family: "Press Start 2P", cursive;
+        font-size: 0.55rem;
+        color: #c49a2a;
+        margin: 24px 0 12px;
+        padding-bottom: 6px;
+        border-bottom: 2px dashed #e8d5a3;
+      }
 
-/* Cards */
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;margin:16px 0}
-.card-mini{background:linear-gradient(135deg,#fffef7,#fef5e7);border:3px solid #d7c9a8;
-  border-radius:14px;padding:14px;text-align:center;transition:transform .15s,box-shadow .15s}
-.card-mini:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.1)}
-.card-mini .letter{font-family:'Press Start 2P',cursive;font-size:1.8rem;color:#4a3728}
-.card-mini .letter .small{font-size:.9rem;color:#b8956a;display:block}
-.card-mini .word{font-weight:800;font-size:1rem;margin-top:4px;color:#5da03c}
-.card-mini .emoji{font-size:2rem;display:block;margin-bottom:4px}
+      /* Cards */
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 14px;
+        margin: 16px 0;
+      }
+      .card-mini {
+        background: linear-gradient(135deg, #fffef7, #fef5e7);
+        border: 3px solid #d7c9a8;
+        border-radius: 14px;
+        padding: 14px;
+        text-align: center;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+      }
+      .card-mini:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+      }
+      .card-mini .letter {
+        font-family: "Press Start 2P", cursive;
+        font-size: 1.8rem;
+        color: #4a3728;
+      }
+      .card-mini .letter .small {
+        font-size: 0.9rem;
+        color: #b8956a;
+        display: block;
+      }
+      .card-mini .word {
+        font-weight: 800;
+        font-size: 1rem;
+        margin-top: 4px;
+        color: #5da03c;
+      }
+      .card-mini .emoji {
+        font-size: 2rem;
+        display: block;
+        margin-bottom: 4px;
+      }
 
-/* Tables */
-.tbl-wrap{overflow-x:auto;margin:16px 0}
-.tbl{border-collapse:collapse;width:100%;font-size:.92rem}
-.tbl th{background:#7ec850;color:#fff;font-weight:800;padding:10px 14px;text-align:left;
-  font-size:.8rem;text-transform:uppercase;letter-spacing:.5px}
-.tbl th:first-child{border-radius:10px 0 0 0}
-.tbl th:last-child{border-radius:0 10px 0 0}
-.tbl td{padding:10px 14px;border-bottom:1px solid #e8d5a3}
-.tbl tr:nth-child(even){background:#fef9f0}
-.tbl tr:hover{background:#fff3dc}
-.tbl .easy{color:#5da03c;font-weight:800}
-.tbl .medium{color:#c49a2a;font-weight:700}
+      /* Tables */
+      .tbl-wrap {
+        overflow-x: auto;
+        margin: 16px 0;
+      }
+      .tbl {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 0.92rem;
+      }
+      .tbl th {
+        background: #7ec850;
+        color: #fff;
+        font-weight: 800;
+        padding: 10px 14px;
+        text-align: left;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .tbl th:first-child {
+        border-radius: 10px 0 0 0;
+      }
+      .tbl th:last-child {
+        border-radius: 0 10px 0 0;
+      }
+      .tbl td {
+        padding: 10px 14px;
+        border-bottom: 1px solid #e8d5a3;
+      }
+      .tbl tr:nth-child(even) {
+        background: #fef9f0;
+      }
+      .tbl tr:hover {
+        background: #fff3dc;
+      }
+      .tbl .easy {
+        color: #5da03c;
+        font-weight: 800;
+      }
+      .tbl .medium {
+        color: #c49a2a;
+        font-weight: 700;
+      }
 
-/* Lists */
-ul{padding-left:24px;margin:12px 0}
-li{margin:6px 0}
+      /* Lists */
+      ul {
+        padding-left: 24px;
+        margin: 12px 0;
+      }
+      li {
+        margin: 6px 0;
+      }
 
-/* Tips */
-.tip-banner{background:linear-gradient(135deg,#e8f5e0,#d4edc8);border:3px solid #7ec850;
-  border-radius:14px;padding:18px 20px;margin:20px 0;font-size:.92rem}
-.tip-banner::before{content:'💡 ';font-size:1.2rem}
+      /* Tips */
+      .tip-banner {
+        background: linear-gradient(135deg, #e8f5e0, #d4edc8);
+        border: 3px solid #7ec850;
+        border-radius: 14px;
+        padding: 18px 20px;
+        margin: 20px 0;
+        font-size: 0.92rem;
+      }
+      .tip-banner::before {
+        content: "💡 ";
+        font-size: 1.2rem;
+      }
 
-/* Weekly plan */
-.week-plan{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;margin:16px 0}
-.week-plan .day{background:#fffaf0;border:2px solid #d7c9a8;border-radius:12px;
-  padding:10px;text-align:center;font-size:.85rem}
-.week-plan .day strong{display:block;font-size:.7rem;color:#ff6b35;text-transform:uppercase;margin-bottom:4px}
-.week-plan .day.free{background:#f0f0f0;border-style:dashed}
+      /* Weekly plan */
+      .week-plan {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 8px;
+        margin: 16px 0;
+      }
+      .week-plan .day {
+        background: #fffaf0;
+        border: 2px solid #d7c9a8;
+        border-radius: 12px;
+        padding: 10px;
+        text-align: center;
+        font-size: 0.85rem;
+      }
+      .week-plan .day strong {
+        display: block;
+        font-size: 0.7rem;
+        color: #ff6b35;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+      }
+      .week-plan .day.free {
+        background: #f0f0f0;
+        border-style: dashed;
+      }
 
-/* Progress tracker */
-.checklist{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
-.checklist li{padding:8px 12px;background:#fef9f0;border:2px solid #e8d5a3;border-radius:8px;font-size:.85rem}
-.checklist li::before{content:'';display:inline-block;width:16px;height:16px;border:2px solid #8b6914;
-  border-radius:4px;margin-right:8px;vertical-align:-3px;background:#fff}
+      /* Progress tracker */
+      .checklist {
+        list-style: none;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 6px;
+      }
+      .checklist li {
+        padding: 8px 12px;
+        background: #fef9f0;
+        border: 2px solid #e8d5a3;
+        border-radius: 8px;
+        font-size: 0.85rem;
+      }
+      .checklist li::before {
+        content: "";
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        border: 2px solid #8b6914;
+        border-radius: 4px;
+        margin-right: 8px;
+        vertical-align: -3px;
+        background: #fff;
+      }
 
-/* Reference grid */
-.ref-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:16px 0}
-.ref-box{background:#fef9f0;border:2px solid #d7c9a8;border-radius:14px;padding:14px;text-align:center}
-.ref-box .ref-emoji{font-size:2rem;display:block}
-.ref-box .ref-label{font-family:'Press Start 2P',cursive;font-size:.45rem;color:#ff6b35;margin-bottom:8px}
-.ref-box .ref-words{font-size:.85rem;color:#4a3728}
+      /* Reference grid */
+      .ref-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 12px;
+        margin: 16px 0;
+      }
+      .ref-box {
+        background: #fef9f0;
+        border: 2px solid #d7c9a8;
+        border-radius: 14px;
+        padding: 14px;
+        text-align: center;
+      }
+      .ref-box .ref-emoji {
+        font-size: 2rem;
+        display: block;
+      }
+      .ref-box .ref-label {
+        font-family: "Press Start 2P", cursive;
+        font-size: 0.45rem;
+        color: #ff6b35;
+        margin-bottom: 8px;
+      }
+      .ref-box .ref-words {
+        font-size: 0.85rem;
+        color: #4a3728;
+      }
 
-/* Quote */
-blockquote{background:#fff8e7;border-left:5px solid #ffaa00;padding:14px 18px;margin:16px 0;
-  border-radius:0 12px 12px 0;font-style:italic}
+      /* Quote */
+      blockquote {
+        background: #fff8e7;
+        border-left: 5px solid #ffaa00;
+        padding: 14px 18px;
+        margin: 16px 0;
+        border-radius: 0 12px 12px 0;
+        font-style: italic;
+      }
 
-/* Footer */
-.footer{text-align:center;padding:40px 20px;color:#8b6914;font-size:.9rem}
-.footer .stickers{font-size:2rem;letter-spacing:6px;margin-bottom:10px}
+      /* Footer */
+      .footer {
+        text-align: center;
+        padding: 40px 20px;
+        color: #8b6914;
+        font-size: 0.9rem;
+      }
+      .footer .stickers {
+        font-size: 2rem;
+        letter-spacing: 6px;
+        margin-bottom: 10px;
+      }
 
-/* Responsive */
-@media(max-width:600px){
-  .phase{padding:20px 14px}
-  .phase h2{font-size:.6rem;padding-left:40px}
-  .cards{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}
-  .phase-nav a{font-size:.4rem;padding:8px 10px}
-}
-</style>
-</head>
-<body>
+      /* Responsive */
+      @media (max-width: 600px) {
+        .phase {
+          padding: 20px 14px;
+        }
+        .phase h2 {
+          font-size: 0.6rem;
+          padding-left: 40px;
+        }
+        .cards {
+          grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        }
+        .phase-nav a {
+          font-size: 0.4rem;
+          padding: 8px 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ===== HERO ===== -->
+    <header class="hero">
+      <span class="hero-icons">🐔🌾🐄🌻🐖🥕</span>
+      <h1>Lesen lernen mit<br />Stardew Valley</h1>
+      <div class="sub">
+        Ein 10–15-Minuten-Lehrplan für deinen Sohn (5–6 Jahre)
+      </div>
+      <div class="source">
+        Alle Begriffe aus dem offiziellen
+        <a href="https://de.stardewvalleywiki.com/" target="_blank"
+          >deutschen Stardew-Valley-Wiki</a
+        >
+      </div>
+    </header>
 
-<!-- ===== HERO ===== -->
-<header class="hero">
-  <span class="hero-icons">🐔🌾🐄🌻🐖🥕</span>
-  <h1>Lesen lernen mit<br>Stardew Valley</h1>
-  <div class="sub">Ein 10–15-Minuten-Lehrplan für deinen Sohn (5–6 Jahre)</div>
-  <div class="source">Alle Begriffe aus dem offiziellen <a href="https://de.stardewvalleywiki.com/" target="_blank">deutschen Stardew-Valley-Wiki</a></div>
-</header>
+    <!-- ===== PHASE NAV ===== -->
+    <nav class="phase-nav">
+      <a href="#phase1">🔤 Phase&nbsp;1</a>
+      <a href="#phase2">🧩 Phase&nbsp;2</a>
+      <a href="#phase3">🌾 Phase&nbsp;3</a>
+      <a href="#phase4">📖 Phase&nbsp;4</a>
+      <a href="#spiele">🎮 Spiele</a>
+      <a href="#tipps">💡 Tipps</a>
+      <a href="#wochenplan">📅 Plan</a>
+      <a class="link-html" href="phase1/lese-schule.html"
+        >▶️ Phase&nbsp;1&nbsp;starten</a
+      >
+    </nav>
 
-<!-- ===== PHASE NAV ===== -->
-<nav class="phase-nav">
-  <a href="#phase1">🔤 Phase&nbsp;1</a>
-  <a href="#phase2">🧩 Phase&nbsp;2</a>
-  <a href="#phase3">🌾 Phase&nbsp;3</a>
-  <a href="#phase4">📖 Phase&nbsp;4</a>
-  <a href="#spiele">🎮 Spiele</a>
-  <a href="#tipps">💡 Tipps</a>
-  <a href="#wochenplan">📅 Plan</a>
-  <a class="link-html" href="phase1/lese-schule.html">▶️ Phase&nbsp;1&nbsp;starten</a>
-</nav>
+    <div class="container">
+      <!-- ===== OVERVIEW ===== -->
+      <div class="phase" style="border-color: #5da03c">
+        <div class="phase-icon">📋</div>
+        <h2>Überblick</h2>
+        <div class="phase-duration" style="margin-bottom: 0">
+          Die 4 Phasen zum Leseerfolg
+        </div>
 
-<div class="container">
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead>
+              <tr>
+                <th>Phase</th>
+                <th>Fokus</th>
+                <th>Dauer</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>🔤 Phase 1</td>
+                <td>Buchstaben-Kennenlernen — Vokale + erste Konsonanten</td>
+                <td>~3–4 Wochen</td>
+              </tr>
+              <tr>
+                <td>🧩 Phase 2</td>
+                <td>Silben verbinden — Einfache Silben & kurze Wörter</td>
+                <td>~3–4 Wochen</td>
+              </tr>
+              <tr>
+                <td>🌾 Phase 3</td>
+                <td>Erste Wörter — Stardew-Valley-Wörter lesen</td>
+                <td>~3–4 Wochen</td>
+              </tr>
+              <tr>
+                <td>📖 Phase 4</td>
+                <td>Kurze Sätze — Spiel-Dialoge & Sätze lesen</td>
+                <td>fortlaufend</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-<!-- ===== OVERVIEW ===== -->
-<div class="phase" style="border-color:#5da03c">
-  <div class="phase-icon">📋</div>
-  <h2>Überblick</h2>
-  <div class="phase-duration" style="margin-bottom:0">Die 4 Phasen zum Leseerfolg</div>
+        <h3>⏱️ Tägliche Routine (10–15 Min)</h3>
+        <ol>
+          <li>
+            <strong>Wiederholung</strong> (2–3 Min) — Kurze Wiederholung vom
+            letzten Mal
+          </li>
+          <li>
+            <strong>Neuer Buchstabe / Neues Konzept</strong> (5–7 Min) —
+            Einführen & üben
+          </li>
+          <li>
+            <strong>Spiel-Spaß</strong> (3–5 Min) — Anwenden mit
+            Stardew-Valley-Bezug
+          </li>
+        </ol>
+      </div>
 
-  <div class="tbl-wrap">
-  <table class="tbl">
-    <thead><tr><th>Phase</th><th>Fokus</th><th>Dauer</th></tr></thead>
-    <tbody>
-      <tr><td>🔤 Phase 1</td><td>Buchstaben-Kennenlernen — Vokale + erste Konsonanten</td><td>~3–4 Wochen</td></tr>
-      <tr><td>🧩 Phase 2</td><td>Silben verbinden — Einfache Silben & kurze Wörter</td><td>~3–4 Wochen</td></tr>
-      <tr><td>🌾 Phase 3</td><td>Erste Wörter — Stardew-Valley-Wörter lesen</td><td>~3–4 Wochen</td></tr>
-      <tr><td>📖 Phase 4</td><td>Kurze Sätze — Spiel-Dialoge & Sätze lesen</td><td>fortlaufend</td></tr>
-    </tbody>
-  </table>
-  </div>
+      <!-- ===== PHASE 1 ===== -->
+      <div class="phase" id="phase1">
+        <div class="phase-icon">🔤</div>
+        <h2>Phase 1: Die Buchstaben</h2>
+        <div class="phase-duration">
+          21 Lektionen · ~4–5 Wochen · 10–15 Min/Tag
+        </div>
 
-  <h3>⏱️ Tägliche Routine (10–15 Min)</h3>
-  <ol>
-    <li><strong>Wiederholung</strong> (2–3 Min) — Kurze Wiederholung vom letzten Mal</li>
-    <li><strong>Neuer Buchstabe / Neues Konzept</strong> (5–7 Min) — Einführen & üben</li>
-    <li><strong>Spiel-Spaß</strong> (3–5 Min) — Anwenden mit Stardew-Valley-Bezug</li>
-  </ol>
-</div>
+        <h3>📐 Prinzipien</h3>
+        <ul>
+          <li>
+            <strong>Immer als LAUT einführen</strong>, nicht als Buchstabenname:
+            „A" = „aaaa" (wie in Apfel), nicht „Ah"
+          </li>
+          <li>
+            <strong>Großbuchstaben zuerst</strong> — die sind leichter zu
+            erkennen und zu schreiben
+          </li>
+          <li><strong>Nur 1 neuer Buchstabe pro Einheit</strong></li>
+          <li>
+            <strong
+              >Jeden Buchstaben mit einer Stardew-Valley-Figur oder einem
+              Gegenstand verbinden</strong
+            >
+          </li>
+        </ul>
 
-<!-- ===== PHASE 1 ===== -->
-<div class="phase" id="phase1">
-  <div class="phase-icon">🔤</div>
-  <h2>Phase 1: Die Buchstaben</h2>
-  <div class="phase-duration">14 Lektionen · ~3–4 Wochen · 10–15 Min/Tag</div>
+        <h3>🗂️ Die 21 Buchstaben auf einen Blick</h3>
+        <div class="cards">
+          <div class="card-mini">
+            <span class="emoji">🏃‍♂️</span
+            ><span class="letter">A<span class="small">a</span></span
+            ><span class="word">Alex</span>
+          </div>
+          <div class="card-mini">
+            <span class="emoji">🥚</span
+            ><span class="letter">E<span class="small">e</span></span
+            ><span class="word">Ei</span>
+          </div>
+          <div class="card-mini">
+            <span class="emoji">⭐</span
+            ><span class="letter">I<span class="small">i</span></span
+            ><span class="word">Iridium</span>
+          </div>
+          <div class="card-mini">
+            <span class="emoji">🍎</span
+            ><span class="letter">O<span class="small">o</span></span
+            ><span class="word">Obst</span>
+          </div>
+          <div class="card-mini">
+            <span class="emoji">🕐</span
+            ><span class="letter">U<span class="small">u</span></span
+            ><span class="word">Uhr</span>
+          </div>
+          <div class="card-mini">
+            <span class="emoji">🐄</span
+            ><span class="letter">M<span class="small">m</span></span
+            ><span class="word">Milch</span>
+          </div>
+          <div class="card-mini">
+            <span class="emoji">🏪</span
+            ><span class="letter">L<span class="small">l</span></span
+            ><span class="word">Laden</span>
+          </div>
+          <div class="card-mini">
+            <span class="emoji">🌱</span
+            ><span class="letter">S<span class="small">s</span></span
+            ><span class="word">Samen</span>
+          </div>
+          <div class="card-mini">
+            <span class="emoji">🍅</span
+            ><span class="letter">T<span class="small">t</span></span
+            ><span class="word">Tomate</span>
+          </div>
+          <div class="card-mini">
+            <span class="emoji">🔨</span
+            ><span class="letter">R<span class="small">r</span></span
+            ><span class="word">Robin</span>
+          </div>
+          <div class="card-mini">
+            <span class="emoji">🌙</span
+            ><span class="letter">N<span class="small">n</span></span
+            ><span class="word">Nacht</span>
+          </div>
+          <div class="card-mini">
+            <span class="emoji">🌸</span
+            ><span class="letter">F<span class="small">f</span></span
+            ><span class="word">Frühling</span>
+          </div>
+          <div class="card-mini">
+            <span class="emoji">🐔</span
+            ><span class="letter">H<span class="small">h</span></span
+            ><span class="word">Hof & Huhn</span>
+          </div>
+          <div class="card-mini">
+            <span class="emoji">❄️</span
+            ><span class="letter">W<span class="small">w</span></span
+            ><span class="word">Winter</span>
+          </div>
+          <div class="card-mini">
+            <span class="emoji">🐄</span
+            ><span class="letter">K<span class="small">k</span></span
+            ><span class="word">Kuh</span>
+          </div>
+          <div class="card-mini">
+            <span class="emoji">💰</span
+            ><span class="letter">G<span class="small">g</span></span
+            ><span class="word">Gold</span>
+          </div>
+          <div class="card-mini">
+            <span class="emoji">🏪</span
+            ><span class="letter">P<span class="small">p</span></span
+            ><span class="word">Pam</span>
+          </div>
+          <div class="card-mini">
+            <span class="emoji">🛏️</span
+            ><span class="letter">B<span class="small">b</span></span
+            ><span class="word">Bett</span>
+          </div>
+          <div class="card-mini">
+            <span class="emoji">🏘️</span
+            ><span class="letter">D<span class="small">d</span></span
+            ><span class="word">Dorf</span>
+          </div>
+          <div class="card-mini">
+            <span class="emoji">⛺</span
+            ><span class="letter">Z<span class="small">z</span></span
+            ><span class="word">Zelt</span>
+          </div>
+          <div class="card-mini">
+            <span class="emoji">👧</span
+            ><span class="letter">J<span class="small">j</span></span
+            ><span class="word">Jas</span>
+          </div>
+        </div>
 
-  <h3>📐 Prinzipien</h3>
-  <ul>
-    <li><strong>Immer als LAUT einführen</strong>, nicht als Buchstabenname: „A" = „aaaa" (wie in Apfel), nicht „Ah"</li>
-    <li><strong>Großbuchstaben zuerst</strong> — die sind leichter zu erkennen und zu schreiben</li>
-    <li><strong>Nur 1 neuer Buchstabe pro Einheit</strong></li>
-    <li><strong>Jeden Buchstaben mit einer Stardew-Valley-Figur oder einem Gegenstand verbinden</strong></li>
-  </ul>
+        <div class="tip-banner" style="margin-top: 24px">
+          <strong>Phase 1 ist vollständig implementiert!</strong><br />
+          <a
+            href="phase1/lese-schule.html"
+            style="color: #3d6b22; font-weight: 800"
+            >▶️ Öffne die interaktive Lese-Schule</a
+          >
+          mit fertigen Lektionen, Karteikarten, Übungsblättern und einem Quiz.
+        </div>
+      </div>
 
-  <h3>🗂️ Die 14 Buchstaben auf einen Blick</h3>
-  <div class="cards">
-    <div class="card-mini"><span class="emoji">🏃‍♂️</span><span class="letter">A<span class="small">a</span></span><span class="word">Alex</span></div>
-    <div class="card-mini"><span class="emoji">🥚</span><span class="letter">E<span class="small">e</span></span><span class="word">Ei</span></div>
-    <div class="card-mini"><span class="emoji">⭐</span><span class="letter">I<span class="small">i</span></span><span class="word">Iridium</span></div>
-    <div class="card-mini"><span class="emoji">🍎</span><span class="letter">O<span class="small">o</span></span><span class="word">Obst</span></div>
-    <div class="card-mini"><span class="emoji">🕐</span><span class="letter">U<span class="small">u</span></span><span class="word">Uhr</span></div>
-    <div class="card-mini"><span class="emoji">🐄</span><span class="letter">M<span class="small">m</span></span><span class="word">Milch</span></div>
-    <div class="card-mini"><span class="emoji">🏪</span><span class="letter">L<span class="small">l</span></span><span class="word">Laden</span></div>
-    <div class="card-mini"><span class="emoji">🌱</span><span class="letter">S<span class="small">s</span></span><span class="word">Samen</span></div>
-    <div class="card-mini"><span class="emoji">🍅</span><span class="letter">T<span class="small">t</span></span><span class="word">Tomate</span></div>
-    <div class="card-mini"><span class="emoji">🔨</span><span class="letter">R<span class="small">r</span></span><span class="word">Robin</span></div>
-    <div class="card-mini"><span class="emoji">🌙</span><span class="letter">N<span class="small">n</span></span><span class="word">Nacht</span></div>
-    <div class="card-mini"><span class="emoji">🌸</span><span class="letter">F<span class="small">f</span></span><span class="word">Frühling</span></div>
-    <div class="card-mini"><span class="emoji">🐔</span><span class="letter">H<span class="small">h</span></span><span class="word">Hof & Huhn</span></div>
-    <div class="card-mini"><span class="emoji">❄️</span><span class="letter">W<span class="small">w</span></span><span class="word">Winter</span></div>
-  </div>
+      <!-- ===== PHASE 2 ===== -->
+      <div class="phase" id="phase2">
+        <div class="phase-icon">🧩</div>
+        <h2>Phase 2: Silben verbinden & erste Wörter</h2>
+        <div class="phase-duration">6 Lektionen · ~3–4 Wochen</div>
 
-  <div class="tip-banner" style="margin-top:24px">
-    <strong>Phase 1 ist vollständig implementiert!</strong><br>
-    <a href="phase1/lese-schule.html" style="color:#3d6b22;font-weight:800;">▶️ Öffne die interaktive Lese-Schule</a> mit fertigen Lektionen,
-    Karteikarten, Übungsblättern und einem Quiz.
-  </div>
-</div>
+        <h3>📐 Prinzipien</h3>
+        <ul>
+          <li><strong>Von Silben zu Wörtern</strong>: MA + MA = MAMA</li>
+          <li>
+            <strong>Erst lautgetreue Wörter</strong> (so geschrieben wie
+            gesprochen)
+          </li>
+          <li><strong>Immer mit Bildern arbeiten</strong></li>
+          <li>
+            <strong>Rückwärtslesen üben</strong>: Wort zeigen → Kind liest →
+            Bild aufdecken (Erfolg!)
+          </li>
+        </ul>
 
-<!-- ===== PHASE 2 ===== -->
-<div class="phase" id="phase2">
-  <div class="phase-icon">🧩</div>
-  <h2>Phase 2: Silben verbinden & erste Wörter</h2>
-  <div class="phase-duration">6 Lektionen · ~3–4 Wochen</div>
+        <h3>📖 Lektionen</h3>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Fokus</th>
+                <th>Wörter</th>
+                <th>Spiel</th>
+                <th>Stardew-Bezug</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>16</td>
+                <td>Silben MA, MO, MI</td>
+                <td>Ma-ma, O-ma</td>
+                <td>Silben-Puzzle</td>
+                <td>„Marnie" enthält MA!</td>
+              </tr>
+              <tr>
+                <td>17</td>
+                <td>Silben LA, LE, LU</td>
+                <td>La-ma, Lu-pe</td>
+                <td>Wort-Bild-Zuordnung</td>
+                <td>„Laden", „Leah" mit L!</td>
+              </tr>
+              <tr>
+                <td>18</td>
+                <td>Silben mit S</td>
+                <td>Sa-men, So-me</td>
+                <td>Anlaut-Memory</td>
+                <td>„Samen" — erstes wichtiges Wort!</td>
+              </tr>
+              <tr>
+                <td>19</td>
+                <td>Silben mit T</td>
+                <td>Tier, Tor, Tee</td>
+                <td>Reimwörter finden</td>
+                <td>„Tiere", „Tag" im Spiel</td>
+              </tr>
+              <tr>
+                <td>20</td>
+                <td>Silben mit R</td>
+                <td>Ra-be, Ro-se</td>
+                <td>Silben-Bingo</td>
+                <td>„Robin" die Schreinerin!</td>
+              </tr>
+              <tr>
+                <td>21</td>
+                <td>Erste Stardew-Wörter</td>
+                <td>Samen, Tier, Hof, Laden</td>
+                <td>Wortkarten-Ziehen</td>
+                <td>Er liest → Belohnung im Spiel!</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
 
-  <h3>📐 Prinzipien</h3>
-  <ul>
-    <li><strong>Von Silben zu Wörtern</strong>: MA + MA = MAMA</li>
-    <li><strong>Erst lautgetreue Wörter</strong> (so geschrieben wie gesprochen)</li>
-    <li><strong>Immer mit Bildern arbeiten</strong></li>
-    <li><strong>Rückwärtslesen üben</strong>: Wort zeigen → Kind liest → Bild aufdecken (Erfolg!)</li>
-  </ul>
+      <!-- ===== PHASE 3 ===== -->
+      <div class="phase" id="phase3">
+        <div class="phase-icon">🌾</div>
+        <h2>Phase 3: Stardew-Valley-Wortschatz</h2>
+        <div class="phase-duration">10 Lektionen · ~3–4 Wochen</div>
 
-  <h3>📖 Lektionen</h3>
-  <div class="tbl-wrap">
-  <table class="tbl">
-    <thead><tr><th>#</th><th>Fokus</th><th>Wörter</th><th>Spiel</th><th>Stardew-Bezug</th></tr></thead>
-    <tbody>
-      <tr><td>16</td><td>Silben MA, MO, MI</td><td>Ma-ma, O-ma</td><td>Silben-Puzzle</td><td>„Marnie" enthält MA!</td></tr>
-      <tr><td>17</td><td>Silben LA, LE, LU</td><td>La-ma, Lu-pe</td><td>Wort-Bild-Zuordnung</td><td>„Laden", „Leah" mit L!</td></tr>
-      <tr><td>18</td><td>Silben mit S</td><td>Sa-men, So-me</td><td>Anlaut-Memory</td><td>„Samen" — erstes wichtiges Wort!</td></tr>
-      <tr><td>19</td><td>Silben mit T</td><td>Tier, Tor, Tee</td><td>Reimwörter finden</td><td>„Tiere", „Tag" im Spiel</td></tr>
-      <tr><td>20</td><td>Silben mit R</td><td>Ra-be, Ro-se</td><td>Silben-Bingo</td><td>„Robin" die Schreinerin!</td></tr>
-      <tr><td>21</td><td>Erste Stardew-Wörter</td><td>Samen, Tier, Hof, Laden</td><td>Wortkarten-Ziehen</td><td>Er liest → Belohnung im Spiel!</td></tr>
-    </tbody>
-  </table>
-  </div>
-</div>
+        <h3>🌸 Jahreszeiten</h3>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead>
+              <tr>
+                <th>Wort</th>
+                <th>Silben</th>
+                <th>Schwierigkeit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Früh-ling</td>
+                <td>2</td>
+                <td class="medium">mittel</td>
+              </tr>
+              <tr>
+                <td>Som-mer</td>
+                <td>2</td>
+                <td class="easy">einfach</td>
+              </tr>
+              <tr>
+                <td>Herbst</td>
+                <td>1</td>
+                <td class="easy">einfach</td>
+              </tr>
+              <tr>
+                <td>Win-ter</td>
+                <td>2</td>
+                <td class="easy">einfach</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-<!-- ===== PHASE 3 ===== -->
-<div class="phase" id="phase3">
-  <div class="phase-icon">🌾</div>
-  <h2>Phase 3: Stardew-Valley-Wortschatz</h2>
-  <div class="phase-duration">10 Lektionen · ~3–4 Wochen</div>
+        <h3>🔧 Werkzeuge</h3>
+        <div class="cards">
+          <div class="card-mini">
+            <span class="emoji">🪓</span><span class="word">Axt</span
+            ><span class="easy">⭐ sehr einfach</span>
+          </div>
+          <div class="card-mini">
+            <span class="emoji">⛏️</span><span class="word">Ha-cke</span
+            ><span class="easy">einfach</span>
+          </div>
+          <div class="card-mini">
+            <span class="emoji">🪣</span><span class="word">Ei-mer</span
+            ><span class="easy">einfach</span>
+          </div>
+          <div class="card-mini">
+            <span class="emoji">🎣</span><span class="word">An-gel</span
+            ><span class="easy">einfach</span>
+          </div>
+          <div class="card-mini">
+            <span class="emoji">🌿</span><span class="word">Sen-se</span
+            ><span class="medium">mittel</span>
+          </div>
+          <div class="card-mini">
+            <span class="emoji">💧</span><span class="word">Gieß-kan-ne</span
+            ><span class="medium">schwer</span>
+          </div>
+        </div>
 
-  <h3>🌸 Jahreszeiten</h3>
-  <div class="tbl-wrap">
-  <table class="tbl">
-    <thead><tr><th>Wort</th><th>Silben</th><th>Schwierigkeit</th></tr></thead>
-    <tbody>
-      <tr><td>Früh-ling</td><td>2</td><td class="medium">mittel</td></tr>
-      <tr><td>Som-mer</td><td>2</td><td class="easy">einfach</td></tr>
-      <tr><td>Herbst</td><td>1</td><td class="easy">einfach</td></tr>
-      <tr><td>Win-ter</td><td>2</td><td class="easy">einfach</td></tr>
-    </tbody>
-  </table>
-  </div>
+        <h3>🐄 Tiere</h3>
+        <div class="cards">
+          <div class="card-mini">
+            <span class="emoji">🐔</span><span class="word">Huhn</span
+            ><span class="easy">⭐</span>
+          </div>
+          <div class="card-mini">
+            <span class="emoji">🐄</span><span class="word">Kuh</span
+            ><span class="easy">⭐</span>
+          </div>
+          <div class="card-mini">
+            <span class="emoji">🥚</span><span class="word">Ei</span
+            ><span class="easy">⭐</span>
+          </div>
+          <div class="card-mini">
+            <span class="emoji">🐑</span><span class="word">Schaf</span
+            ><span class="easy">⭐</span>
+          </div>
+          <div class="card-mini">
+            <span class="emoji">🦆</span><span class="word">Ente</span
+            ><span class="easy">⭐</span>
+          </div>
+          <div class="card-mini">
+            <span class="emoji">🐰</span><span class="word">Ha-se</span
+            ><span class="easy">⭐</span>
+          </div>
+          <div class="card-mini">
+            <span class="emoji">🐐</span><span class="word">Zi-e-ge</span
+            ><span class="medium">mittel</span>
+          </div>
+          <div class="card-mini">
+            <span class="emoji">🐖</span><span class="word">Schwein</span
+            ><span class="medium">mittel</span>
+          </div>
+        </div>
 
-  <h3>🔧 Werkzeuge</h3>
-  <div class="cards">
-    <div class="card-mini"><span class="emoji">🪓</span><span class="word">Axt</span><span class="easy">⭐ sehr einfach</span></div>
-    <div class="card-mini"><span class="emoji">⛏️</span><span class="word">Ha-cke</span><span class="easy">einfach</span></div>
-    <div class="card-mini"><span class="emoji">🪣</span><span class="word">Ei-mer</span><span class="easy">einfach</span></div>
-    <div class="card-mini"><span class="emoji">🎣</span><span class="word">An-gel</span><span class="easy">einfach</span></div>
-    <div class="card-mini"><span class="emoji">🌿</span><span class="word">Sen-se</span><span class="medium">mittel</span></div>
-    <div class="card-mini"><span class="emoji">💧</span><span class="word">Gieß-kan-ne</span><span class="medium">schwer</span></div>
-  </div>
+        <h3>🌱 Pflanzen</h3>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead>
+              <tr>
+                <th>Wort</th>
+                <th>Jahreszeit</th>
+                <th>Wort</th>
+                <th>Jahreszeit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>To-ma-te</td>
+                <td>Sommer</td>
+                <td>Kar-tof-fel</td>
+                <td>Frühling</td>
+              </tr>
+              <tr>
+                <td>Me-lo-ne</td>
+                <td>Sommer</td>
+                <td>Kür-bis</td>
+                <td>Herbst</td>
+              </tr>
+              <tr>
+                <td>Mais</td>
+                <td>Sommer+Herbst</td>
+                <td>Wei-zen</td>
+                <td>Sommer+Herbst</td>
+              </tr>
+              <tr>
+                <td>Erd-bee-re</td>
+                <td>Frühling</td>
+                <td>Tee</td>
+                <td>Frühling–Herbst</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-  <h3>🐄 Tiere</h3>
-  <div class="cards">
-    <div class="card-mini"><span class="emoji">🐔</span><span class="word">Huhn</span><span class="easy">⭐</span></div>
-    <div class="card-mini"><span class="emoji">🐄</span><span class="word">Kuh</span><span class="easy">⭐</span></div>
-    <div class="card-mini"><span class="emoji">🥚</span><span class="word">Ei</span><span class="easy">⭐</span></div>
-    <div class="card-mini"><span class="emoji">🐑</span><span class="word">Schaf</span><span class="easy">⭐</span></div>
-    <div class="card-mini"><span class="emoji">🦆</span><span class="word">Ente</span><span class="easy">⭐</span></div>
-    <div class="card-mini"><span class="emoji">🐰</span><span class="word">Ha-se</span><span class="easy">⭐</span></div>
-    <div class="card-mini"><span class="emoji">🐐</span><span class="word">Zi-e-ge</span><span class="medium">mittel</span></div>
-    <div class="card-mini"><span class="emoji">🐖</span><span class="word">Schwein</span><span class="medium">mittel</span></div>
-  </div>
+        <h3>👨‍🌾 Dorfbewohner (NPCs)</h3>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Lesbarkeit</th>
+                <th>Wer ist's?</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Gus</td>
+                <td class="easy">⭐ sehr einfach</td>
+                <td>Der Wirt vom Saloon</td>
+              </tr>
+              <tr>
+                <td>Sam</td>
+                <td class="easy">⭐ sehr einfach</td>
+                <td>Spielt Gitarre</td>
+              </tr>
+              <tr>
+                <td>Pam</td>
+                <td class="easy">⭐ sehr einfach</td>
+                <td>Fährt den Bus</td>
+              </tr>
+              <tr>
+                <td>Alex</td>
+                <td class="easy">einfach</td>
+                <td>Spielt/macht Sport</td>
+              </tr>
+              <tr>
+                <td>Ma-ru</td>
+                <td class="easy">einfach</td>
+                <td>Arbeitet mit Demetrius</td>
+              </tr>
+              <tr>
+                <td>Li-nus</td>
+                <td class="easy">einfach</td>
+                <td>Lebt im Zelt</td>
+              </tr>
+              <tr>
+                <td>Ro-bin</td>
+                <td class="medium">mittel</td>
+                <td>Die Schreinerin</td>
+              </tr>
+              <tr>
+                <td>Ma-rnie</td>
+                <td class="medium">mittel</td>
+                <td>Hat die Tier-Ranch</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
 
-  <h3>🌱 Pflanzen</h3>
-  <div class="tbl-wrap">
-  <table class="tbl">
-    <thead><tr><th>Wort</th><th>Jahreszeit</th><th>Wort</th><th>Jahreszeit</th></tr></thead>
-    <tbody>
-      <tr><td>To-ma-te</td><td>Sommer</td><td>Kar-tof-fel</td><td>Frühling</td></tr>
-      <tr><td>Me-lo-ne</td><td>Sommer</td><td>Kür-bis</td><td>Herbst</td></tr>
-      <tr><td>Mais</td><td>Sommer+Herbst</td><td>Wei-zen</td><td>Sommer+Herbst</td></tr>
-      <tr><td>Erd-bee-re</td><td>Frühling</td><td>Tee</td><td>Frühling–Herbst</td></tr>
-    </tbody>
-  </table>
-  </div>
+      <!-- ===== PHASE 4 ===== -->
+      <div class="phase" id="phase4">
+        <div class="phase-icon">📖</div>
+        <h2>Phase 4: Erste Sätze und Dialoge</h2>
+        <div class="phase-duration">fortlaufend</div>
 
-  <h3>👨‍🌾 Dorfbewohner (NPCs)</h3>
-  <div class="tbl-wrap">
-  <table class="tbl">
-    <thead><tr><th>Name</th><th>Lesbarkeit</th><th>Wer ist's?</th></tr></thead>
-    <tbody>
-      <tr><td>Gus</td><td class="easy">⭐ sehr einfach</td><td>Der Wirt vom Saloon</td></tr>
-      <tr><td>Sam</td><td class="easy">⭐ sehr einfach</td><td>Spielt Gitarre</td></tr>
-      <tr><td>Pam</td><td class="easy">⭐ sehr einfach</td><td>Fährt den Bus</td></tr>
-      <tr><td>Alex</td><td class="easy">einfach</td><td>Spielt/macht Sport</td></tr>
-      <tr><td>Ma-ru</td><td class="easy">einfach</td><td>Arbeitet mit Demetrius</td></tr>
-      <tr><td>Li-nus</td><td class="easy">einfach</td><td>Lebt im Zelt</td></tr>
-      <tr><td>Ro-bin</td><td class="medium">mittel</td><td>Die Schreinerin</td></tr>
-      <tr><td>Ma-rnie</td><td class="medium">mittel</td><td>Hat die Tier-Ranch</td></tr>
-    </tbody>
-  </table>
-  </div>
-</div>
+        <h3>💬 Typische Sätze aus Stardew Valley</h3>
+        <p style="margin-bottom: 12px">
+          Diese Sätze kommen so oder ähnlich wirklich im Spiel vor:
+        </p>
+        <ol>
+          <li>
+            <strong>„Hallo, Bauer!"</strong> — Begrüßung von Dorfbewohnern
+          </li>
+          <li><strong>„Guten Morgen!"</strong> — Morgens im Spiel</li>
+          <li><strong>„Es ist ein schöner Tag."</strong> — Oft zu hören</li>
+          <li><strong>„Hier ist ein Geschenk."</strong> — Beim Schenken</li>
+          <li>
+            <strong>„Komm morgen wieder!"</strong> — Wenn der Laden schließt
+          </li>
+          <li><strong>„Es ist Frühling."</strong> — Saisonanfang</li>
+          <li>
+            <strong>„Gieße die Pflanzen!"</strong> — Deine Aufgabe als Bauer
+          </li>
+          <li>
+            <strong>„Dein Hof sieht gut aus!"</strong> — Lob von den Nachbarn
+          </li>
+          <li><strong>„Ich mag Tiere."</strong> — Sagt z. B. Marnie</li>
+          <li><strong>„Gute Nacht!"</strong> — Vor dem Schlafengehen</li>
+        </ol>
 
-<!-- ===== PHASE 4 ===== -->
-<div class="phase" id="phase4">
-  <div class="phase-icon">📖</div>
-  <h2>Phase 4: Erste Sätze und Dialoge</h2>
-  <div class="phase-duration">fortlaufend</div>
+        <h3>🎭 Satz-Training</h3>
+        <ul>
+          <li>
+            Er liest den Satz <strong>langsam Wort für Wort</strong> → du
+            sprichst ihn ganz aus → gemeinsam freuen
+          </li>
+          <li>
+            <strong>Dialog-Puppentheater</strong>: Ihr spielt Pierre und Bauer
+            mit Zetteln
+          </li>
+          <li>
+            <strong>Live-Spiel-Modus ✨</strong>: Ihr startet Stardew Valley,
+            ein Dialog erscheint → ER versucht, ein Wort daraus zu erkennen und
+            vorzulesen
+          </li>
+        </ul>
+      </div>
 
-  <h3>💬 Typische Sätze aus Stardew Valley</h3>
-  <p style="margin-bottom:12px">Diese Sätze kommen so oder ähnlich wirklich im Spiel vor:</p>
-  <ol>
-    <li><strong>„Hallo, Bauer!"</strong> — Begrüßung von Dorfbewohnern</li>
-    <li><strong>„Guten Morgen!"</strong> — Morgens im Spiel</li>
-    <li><strong>„Es ist ein schöner Tag."</strong> — Oft zu hören</li>
-    <li><strong>„Hier ist ein Geschenk."</strong> — Beim Schenken</li>
-    <li><strong>„Komm morgen wieder!"</strong> — Wenn der Laden schließt</li>
-    <li><strong>„Es ist Frühling."</strong> — Saisonanfang</li>
-    <li><strong>„Gieße die Pflanzen!"</strong> — Deine Aufgabe als Bauer</li>
-    <li><strong>„Dein Hof sieht gut aus!"</strong> — Lob von den Nachbarn</li>
-    <li><strong>„Ich mag Tiere."</strong> — Sagt z. B. Marnie</li>
-    <li><strong>„Gute Nacht!"</strong> — Vor dem Schlafengehen</li>
-  </ol>
+      <!-- ===== SPIELE ===== -->
+      <div class="phase" id="spiele">
+        <div class="phase-icon">🎮</div>
+        <h2>Stardew-Valley-Lese-Spiele</h2>
+        <div class="phase-duration" style="margin-bottom: 12px">
+          Bonus-Ideen für 3–5 Minuten
+        </div>
 
-  <h3>🎭 Satz-Training</h3>
-  <ul>
-    <li>Er liest den Satz <strong>langsam Wort für Wort</strong> → du sprichst ihn ganz aus → gemeinsam freuen</li>
-    <li><strong>Dialog-Puppentheater</strong>: Ihr spielt Pierre und Bauer mit Zetteln</li>
-    <li><strong>Live-Spiel-Modus ✨</strong>: Ihr startet Stardew Valley, ein Dialog erscheint → ER versucht, ein Wort daraus zu erkennen und vorzulesen</li>
-  </ul>
-</div>
+        <div class="cards">
+          <div class="card-mini">
+            <span class="emoji">🎣</span>
+            <span class="word" style="font-size: 0.9rem">Wort-Angelspiel</span>
+            <span style="font-size: 0.75rem; color: #8b6914"
+              >Papierfische mit Wörtern beschriften, mit Magnet-Angel „fangen"
+              und vorlesen</span
+            >
+          </div>
+          <div class="card-mini">
+            <span class="emoji">🌱</span>
+            <span class="word" style="font-size: 0.9rem"
+              >Samen-Einpflanz-Spiel</span
+            >
+            <span style="font-size: 0.75rem; color: #8b6914"
+              >Wortkarten in Blumentöpfe stecken — richtig gelesen = echten
+              Samen pflanzen</span
+            >
+          </div>
+          <div class="card-mini">
+            <span class="emoji">🐔</span>
+            <span class="word" style="font-size: 0.9rem"
+              >Hühnerstall-Füttern</span
+            >
+            <span style="font-size: 0.75rem; color: #8b6914"
+              >Stoffhühner mit „Futter-Wörtern" auf Zetteln füttern</span
+            >
+          </div>
+          <div class="card-mini">
+            <span class="emoji">📅</span>
+            <span class="word" style="font-size: 0.9rem"
+              >Jahreszeiten-Sortieren</span
+            >
+            <span style="font-size: 0.75rem; color: #8b6914"
+              >Wortkarten der richtigen Jahreszeit zuordnen</span
+            >
+          </div>
+          <div class="card-mini">
+            <span class="emoji">🎯</span>
+            <span class="word" style="font-size: 0.9rem">Buchstaben-Bingo</span>
+            <span style="font-size: 0.75rem; color: #8b6914"
+              >3×3-Feld mit Buchstaben — du sagst einen Laut, er markiert
+              ihn</span
+            >
+          </div>
+        </div>
+      </div>
 
-<!-- ===== SPIELE ===== -->
-<div class="phase" id="spiele">
-  <div class="phase-icon">🎮</div>
-  <h2>Stardew-Valley-Lese-Spiele</h2>
-  <div class="phase-duration" style="margin-bottom:12px">Bonus-Ideen für 3–5 Minuten</div>
+      <!-- ===== TIPPS ===== -->
+      <div class="phase" id="tipps">
+        <div class="phase-icon">💡</div>
+        <h2>Allgemeine Tipps für Leseanfänger</h2>
+        <div class="phase-duration" style="margin-bottom: 12px">
+          10 goldene Regeln
+        </div>
 
-  <div class="cards">
-    <div class="card-mini">
-      <span class="emoji">🎣</span>
-      <span class="word" style="font-size:.9rem">Wort-Angelspiel</span>
-      <span style="font-size:.75rem;color:#8b6914">Papierfische mit Wörtern beschriften, mit Magnet-Angel „fangen" und vorlesen</span>
+        <ol>
+          <li>
+            <strong>Kein Druck, kein Frust!</strong> — Wenn er müde ist,
+            pausiert. Besser 5 Minuten happy als 15 Minuten Quälerei.
+          </li>
+          <li>
+            <strong>Loben, loben, loben</strong> — Jeder kleine Fortschritt
+            zählt. „Wow, du hast das A erkannt!"
+          </li>
+          <li>
+            <strong>Mit dem Finger mitzeigen</strong> — Von links nach rechts
+            unter dem Wort entlangfahren.
+          </li>
+          <li>
+            <strong>Laute dehnen und verbinden</strong> — „Ssss-aaa-mmm-e-n" →
+            „Samen!"
+          </li>
+          <li>
+            <strong>Wiederholung ist der Schlüssel</strong> — Dieselben Wörter
+            mehrfach in verschiedenen Kontexten zeigen.
+          </li>
+          <li>
+            <strong>Vorlesen, vorlesen, vorlesen</strong> — Du liest ihm
+            weiterhin Bilderbücher vor. Das ist die Grundlage!
+          </li>
+          <li>
+            <strong>Bildschirmzeit begrenzt halten</strong> — Die Lesestunden
+            sind hauptsächlich offline; das Spiel ist Belohnung.
+          </li>
+          <li>
+            <strong>Schreiben lassen!</strong> — Buchstaben in Sand/Schaum/auf
+            Papier schreiben. Schreiben unterstützt Lesen enorm.
+          </li>
+          <li>
+            <strong>Geduld mit schwierigen Buchstaben</strong> — Ch, Sch, ß, St,
+            ä/ö/ü kommen später.
+          </li>
+          <li>
+            <strong>Rituale schaffen</strong> — Immer zur gleichen Zeit, am
+            gleichen Ort → Routine gibt Sicherheit.
+          </li>
+        </ol>
+      </div>
+
+      <!-- ===== WEEKLY PLAN ===== -->
+      <div class="phase" id="wochenplan">
+        <div class="phase-icon">📅</div>
+        <h2>Beispiel-Wochenplan</h2>
+        <div class="phase-duration" style="margin-bottom: 12px">
+          6 Tage üben · 1 Tag frei
+        </div>
+
+        <div class="week-plan">
+          <div class="day">
+            <strong>Mo</strong>Neuer Buchstabe<br />15 Min<br />Einführung +
+            Merkwort
+          </div>
+          <div class="day">
+            <strong>Di</strong>Wiederholung<br />10 Min<br />Silben mit Vokalen
+          </div>
+          <div class="day">
+            <strong>Mi</strong>Spiel-Wörter<br />15 Min<br />2 Stardew-Wörter
+          </div>
+          <div class="day">
+            <strong>Do</strong>Wiederholung<br />10 Min<br />„Blitz-Runde"
+          </div>
+          <div class="day">
+            <strong>Fr</strong>Lese-Spiel<br />15 Min<br />Angelspiel, Bingo
+          </div>
+          <div class="day">
+            <strong>Sa</strong>Stardew-Session<br />15 Min<br />Gemeinsam im
+            Spiel lesen
+          </div>
+          <div class="day free">
+            <strong>So</strong>FREI<br />Kein Unterricht<br />(Vorlesen okay!)
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== REFERENCE ===== -->
+      <div class="phase">
+        <div class="phase-icon">📚</div>
+        <h2>Die wichtigsten deutschen Begriffe</h2>
+        <div class="phase-duration" style="margin-bottom: 12px">
+          Perfekt für Karteikarten!
+        </div>
+
+        <div class="ref-grid">
+          <div class="ref-box">
+            <span class="ref-emoji">🌸</span>
+            <span class="ref-label">Jahreszeiten</span>
+            <span class="ref-words">Frühling, Sommer, Herbst, Winter</span>
+          </div>
+          <div class="ref-box">
+            <span class="ref-emoji">🔧</span>
+            <span class="ref-label">Werkzeuge</span>
+            <span class="ref-words"
+              >Axt, Hacke, Gießkanne, Sense, Spitzhacke, Angel, Melkkübel,
+              Schafschere</span
+            >
+          </div>
+          <div class="ref-box">
+            <span class="ref-emoji">🐄</span>
+            <span class="ref-label">Tiere</span>
+            <span class="ref-words"
+              >Huhn, Kuh, Schaf, Schwein, Ziege, Ente, Hase, Katze, Hund,
+              Pferd</span
+            >
+          </div>
+          <div class="ref-box">
+            <span class="ref-emoji">🌱</span>
+            <span class="ref-label">Pflanzen</span>
+            <span class="ref-words"
+              >Pastinake, Kartoffel, Blumenkohl, Tomate, Melone, Kürbis, Mais,
+              Weizen, Erdbeere, Tee</span
+            >
+          </div>
+          <div class="ref-box">
+            <span class="ref-emoji">🏪</span>
+            <span class="ref-label">Orte</span>
+            <span class="ref-words"
+              >Hof, Laden, Saloon, Mine, Schreinerladen, Ranch, Strand, Bahnhof,
+              Wald, See, Fluss</span
+            >
+          </div>
+          <div class="ref-box">
+            <span class="ref-emoji">⭐</span>
+            <span class="ref-label">Sonstiges</span>
+            <span class="ref-words"
+              >Ei, Milch, Wolle, Heu, Gold, Geschenk, Freund, Fest, Ernte,
+              Samen, Angel, Fisch</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== FOOTER ===== -->
+      <div class="footer">
+        <div class="stickers">🐔🐄🐑🐖🌱🍎🥚⭐</div>
+        <p>
+          Erstellt mit ❤️ für einen tollen Papa und seinen
+          Stardew-Valley-Fan.<br />
+          Alle Begriffe aus dem offiziellen
+          <a href="https://de.stardewvalleywiki.com/" style="color: #5da03c"
+            >deutschen Stardew-Valley-Wiki</a
+          >.
+        </p>
+      </div>
     </div>
-    <div class="card-mini">
-      <span class="emoji">🌱</span>
-      <span class="word" style="font-size:.9rem">Samen-Einpflanz-Spiel</span>
-      <span style="font-size:.75rem;color:#8b6914">Wortkarten in Blumentöpfe stecken — richtig gelesen = echten Samen pflanzen</span>
-    </div>
-    <div class="card-mini">
-      <span class="emoji">🐔</span>
-      <span class="word" style="font-size:.9rem">Hühnerstall-Füttern</span>
-      <span style="font-size:.75rem;color:#8b6914">Stoffhühner mit „Futter-Wörtern" auf Zetteln füttern</span>
-    </div>
-    <div class="card-mini">
-      <span class="emoji">📅</span>
-      <span class="word" style="font-size:.9rem">Jahreszeiten-Sortieren</span>
-      <span style="font-size:.75rem;color:#8b6914">Wortkarten der richtigen Jahreszeit zuordnen</span>
-    </div>
-    <div class="card-mini">
-      <span class="emoji">🎯</span>
-      <span class="word" style="font-size:.9rem">Buchstaben-Bingo</span>
-      <span style="font-size:.75rem;color:#8b6914">3×3-Feld mit Buchstaben — du sagst einen Laut, er markiert ihn</span>
-    </div>
-  </div>
-</div>
-
-<!-- ===== TIPPS ===== -->
-<div class="phase" id="tipps">
-  <div class="phase-icon">💡</div>
-  <h2>Allgemeine Tipps für Leseanfänger</h2>
-  <div class="phase-duration" style="margin-bottom:12px">10 goldene Regeln</div>
-
-  <ol>
-    <li><strong>Kein Druck, kein Frust!</strong> — Wenn er müde ist, pausiert. Besser 5 Minuten happy als 15 Minuten Quälerei.</li>
-    <li><strong>Loben, loben, loben</strong> — Jeder kleine Fortschritt zählt. „Wow, du hast das A erkannt!"</li>
-    <li><strong>Mit dem Finger mitzeigen</strong> — Von links nach rechts unter dem Wort entlangfahren.</li>
-    <li><strong>Laute dehnen und verbinden</strong> — „Ssss-aaa-mmm-e-n" → „Samen!"</li>
-    <li><strong>Wiederholung ist der Schlüssel</strong> — Dieselben Wörter mehrfach in verschiedenen Kontexten zeigen.</li>
-    <li><strong>Vorlesen, vorlesen, vorlesen</strong> — Du liest ihm weiterhin Bilderbücher vor. Das ist die Grundlage!</li>
-    <li><strong>Bildschirmzeit begrenzt halten</strong> — Die Lesestunden sind hauptsächlich offline; das Spiel ist Belohnung.</li>
-    <li><strong>Schreiben lassen!</strong> — Buchstaben in Sand/Schaum/auf Papier schreiben. Schreiben unterstützt Lesen enorm.</li>
-    <li><strong>Geduld mit schwierigen Buchstaben</strong> — Ch, Sch, ß, St, ä/ö/ü kommen später.</li>
-    <li><strong>Rituale schaffen</strong> — Immer zur gleichen Zeit, am gleichen Ort → Routine gibt Sicherheit.</li>
-  </ol>
-</div>
-
-<!-- ===== WEEKLY PLAN ===== -->
-<div class="phase" id="wochenplan">
-  <div class="phase-icon">📅</div>
-  <h2>Beispiel-Wochenplan</h2>
-  <div class="phase-duration" style="margin-bottom:12px">6 Tage üben · 1 Tag frei</div>
-
-  <div class="week-plan">
-    <div class="day"><strong>Mo</strong>Neuer Buchstabe<br>15 Min<br>Einführung + Merkwort</div>
-    <div class="day"><strong>Di</strong>Wiederholung<br>10 Min<br>Silben mit Vokalen</div>
-    <div class="day"><strong>Mi</strong>Spiel-Wörter<br>15 Min<br>2 Stardew-Wörter</div>
-    <div class="day"><strong>Do</strong>Wiederholung<br>10 Min<br>„Blitz-Runde"</div>
-    <div class="day"><strong>Fr</strong>Lese-Spiel<br>15 Min<br>Angelspiel, Bingo</div>
-    <div class="day"><strong>Sa</strong>Stardew-Session<br>15 Min<br>Gemeinsam im Spiel lesen</div>
-    <div class="day free"><strong>So</strong>FREI<br>Kein Unterricht<br>(Vorlesen okay!)</div>
-  </div>
-</div>
-
-<!-- ===== REFERENCE ===== -->
-<div class="phase">
-  <div class="phase-icon">📚</div>
-  <h2>Die wichtigsten deutschen Begriffe</h2>
-  <div class="phase-duration" style="margin-bottom:12px">Perfekt für Karteikarten!</div>
-
-  <div class="ref-grid">
-    <div class="ref-box">
-      <span class="ref-emoji">🌸</span>
-      <span class="ref-label">Jahreszeiten</span>
-      <span class="ref-words">Frühling, Sommer, Herbst, Winter</span>
-    </div>
-    <div class="ref-box">
-      <span class="ref-emoji">🔧</span>
-      <span class="ref-label">Werkzeuge</span>
-      <span class="ref-words">Axt, Hacke, Gießkanne, Sense, Spitzhacke, Angel, Melkkübel, Schafschere</span>
-    </div>
-    <div class="ref-box">
-      <span class="ref-emoji">🐄</span>
-      <span class="ref-label">Tiere</span>
-      <span class="ref-words">Huhn, Kuh, Schaf, Schwein, Ziege, Ente, Hase, Katze, Hund, Pferd</span>
-    </div>
-    <div class="ref-box">
-      <span class="ref-emoji">🌱</span>
-      <span class="ref-label">Pflanzen</span>
-      <span class="ref-words">Pastinake, Kartoffel, Blumenkohl, Tomate, Melone, Kürbis, Mais, Weizen, Erdbeere, Tee</span>
-    </div>
-    <div class="ref-box">
-      <span class="ref-emoji">🏪</span>
-      <span class="ref-label">Orte</span>
-      <span class="ref-words">Hof, Laden, Saloon, Mine, Schreinerladen, Ranch, Strand, Bahnhof, Wald, See, Fluss</span>
-    </div>
-    <div class="ref-box">
-      <span class="ref-emoji">⭐</span>
-      <span class="ref-label">Sonstiges</span>
-      <span class="ref-words">Ei, Milch, Wolle, Heu, Gold, Geschenk, Freund, Fest, Ernte, Samen, Angel, Fisch</span>
-    </div>
-  </div>
-</div>
-
-<!-- ===== FOOTER ===== -->
-<div class="footer">
-  <div class="stickers">🐔🐄🐑🐖🌱🍎🥚⭐</div>
-  <p>Erstellt mit ❤️ für einen tollen Papa und seinen Stardew-Valley-Fan.<br>
-  Alle Begriffe aus dem offiziellen <a href="https://de.stardewvalleywiki.com/" style="color:#5da03c;">deutschen Stardew-Valley-Wiki</a>.</p>
-</div>
-
-</div><!-- .container -->
-</body>
+    <!-- .container -->
+  </body>
 </html>

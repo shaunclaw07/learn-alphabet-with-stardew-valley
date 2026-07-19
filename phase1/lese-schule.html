@@ -1,0 +1,961 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🐔 Lesen lernen mit Stardew Valley – Phase 1</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ===== RESET & BASE ===== */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Nunito", sans-serif;
+        background: #f5eedc;
+        background-image:
+          radial-gradient(ellipse at 20% 20%, #e8d5a3 0%, transparent 50%),
+          radial-gradient(ellipse at 80% 80%, #c8e6a5 0%, transparent 50%),
+          radial-gradient(ellipse at 50% 50%, #f5eedc 0%, transparent 70%);
+        min-height: 100vh;
+        color: #4a3728;
+        overflow-x: hidden;
+      }
+
+      /* ===== HEADER ===== */
+      .header {
+        background: linear-gradient(180deg, #7ec850 0%, #5da03c 100%);
+        border-bottom: 6px solid #3d6b22;
+        padding: 20px 16px 24px;
+        text-align: center;
+        position: relative;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      }
+      .header::after {
+        content: "";
+        position: absolute;
+        bottom: -12px;
+        left: 0;
+        right: 0;
+        height: 12px;
+        background: repeating-linear-gradient(
+          90deg,
+          #8b6914 0px,
+          #8b6914 8px,
+          #c49a2a 8px,
+          #c49a2a 16px
+        );
+      }
+      .header-icons {
+        font-size: 2rem;
+        letter-spacing: 4px;
+        margin-bottom: 6px;
+      }
+      .header h1 {
+        font-family: "Press Start 2P", cursive;
+        font-size: clamp(0.7rem, 2.5vw, 1.1rem);
+        color: #fff;
+        text-shadow:
+          2px 2px 0 #3d6b22,
+          0 0 12px rgba(255, 255, 255, 0.3);
+        line-height: 1.6;
+        letter-spacing: 1px;
+      }
+      .header .subtitle {
+        font-size: 1rem;
+        color: #e8f5e0;
+        font-weight: 700;
+        margin-top: 4px;
+      }
+
+      /* ===== PROGRESS BAR ===== */
+      .progress-wrap {
+        max-width: 700px;
+        margin: 24px auto 0;
+        padding: 0 16px;
+      }
+      .progress-bar {
+        background: #d7c9a8;
+        height: 22px;
+        border-radius: 11px;
+        border: 3px solid #8b6914;
+        overflow: hidden;
+        position: relative;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+      }
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #ffd700, #ffaa00);
+        width: 0%;
+        transition: width 0.5s ease;
+        border-radius: 9px;
+        position: relative;
+      }
+      .progress-fill::after {
+        content: "⭐";
+        position: absolute;
+        right: -2px;
+        top: -8px;
+        font-size: 18px;
+        animation: bounce 1s infinite;
+      }
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-6px);
+        }
+      }
+      .progress-label {
+        text-align: center;
+        font-weight: 800;
+        font-size: 0.85rem;
+        margin-top: 6px;
+        color: #6b4f2a;
+      }
+
+      /* ===== MAIN LAYOUT ===== */
+      .main-wrap {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 24px 16px 60px;
+      }
+
+      /* ===== LETTER CARD ===== */
+      .card {
+        background: #fffaf0;
+        border: 4px solid #8b6914;
+        border-radius: 20px;
+        padding: 28px 24px;
+        margin-bottom: 32px;
+        box-shadow:
+          0 8px 30px rgba(0, 0, 0, 0.1),
+          0 0 0 8px #d7c9a8;
+        position: relative;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+      .card:hover {
+        transform: translateY(-3px);
+        box-shadow:
+          0 12px 36px rgba(0, 0, 0, 0.15),
+          0 0 0 8px #c9b888;
+      }
+      .card-number {
+        position: absolute;
+        top: -16px;
+        left: 20px;
+        background: #ff6b35;
+        color: #fff;
+        font-family: "Press Start 2P", cursive;
+        font-size: 0.6rem;
+        padding: 6px 12px;
+        border-radius: 8px;
+        border: 2px solid #c44220;
+      }
+      .card-content {
+        display: flex;
+        gap: 24px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .letter-display {
+        flex-shrink: 0;
+        width: 140px;
+        height: 140px;
+        background: linear-gradient(135deg, #fff8e7, #ffe4b5);
+        border: 4px solid #c49a2a;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Press Start 2P", cursive;
+        font-size: 4rem;
+        color: #4a3728;
+        box-shadow:
+          inset 0 0 20px rgba(255, 215, 0, 0.2),
+          0 4px 12px rgba(0, 0, 0, 0.1);
+        position: relative;
+      }
+      .letter-display .small {
+        position: absolute;
+        bottom: 10px;
+        right: 16px;
+        font-size: 1.8rem;
+        color: #b8956a;
+      }
+      .card-info {
+        flex: 1;
+        min-width: 200px;
+      }
+      .card-info h2 {
+        font-family: "Press Start 2P", cursive;
+        font-size: 0.8rem;
+        color: #5da03c;
+        margin-bottom: 4px;
+      }
+      .card-info .merkwort {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #4a3728;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 8px 0;
+      }
+      .card-info .merkwort .emoji {
+        font-size: 2.2rem;
+      }
+      .card-info .laut {
+        font-size: 1.2rem;
+        color: #8b6914;
+        font-weight: 700;
+        margin-bottom: 12px;
+        font-style: italic;
+      }
+      .card-info .bezug {
+        background: #e8f5e0;
+        border-left: 4px solid #7ec850;
+        padding: 10px 14px;
+        border-radius: 0 10px 10px 0;
+        font-size: 0.95rem;
+        line-height: 1.5;
+      }
+      .card-info .bezug strong {
+        color: #3d6b22;
+      }
+
+      .silben-row {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 12px;
+      }
+      .silben-chip {
+        background: linear-gradient(135deg, #ffd700, #ffaa00);
+        color: #4a3728;
+        font-weight: 800;
+        font-size: 1.1rem;
+        padding: 6px 14px;
+        border-radius: 20px;
+        border: 2px solid #c49a2a;
+        letter-spacing: 1px;
+      }
+
+      /* ===== NAVIGATION ===== */
+      .nav-row {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 24px;
+        position: sticky;
+        top: 10px;
+        z-index: 10;
+        background: #f5eedcee;
+        backdrop-filter: blur(6px);
+        padding: 10px;
+        border-radius: 16px;
+      }
+      .nav-btn {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        border: 2px solid #8b6914;
+        background: #fffaf0;
+        font-family: "Press Start 2P", cursive;
+        font-size: 0.55rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        color: #4a3728;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .nav-btn:hover,
+      .nav-btn.active {
+        background: #7ec850;
+        color: #fff;
+        border-color: #3d6b22;
+        transform: scale(1.1);
+        box-shadow: 0 4px 12px rgba(126, 200, 80, 0.4);
+      }
+      .nav-btn.done {
+        background: #ffd700;
+        border-color: #c49a2a;
+      }
+      .nav-btn.special {
+        width: auto;
+        padding: 0 12px;
+        font-size: 0.5rem;
+        background: #ff6b35;
+        color: #fff;
+        border-color: #c44220;
+      }
+
+      /* ===== CERTIFICATE SECTION ===== */
+      .certificate {
+        background: linear-gradient(135deg, #fffef7, #fff8e7);
+        border: 6px double #c49a2a;
+        border-radius: 24px;
+        padding: 32px 24px;
+        text-align: center;
+        margin-top: 20px;
+        box-shadow:
+          0 8px 30px rgba(0, 0, 0, 0.1),
+          inset 0 0 50px rgba(255, 215, 0, 0.08);
+        position: relative;
+      }
+      .certificate::before {
+        content: "⭐";
+        font-size: 3rem;
+        position: absolute;
+        top: -20px;
+        left: 20px;
+      }
+      .certificate::after {
+        content: "⭐";
+        font-size: 3rem;
+        position: absolute;
+        bottom: -20px;
+        right: 20px;
+      }
+      .certificate h2 {
+        font-family: "Press Start 2P", cursive;
+        font-size: 0.7rem;
+        color: #c49a2a;
+        margin-bottom: 16px;
+      }
+      .certificate .big-name {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: #4a3728;
+        margin: 16px 0;
+        font-family: "Nunito", sans-serif;
+        border-bottom: 3px dashed #c49a2a;
+        display: inline-block;
+        padding: 0 20px 8px;
+        min-width: 200px;
+      }
+      .certificate .letters-row {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 16px 0;
+      }
+      .certificate .letter-badge {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        background: #ffd700;
+        border: 2px solid #c49a2a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 1rem;
+      }
+
+      /* ===== STICKER ROW ===== */
+      .stickers {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        font-size: 2rem;
+        margin: 20px 0;
+        flex-wrap: wrap;
+      }
+
+      /* ===== FARM BACKGROUND ELEMENTS ===== */
+      .farm-decoration {
+        position: fixed;
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.12;
+        font-size: 4rem;
+      }
+      .farm-1 {
+        top: 10%;
+        left: 2%;
+      }
+      .farm-2 {
+        top: 25%;
+        right: 3%;
+      }
+      .farm-3 {
+        bottom: 15%;
+        left: 4%;
+      }
+      .farm-4 {
+        bottom: 8%;
+        right: 5%;
+      }
+      .farm-5 {
+        top: 60%;
+        left: 50%;
+      }
+
+      /* ===== PARENT INFO PANEL ===== */
+      .info-toggle-btn {
+        position: absolute;
+        top: 12px;
+        right: 16px;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 2px solid #8b6914;
+        background: #fffaf0;
+        font-family: "Press Start 2P", cursive;
+        font-size: 0.55rem;
+        cursor: pointer;
+        color: #8b6914;
+        z-index: 5;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .info-toggle-btn:hover {
+        background: #7ec850;
+        color: #fff;
+        border-color: #3d6b22;
+        transform: scale(1.15);
+      }
+      .info-toggle-btn.open {
+        background: #ff6b35;
+        color: #fff;
+        border-color: #c44220;
+      }
+      .parent-info {
+        display: none;
+        background: #fffef7;
+        border: 2px dashed #8b6914;
+        border-radius: 14px;
+        padding: 16px 18px;
+        margin-top: 16px;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        color: #4a3728;
+      }
+      .parent-info.visible {
+        display: block;
+      }
+      .parent-info h3 {
+        font-family: "Press Start 2P", cursive;
+        font-size: 0.5rem;
+        color: #ff6b35;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .parent-info .step {
+        margin: 8px 0;
+        padding-left: 8px;
+      }
+      .parent-info .step .step-label {
+        font-weight: 800;
+        color: #5da03c;
+        font-size: 0.8rem;
+        display: inline-block;
+        min-width: 80px;
+        margin-right: 4px;
+      }
+      .parent-info .say {
+        background: #fff8e7;
+        border-left: 3px solid #ffaa00;
+        padding: 6px 10px;
+        margin: 6px 0;
+        border-radius: 0 8px 8px 0;
+        font-style: italic;
+      }
+      .parent-info .say::before {
+        content: "💬 ";
+        font-style: normal;
+      }
+
+      /* ===== RESPONSIVE ===== */
+      @media (max-width: 600px) {
+        .card-content {
+          flex-direction: column;
+          text-align: center;
+        }
+        .letter-display {
+          width: 110px;
+          height: 110px;
+          font-size: 3rem;
+        }
+        .card-info .merkwort {
+          justify-content: center;
+        }
+        .silben-row {
+          justify-content: center;
+        }
+        .nav-btn {
+          width: 34px;
+          height: 34px;
+          font-size: 0.5rem;
+        }
+        .header h1 {
+          font-size: 0.6rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Farm decorations -->
+    <div class="farm-decoration farm-1">🌻</div>
+    <div class="farm-decoration farm-2">🐄</div>
+    <div class="farm-decoration farm-3">🌽</div>
+    <div class="farm-decoration farm-4">🐔</div>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+      <div class="header-icons">🐔🌾🐄🌻🐖🥕</div>
+      <h1>Lesen lernen mit<br />Stardew Valley</h1>
+      <div class="subtitle">Phase 1 — Die Buchstaben</div>
+    </header>
+
+    <!-- ===== PROGRESS ===== -->
+    <div class="progress-wrap">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-label" id="progressLabel">
+        0 von 14 Buchstaben ⭐
+      </div>
+    </div>
+
+    <!-- ===== NAVIGATION ===== -->
+    <div class="nav-row" id="navRow"></div>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <div class="main-wrap" id="mainContent"></div>
+
+    <!-- ===== CERTIFICATE ===== -->
+    <div id="certSection" style="display: none">
+      <div class="main-wrap">
+        <div class="certificate">
+          <h2>⭐ BUCHSTABEN-MEISTER ⭐</h2>
+          <p style="font-size: 1.1rem; color: #8b6914; font-weight: 700">
+            Verliehen an
+          </p>
+          <div class="big-name" contenteditable="true">DEIN NAME</div>
+          <p style="color: #5da03c; font-weight: 700; margin: 10px 0">
+            für das erfolgreiche Erlernen aller 14 Buchstaben<br />
+            und das Lesen der ersten Stardew-Valley-Wörter!
+          </p>
+          <div class="letters-row">
+            <span class="letter-badge">A</span
+            ><span class="letter-badge">E</span>
+            <span class="letter-badge">I</span
+            ><span class="letter-badge">O</span>
+            <span class="letter-badge">U</span
+            ><span class="letter-badge">M</span>
+            <span class="letter-badge">L</span
+            ><span class="letter-badge">S</span>
+            <span class="letter-badge">T</span
+            ><span class="letter-badge">R</span>
+            <span class="letter-badge">N</span
+            ><span class="letter-badge">F</span>
+            <span class="letter-badge">H</span
+            ><span class="letter-badge">W</span>
+          </div>
+          <p style="color: #4a3728; font-weight: 700">
+            ⭐ HOF &nbsp;·&nbsp; EI &nbsp;·&nbsp; HUHN &nbsp;·&nbsp; SAMEN
+            &nbsp;·&nbsp; MAMA ⭐
+          </p>
+          <div class="stickers">🐔🐄🐑🐖🌱🍎🥚⭐</div>
+          <p style="color: #8b6914; font-size: 0.85rem; margin-top: 12px">
+            Pelikan Stadt · Stardew Valley
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ===== LETTER DATA =====
+      const letters = [
+        {
+          id: "A",
+          small: "a",
+          laut: "aaaa",
+          emoji: "🏃‍♂️",
+          merkwort: "Alex",
+          silben: ["MA", "LA", "SA", "RA", "TA"],
+          bezug:
+            "Alex wohnt in <strong>Pelikan Stadt</strong> und macht gern Sport. <strong>A wie Alex!</strong>",
+          elternInfo:
+            '<h3>👨‍🏫 So bringst du das A bei</h3><div class="step"><span class="step-label">① Laut zeigen</span>„Das ist ein A. Wir sagen <strong>aaaa</strong> — wie beim Arzt, wenn er in den Hals guckt: aaaa!"</div><div class="step"><span class="step-label">② Nachspuren</span>Mit dem Finger in der Luft, auf dem Tisch oder auf Papier: „Erst ein Strich nach oben, dann runter, dann in der Mitte."</div><div class="step"><span class="step-label">③ A-Jagd</span>Zeitung/Prospekt nehmen und alle A einkreisen. Auch auf Verpackungen suchen!</div><div class="step"><span class="step-label">④ Stardew-Spiel</span>In Stardew Valley Alex zeigen. Sage: "A wie Alex — er wohnt in Pelikan Stadt!"</div><div class="say">Du sagst Wörter. Wenn er ein A hört, streckt er den Arm hoch: <strong>Alex</strong> ✋, Ente (kein A), <strong>Axt</strong> ✋, Hof (kein A), <strong>Mama</strong> ✋</div>',
+        },
+        {
+          id: "E",
+          small: "e",
+          laut: "eeee",
+          emoji: "🥚",
+          merkwort: "Ei",
+          silben: ["ME", "LE", "SE", "RE", "TE"],
+          bezug:
+            "Deine Hühner legen <strong>Eier</strong> im Hühnerstall. <strong>E wie Ei!</strong>",
+          elternInfo:
+            '<h3>👨‍🏫 So bringst du das E bei</h3><div class="step"><span class="step-label">① Wiederholung</span>Zeig die A-Karte: "Weißt du noch? A wie Alex!"</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das E sagen wir <strong>eeee</strong> — wie wenn ein Esel ruft: I-aaaaah!" Mach den Mund breit, wie beim Lächeln.</div><div class="step"><span class="step-label">③ Fühlen & formen</span>Aus Knete ein E formen oder in Sand/Grieß mit dem Finger malen.</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>Im Spiel die Hühner besuchen: "Deine Hühner legen <strong>Eier</strong>. E wie Ei!"</div><div class="say">Wo ist das E? <strong>E</strong>-i (Anfang!), Melon<strong>e</strong> (am Ende!), <strong>E</strong>mily (Anfang!), S<strong>e</strong>ns<strong>e</strong> (Mitte und Ende!), Huhn (kein E!)</div>',
+        },
+        {
+          id: "I",
+          small: "i",
+          laut: "iiii",
+          emoji: "⭐",
+          merkwort: "Iridium",
+          silben: ["MI", "LI", "SI", "RI", "TI"],
+          bezug:
+            "<strong>Iridium</strong> ist die allerbeste Qualität im Spiel! Lila Sterne sind super wertvoll. <strong>I wie Iridium!</strong>",
+          elternInfo:
+            '<h3>👨‍🏫 So bringst du das I bei</h3><div class="step"><span class="step-label">① Wiederholung</span>Zeig A- und E-Karte: "Welcher ist A? Welcher E?"</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das I sagen wir <strong>iiii</strong> — wie wenn du dich freust: Juchhuuu! Oder wie Iiiiih!"</div><div class="step"><span class="step-label">③ I legen</span>Aus Bausteinen/Legosteinen ein I legen — es ist nur ein gerader Strich, der einfachste Buchstabe!</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>"Iridium ist lila und super wertvoll — die beste Qualität im ganzen Spiel!"</div><div class="say">Übe mit der I-Karte + Vokalen: M-I → MI, L-I → LI, S-I → SI</div>',
+        },
+        {
+          id: "O",
+          small: "o",
+          laut: "oooo",
+          emoji: "🍎",
+          merkwort: "Obst",
+          silben: ["MO", "LO", "SO", "RO", "TO"],
+          bezug:
+            "Auf deiner Farm wachsen <strong>Obstbäume</strong> — Äpfel, Kirschen, Orangen! <strong>O wie Obst!</strong>",
+          elternInfo:
+            '<h3>👨‍🏫 So bringst du das O bei</h3><div class="step"><span class="step-label">① Wiederholung</span>Alle drei Karten (A, E, I) durchgehen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das O sagen wir <strong>oooo</strong> — mach den Mund ganz rund, wie ein Luftballon!"</div><div class="step"><span class="step-label">③ O-Entdeckung</span>O mit Kreide draußen malen. O-förmige Dinge im Raum suchen: Uhr, Teller, Ball, Fenster...</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>Auf der Farm Obstbäume zeigen: "Äpfel und Kirschen sind Obst! O wie Obst!"</div><div class="say">Alle 4 Vokale mischen und schnell zeigen lassen: A, E, I, O — immer schneller!</div>',
+        },
+        {
+          id: "U",
+          small: "u",
+          laut: "uuuu",
+          emoji: "🕐",
+          merkwort: "Uhr",
+          silben: ["MU", "LU", "SU", "RU", "TU"],
+          bezug:
+            "Die <strong>Uhr</strong> zeigt dir im Spiel, wie spät es ist. Um 2 Uhr nachts musst du ins Bett! <strong>U wie Uhr!</strong>",
+          elternInfo:
+            '<h3>👨‍🏫 So bringst du das U bei</h3><div class="step"><span class="step-label">① Wiederholung</span>A, E, I, O durchgehen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das U sagen wir <strong>uuuu</strong> — wie eine Kuh: Muuuuh, aber ohne M. Nur uuuu!"</div><div class="step"><span class="step-label">③ Vokal-Memory</span>5 Kartenpaare (A, E, I, O, U) basteln. Mischen, verdeckt hinlegen. Paare finden und Laut sagen!</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>"Im Spiel siehst du immer eine Uhr — wenn es ganz spät ist, musst du ins Bett!"</div><div class="say">Merkspruch: "<strong>A-E-I-O-U</strong> — alle Vokale kennst du!" Jetzt kommen die Konsonanten!</div>',
+        },
+        {
+          id: "M",
+          small: "m",
+          laut: "mmmm",
+          emoji: "🐄",
+          merkwort: "Milch",
+          silben: ["MA", "ME", "MI", "MO", "MU"],
+          bezug:
+            "Deine Kühe geben <strong>Milch</strong> — hol sie mit dem Melkkübel ab! Auch <strong>Marnie</strong> fängt mit M an. <strong>M wie Milch!</strong>",
+          elternInfo:
+            '<h3>👨‍🏫 So bringst du das M bei</h3><div class="step"><span class="step-label">① Wiederholung</span>Alle 5 Vokale durchgehen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Lippen zusammenpressen und summen: <strong>mmmm</strong>. Spürst du das Kitzeln auf den Lippen?"</div><div class="step"><span class="step-label">③ ★ WICHTIG: Silben!</span> M-Karte links, Vokale rechts tauschen: M+A=MA, M+E=ME, M+I=MI, M+O=MO, M+U=MU. Von links nach rechts mit dem Finger!</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>"Deine Kühe geben Milch. M wie Milch! Und Marnie verkauft die Tiere!"</div><div class="say">Erste Silben lesen: "Mmmm-aaaa → <strong>MA</strong>! Mmmm-iiii → <strong>MI</strong>!"</div>',
+        },
+        {
+          id: "L",
+          small: "l",
+          laut: "llll",
+          emoji: "🏪",
+          merkwort: "Laden",
+          silben: ["LA", "LE", "LI", "LO", "LU"],
+          bezug:
+            "In <strong>Pierres Gemischtwarenladen</strong> kaufst du Samen. <strong>Linus</strong> im Zelt hat auch ein L! <strong>L wie Laden!</strong>",
+          elternInfo:
+            '<h3>👨‍🏫 So bringst du das L bei</h3><div class="step"><span class="step-label">① Wiederholung</span>M und Vokale. MA-ME-MI-MO-MU schnell wiederholen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Zunge an die oberen Zähne: <strong>llll</strong>. Wie wenn du ein Lied singst: Lalala!"</div><div class="step"><span class="step-label">③ Silben-Mix</span> Jetzt M und L mit Vokalen mischen: "Was ist M-A? MA! Und L-A? LA! Und M-A + M-A? <strong>MAMA!</strong>"</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>"Pierres Gemischtwarenladen — dort kaufst du Samen. <strong>L wie Laden!</strong> Und Linus im Zelt!"</div><div class="say">Erste Wörter mit M+L: <strong>MA-MA</strong>, <strong>LA-MA</strong>, <strong>O-MA</strong> — lies sie gemeinsam!</div>',
+        },
+        {
+          id: "S",
+          small: "s",
+          laut: "ssss",
+          emoji: "🌱",
+          merkwort: "Samen",
+          silben: ["SA", "SE", "SI", "SO", "SU"],
+          bezug:
+            "Ohne <strong>Samen</strong> wächst nichts! Du kaufst sie bei Pierre. Auch die <strong>Sense</strong> fängt mit S an. <strong>S wie Samen!</strong>",
+          elternInfo:
+            '<h3>👨‍🏫 So bringst du das S bei</h3><div class="step"><span class="step-label">① Wiederholung</span>M, L und Vokale. Kurz MA, LA, MI, LO lesen lassen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das S zischt wie eine Schlange: <strong>sssss</strong>! Die Luft geht zwischen den Zähnen durch."</div><div class="step"><span class="step-label">③ Silben</span> S mit allen Vokalen: SA, SE, SI, SO, SU. "SA wie Samen! SE wie Sense! SI wie Silo!"</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>"Das wichtigste Wort: <strong>Samen!</strong> Ohne Samen wächst nichts. Und die <strong>Sense</strong> für Heu!"</div><div class="say">Jetzt SILBEN ZUSAMMENZIEHEN: "Ssss-aaaa-mmm-e-n → <strong>Samen!</strong>" — Finger drunter, langsam zusammenziehen!</div>',
+        },
+        {
+          id: "T",
+          small: "t",
+          laut: "t-t-t",
+          emoji: "🍅",
+          merkwort: "Tomate",
+          silben: ["TA", "TE", "TI", "TO", "TU"],
+          bezug:
+            "Im Sommer wachsen <strong>Tomaten</strong> auf deiner Farm. Und <strong>Tee</strong>-Blätter! <strong>T wie Tomate!</strong>",
+          elternInfo:
+            '<h3>👨‍🏫 So bringst du das T bei</h3><div class="step"><span class="step-label">① Wiederholung</span>S-Karte zeigen. Silben mit S wiederholen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das T macht <strong>t</strong> — ganz kurz! Zunge tippt oben an und springt zurück. T! T! T! Wie ein Trommelschlag."</div><div class="step"><span class="step-label">③ Silben</span>T mit Vokalen: TA, TE, TI, TO, TU. "TA wie Tag! TE wie Tee! TO wie Tomate!"</div><div class="step"><span class="step-label">④ Kombiniere S+T</span> "Ssss-aaaa-mmm-e-nnnn → Samen! T-o-m-a-t-e → Tomate!"</div><div class="say">SA und TA nebeneinander: "Was ist der Unterschied? S zischt lang, T tippt kurz! Sssss-A vs T-A. Spürst du\'s?"</div>',
+        },
+        {
+          id: "R",
+          small: "r",
+          laut: "rrrr",
+          emoji: "🔨",
+          merkwort: "Robin",
+          silben: ["RA", "RE", "RI", "RO", "RU"],
+          bezug:
+            "<strong>Robin</strong> ist die Schreinerin — sie baut dir den Hühnerstall! <strong>R wie Robin!</strong>",
+          elternInfo:
+            '<h3>👨‍🏫 So bringst du das R bei</h3><div class="step"><span class="step-label">① Wiederholung</span>S und T durchgehen. SAMEN schon lesen lassen!</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das R rollt: <strong>rrrr</strong>. Wie ein Motorrad: Brrrumm! Die Zunge flattert oben." Falls das Rollen schwerfällt: kein Problem, akzeptiere auch ein weiches R.</div><div class="step"><span class="step-label">③ Silben</span>RA, RE, RI, RO, RU. "RO wie Robin! RA wie Rasen! RI wie Riese!"</div><div class="step"><span class="step-label">④ Erste Namen lesen</span> "R-O → Ro! R-A → Ra! Und Ma-ru kennst du: M-A → Ma, R-U → Ru → <strong>Maru!</strong>"</div><div class="say">"Robin baut dir den Hühnerstall im <strong>Schreinerladen</strong>. R wie Robin! Und im Herbst wachsen Riesen-Kürbisse!"</div>',
+        },
+        {
+          id: "N",
+          small: "n",
+          laut: "nnnn",
+          emoji: "🌙",
+          merkwort: "Nacht",
+          silben: ["NA", "NE", "NI", "NO", "NU"],
+          bezug:
+            "In der <strong>Nacht</strong> siehst du Sterne und Glühwürmchen. <strong>N wie Nacht!</strong>",
+          elternInfo:
+            '<h3>👨‍🏫 So bringst du das N bei</h3><div class="step"><span class="step-label">① Wiederholung</span>M, L, S, T, R und Vokale durchgehen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das N ist lustig: <strong>nnnn</strong>. Halt dir die Nase zu! Merkst du? Es kommt nichts raus! Das N wohnt in der Nase."</div><div class="step"><span class="step-label">③ Silben</span>NA, NE, NI, NO, NU. "NA wie Nase! NE wie Nest!"</div><div class="step"><span class="step-label">④ Erste Wörter lesen</span> Aus den bisherigen Buchstaben: N-E-S-T → Nest! N-A-S-E → Nase! S-O-N-N-E → Sonne!</div><div class="say">Wenn er M und N verwechselt: "Halt die Nase zu — wenn Luft durch will, ist es N. Wenn nicht, M."</div>',
+        },
+        {
+          id: "F",
+          small: "f",
+          laut: "ffff",
+          emoji: "🌸",
+          merkwort: "Frühling",
+          silben: ["FA", "FE", "FI", "FO", "FU"],
+          bezug:
+            "Das Spiel beginnt im <strong>Frühling</strong>! Pflanze Pastinaken und Blumenkohl. <strong>F wie Frühling!</strong>",
+          elternInfo:
+            '<h3>👨‍🏫 So bringst du das F bei</h3><div class="step"><span class="step-label">① Wiederholung</span>Alle 6 Konsonanten + Vokale durchgehen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das F pustet: <strong>ffff</strong>. Oberzähne auf Unterlippe und Luft rausblasen. Wie eine Katze, die faucht — aber leise!"</div><div class="step"><span class="step-label">③ Silben</span>FA, FE, FI, FO, FU. "FA wie Farm! FI wie Fisch!"</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>"Das Spiel startet im <strong>Frühling</strong>! Alles wird grün. Du pflanzt Pastinaken! Und <strong>Fisch</strong> angeln!"</div><div class="say">Vorschau auf morgen: "Morgen lernen wir H — dann kannst du H-O-F → <strong>Hof</strong> lesen!"</div>',
+        },
+        {
+          id: "H",
+          small: "h",
+          laut: "hhhh",
+          emoji: "🐔",
+          merkwort: "Hof & Huhn",
+          silben: ["HA", "HE", "HI", "HO", "HU"],
+          bezug:
+            "Dein <strong>Hof</strong> und deine <strong>Hühner</strong> — gleich zwei wichtige Wörter mit H! <strong>H wie Hof!</strong>",
+          elternInfo:
+            '<h3>👨‍🏫 So bringst du das H bei</h3><div class="step"><span class="step-label">① Wiederholung</span>F und alle vorherigen durchgehen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das H haucht: <strong>hhhh</strong>. Wie wenn du eine Fensterscheibe anhauchst. Ganz weich und warm."</div><div class="step"><span class="step-label">③ Silben</span>HA, HE, HI, HO, HU. "HA wie Hallo! HE wie Heu! HO wie Hof! HU wie Huhn!"</div><div class="step"><span class="step-label">④ ★ ERSTES WORT!</span>H-O-F → <strong>Hof!</strong> H-U-H-N → <strong>Huhn!</strong> Das sind die ersten echten Stardew-Wörter!</div><div class="say">Feierlicher Moment: "Du kannst jetzt <strong>Hof</strong> und <strong>Huhn</strong> lesen! Das sind Wörter aus deinem Spiel!" 🎉</div>',
+        },
+        {
+          id: "W",
+          small: "w",
+          laut: "wwww",
+          emoji: "❄️",
+          merkwort: "Winter",
+          silben: ["WA", "WE", "WI", "WO", "WU"],
+          bezug:
+            "Im <strong>Winter</strong> schneit es in Pelikan Stadt. <strong>Willy</strong> am Strand — auch der fängt mit W an! Und das <strong>Wasser</strong> zum Gießen. <strong>W wie Winter!</strong>",
+          elternInfo:
+            '<h3>👨‍🏫 So bringst du das W bei</h3><div class="step"><span class="step-label">① Wiederholung</span>Alle 13 Buchstaben durchgehen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das W macht die Lippen rund: <strong>wwww</strong>. Spür mal den Hals — der brummt. Wie der Wind: www-ind!"</div><div class="step"><span class="step-label">③ Silben</span>WA, WE, WI, WO, WU. "WA wie Wald! WI wie Winter! WO wie Wolle!"</div><div class="step"><span class="step-label">④ Letzter Buchstabe!</span> "Im Winter schneit es in Stardew Valley. Und Willy am Strand verkauft Angel-Zeug!"</div><div class="say">Jetzt mit allen Buchstaben: <strong>WIN-TER</strong>, <strong>WAS-SER</strong>, <strong>WALD</strong> — und morgen feiern wir das Wiederholungsfest! 🎉</div>',
+        },
+      ];
+
+      const STORAGE_KEY = "sv_lesen_phase1_progress";
+      function loadProgress() {
+        try {
+          return new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"));
+        } catch (e) {
+          return new Set();
+        }
+      }
+      let completed = loadProgress();
+
+      function save() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify([...completed]));
+      }
+      function toggle(id) {
+        if (completed.has(id)) completed.delete(id);
+        else completed.add(id);
+        save();
+        render();
+      }
+
+      function render() {
+        const navRow = document.getElementById("navRow");
+        const mainContent = document.getElementById("mainContent");
+        const certSection = document.getElementById("certSection");
+        const progressFill = document.getElementById("progressFill");
+        const progressLabel = document.getElementById("progressLabel");
+
+        // Progress
+        const done = completed.size;
+        const total = letters.length;
+        const pct = Math.round((done / total) * 100);
+        progressFill.style.width = pct + "%";
+        progressLabel.textContent = done + " von " + total + " Buchstaben ⭐";
+
+        // Nav
+        navRow.replaceChildren();
+        letters.forEach((l) => {
+          const btn = document.createElement("button");
+          btn.className = "nav-btn" + (completed.has(l.id) ? " done" : "");
+          btn.textContent = l.id;
+          btn.title = l.merkwort;
+          btn.addEventListener("click", () => scrollToLetter(l.id));
+          navRow.appendChild(btn);
+        });
+        const certBtn = document.createElement("button");
+        certBtn.className = "nav-btn special";
+        certBtn.textContent = "🏆";
+        certBtn.addEventListener("click", scrollToCert);
+        navRow.appendChild(certBtn);
+
+        // Cards
+        mainContent.replaceChildren();
+        letters.forEach((l, i) => {
+          const card = document.createElement("div");
+          card.className = "card";
+          card.id = "letter-" + l.id;
+          card.style.position = "relative";
+
+          // Info toggle button for parents
+          const infoBtn = document.createElement("button");
+          infoBtn.className = "info-toggle-btn";
+          infoBtn.textContent = "i";
+          infoBtn.title = "Eltern-Info ein-/ausblenden";
+          infoBtn.addEventListener("click", function (e) {
+            e.stopPropagation();
+            const panel = card.querySelector(".parent-info");
+            if (panel.classList.contains("visible")) {
+              panel.classList.remove("visible");
+              infoBtn.classList.remove("open");
+              infoBtn.textContent = "i";
+            } else {
+              panel.classList.add("visible");
+              infoBtn.classList.add("open");
+              infoBtn.textContent = "✕";
+            }
+          });
+          card.appendChild(infoBtn);
+
+          const num = document.createElement("div");
+          num.className = "card-number";
+          num.textContent = "Lektion " + (i + 1);
+          card.appendChild(num);
+
+          const content = document.createElement("div");
+          content.className = "card-content";
+
+          const display = document.createElement("div");
+          display.className = "letter-display";
+          display.appendChild(document.createTextNode(l.id));
+          const small = document.createElement("span");
+          small.className = "small";
+          small.textContent = l.small;
+          display.appendChild(small);
+          content.appendChild(display);
+
+          const info = document.createElement("div");
+          info.className = "card-info";
+          const h2 = document.createElement("h2");
+          h2.textContent = "Laut: „" + l.laut + '"';
+          info.appendChild(h2);
+
+          const mw = document.createElement("div");
+          mw.className = "merkwort";
+          const em = document.createElement("span");
+          em.className = "emoji";
+          em.textContent = l.emoji;
+          mw.appendChild(em);
+          mw.appendChild(document.createTextNode(" " + l.merkwort));
+          info.appendChild(mw);
+
+          const lautDiv = document.createElement("div");
+          lautDiv.className = "laut";
+          lautDiv.textContent = "Sprich: „" + l.laut + '" — wie klingt das?';
+          info.appendChild(lautDiv);
+
+          const bezug = document.createElement("div");
+          bezug.className = "bezug";
+          const p = new DOMParser().parseFromString(l.bezug, "text/html");
+          bezug.appendChild(document.createTextNode(p.body.textContent || ""));
+          if (p.body.querySelector("strong")) {
+            const s = document.createElement("strong");
+            s.textContent = p.body.querySelector("strong")?.textContent || "";
+            const txt = p.body.textContent || "";
+            const idx = txt.indexOf(s.textContent);
+            if (idx >= 0) {
+              bezug.appendChild(document.createTextNode(txt.slice(0, idx)));
+              bezug.appendChild(s);
+              bezug.appendChild(
+                document.createTextNode(txt.slice(idx + s.textContent.length)),
+              );
+            } else {
+              bezug.textContent = txt;
+            }
+          }
+          info.appendChild(bezug);
+
+          const silbenRow = document.createElement("div");
+          silbenRow.className = "silben-row";
+          l.silben.forEach((s) => {
+            const chip = document.createElement("span");
+            chip.className = "silben-chip";
+            chip.textContent = s;
+            silbenRow.appendChild(chip);
+          });
+          info.appendChild(silbenRow);
+          content.appendChild(info);
+          card.appendChild(content);
+
+          // Parent info panel (hidden by default)
+          if (l.elternInfo) {
+            const parentInfo = document.createElement("div");
+            parentInfo.className = "parent-info";
+            const frag = new DOMParser().parseFromString(
+              l.elternInfo,
+              "text/html",
+            );
+            while (frag.body.firstChild) {
+              parentInfo.appendChild(frag.body.firstChild);
+            }
+            card.appendChild(parentInfo);
+          }
+
+          const btnWrap = document.createElement("div");
+          btnWrap.style.cssText = "margin-top:16px;text-align:center;";
+          const btn = document.createElement("button");
+          const isDone = completed.has(l.id);
+          btn.textContent = isDone
+            ? "⭐ Geschafft! ⭐"
+            : "✋ Klick wenn du diesen Buchstaben kannst!";
+          btn.style.cssText =
+            "font-family:Nunito,sans-serif;font-weight:800;font-size:1rem;padding:10px 24px;border-radius:12px;cursor:pointer;border:2px solid #5da03c;background:" +
+            (isDone ? "#ffd700" : "#e8f5e0") +
+            ";color:" +
+            (isDone ? "#4a3728" : "#3d6b22") +
+            ";transition:all .2s;";
+          btn.addEventListener("click", () => toggle(l.id));
+          btnWrap.appendChild(btn);
+          card.appendChild(btnWrap);
+
+          mainContent.appendChild(card);
+        });
+
+        // Certificate visibility
+        certSection.style.display = done >= 14 ? "block" : "none";
+      }
+
+      function scrollToLetter(id) {
+        const el = document.getElementById("letter-" + id);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+      function scrollToCert() {
+        document
+          .getElementById("certSection")
+          .scrollIntoView({ behavior: "smooth" });
+      }
+
+      render();
+    </script>
+  </body>
+</html>

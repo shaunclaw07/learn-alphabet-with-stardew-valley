@@ -126,6 +126,39 @@
         color: #6b4f2a;
       }
 
+      /* ===== VOICE PICKER ===== */
+      .voice-wrap {
+        max-width: 700px;
+        margin: 12px auto 0;
+        padding: 0 16px;
+        text-align: center;
+        font-weight: 700;
+        color: #6b4f2a;
+        font-size: 0.9rem;
+      }
+      .voice-wrap select {
+        font-family: "Nunito", sans-serif;
+        font-weight: 700;
+        padding: 4px 8px;
+        border-radius: 8px;
+        border: 2px solid #8b6914;
+        background: #fffaf0;
+        color: #4a3728;
+        margin-left: 6px;
+        max-width: 100%;
+      }
+      .voice-hint {
+        margin-top: 8px;
+        background: #fff3d6;
+        border: 2px dashed #c49a2a;
+        border-radius: 10px;
+        padding: 8px 12px;
+        font-weight: 600;
+        font-size: 0.82rem;
+        line-height: 1.45;
+        text-align: left;
+      }
+
       /* ===== MAIN LAYOUT ===== */
       .main-wrap {
         max-width: 900px;
@@ -858,6 +891,20 @@
       </div>
     </div>
 
+    <!-- ===== VOICE PICKER ===== -->
+    <div class="voice-wrap">
+      <span>🔊 Vorlese-Stimme:</span>
+      <select id="voicePick" aria-label="Vorlese-Stimme"></select>
+      <div id="voiceStatus" style="margin-top: 6px; font-size: 0.82rem"></div>
+      <div class="voice-hint" id="voiceHint" style="display: none">
+        ⚠️ <strong>Keine deutsche Stimme gefunden</strong> — die Laute klingen
+        sonst englisch. So installierst du eine (einmalig): <strong>Windows →
+        Einstellungen → Zeit &amp; Sprache → Sprache → „Deutsch" → Optionen →
+        Sprache/Stimme herunterladen</strong>. Danach den Browser neu starten
+        und hier oben die deutsche Stimme auswählen.
+      </div>
+    </div>
+
     <!-- ===== NAVIGATION ===== -->
     <div class="nav-row" id="navRow"></div>
 
@@ -1232,25 +1279,79 @@
 
       // ===== AUDIO (Web Speech API — offline, kostenlos) =====
       // Ermöglicht selbstständiges Lernen: das Kind HÖRT den Laut/das Wort.
-      let deVoice = null;
-      function pickVoice() {
+      let voices = [];
+      let chosenVoice = null;
+      const VOICE_KEY = "sv_lesen_voice";
+      function isGermanVoice(v) {
+        return /^de([-_]|$)/i.test(v.lang) || /deutsch|german/i.test(v.name);
+      }
+      function updateVoiceStatus() {
+        const st = document.getElementById("voiceStatus");
+        if (!st) return;
+        if (!chosenVoice) {
+          st.textContent = "";
+          return;
+        }
+        const ok = isGermanVoice(chosenVoice);
+        st.textContent =
+          (ok ? "✅ Aktiv: " : "❌ Aktiv (nicht Deutsch!): ") +
+          chosenVoice.name +
+          " · " +
+          chosenVoice.lang;
+        st.style.color = ok ? "#3d6b22" : "#b23b1e";
+        st.style.fontWeight = "800";
+      }
+      function buildVoicePicker(german) {
+        const sel = document.getElementById("voicePick");
+        const hint = document.getElementById("voiceHint");
+        if (!sel) return;
+        // Alle Stimmen zeigen (deutsche zuerst) — so ist sichtbar, ob es
+        // überhaupt eine deutsche gibt.
+        const list = [...german, ...voices.filter((v) => !isGermanVoice(v))];
+        sel.replaceChildren();
+        list.forEach((v) => {
+          const o = document.createElement("option");
+          o.value = v.name;
+          o.textContent = (isGermanVoice(v) ? "🇩🇪 " : "🌐 ") + v.name;
+          if (chosenVoice && v.name === chosenVoice.name) o.selected = true;
+          sel.appendChild(o);
+        });
+        sel.onchange = () => {
+          chosenVoice = voices.find((v) => v.name === sel.value) || chosenVoice;
+          if (chosenVoice) localStorage.setItem(VOICE_KEY, chosenVoice.name);
+          updateVoiceStatus();
+          speak("Hallo, ich lese dir vor!"); // Hörprobe
+        };
+        if (hint) hint.style.display = german.length ? "none" : "block";
+        updateVoiceStatus();
+      }
+      function refreshVoices() {
         if (!("speechSynthesis" in window)) return;
-        const vs = speechSynthesis.getVoices();
-        deVoice =
-          vs.find((v) => /^de(-|_)/i.test(v.lang)) ||
-          vs.find((v) => /german|deutsch/i.test(v.name)) ||
-          deVoice;
+        voices = speechSynthesis.getVoices() || [];
+        if (!voices.length) return;
+        const german = voices.filter(isGermanVoice);
+        const saved = localStorage.getItem(VOICE_KEY);
+        // Deutsche Stimme hat IMMER Vorrang. Nur wenn eine gespeicherte Wahl
+        // selbst deutsch ist (oder es gar keine deutsche gibt), wird sie geehrt.
+        chosenVoice =
+          german.find((v) => v.name === saved) ||
+          german[0] ||
+          voices.find((v) => v.name === saved) ||
+          chosenVoice ||
+          voices[0] ||
+          null;
+        buildVoicePicker(german);
       }
       if ("speechSynthesis" in window) {
-        pickVoice();
-        speechSynthesis.onvoiceschanged = pickVoice;
+        refreshVoices();
+        speechSynthesis.onvoiceschanged = refreshVoices;
       }
       function speak(text, rate) {
         if (!("speechSynthesis" in window) || !text) return;
         speechSynthesis.cancel();
         const u = new SpeechSynthesisUtterance(String(text));
-        u.lang = "de-DE";
-        if (deVoice) u.voice = deVoice;
+        u.lang = (chosenVoice && chosenVoice.lang) || "de-DE";
+        if (chosenVoice) u.voice = chosenVoice;
         u.rate = rate || 0.85;
         u.pitch = 1.05;
         speechSynthesis.speak(u);
@@ -1258,6 +1359,11 @@
       // "Hof & Huhn" -> "Hof" (ein sauber sprechbares Anlaut-Wort)
       function spokenWord(mw) {
         return String(mw).split("&")[0].trim();
+      }
+      // Silbe als Laut sprechen. Kleinschreibung, damit eine deutsche Stimme
+      // "ma"/"me"/"mi" als Silbe liest (Großbuchstaben werden buchstabiert).
+      function saySyllable(syl) {
+        speak(String(syl).toLowerCase(), 0.7);
       }
 
       // ===== REIHENFOLGE & WOCHEN (entzerrt) =====
@@ -1453,8 +1559,8 @@
             chip.className = "silben-chip";
             chip.textContent = s;
             chip.title = "Antippen zum Hören";
-            // Silbe langsam vorsprechen — direkte Blending-Hilfe
-            chip.addEventListener("click", () => speak(s, 0.7));
+            // Silbe langsam als Laut vorsprechen — direkte Blending-Hilfe
+            chip.addEventListener("click", () => saySyllable(s));
             silbenRow.appendChild(chip);
           });
           info.appendChild(silbenRow);
@@ -1670,7 +1776,7 @@
           el.textContent = ch;
           el.addEventListener("click", () => {
             el.classList.add("lit");
-            speak(ch, 0.7);
+            speak(ch.toLowerCase(), 0.7);
             setTimeout(() => el.classList.remove("lit"), 400);
           });
           wsWord.appendChild(el);
@@ -1688,7 +1794,7 @@
         const tiles = [...document.querySelectorAll("#wsWord .ws-letter")];
         if (tiles.length === 0) return;
         document.getElementById("wsHint").textContent = "Hör genau hin …";
-        speak(word, 0.5); // erst langsam vorlesen
+        speak(word.toLowerCase(), 0.5); // erst langsam vorlesen
         let i = 0;
         const step = () => {
           tiles.forEach((t) => t.classList.remove("lit"));
@@ -1699,7 +1805,7 @@
           } else {
             const whole = document.getElementById("wsWhole");
             whole.classList.add("show");
-            speak(word, 0.85); // dann flüssig
+            speak(word.toLowerCase(), 0.85); // dann flüssig
             document.getElementById("wsHint").textContent =
               "🎉 Das Wort heißt: " + word + "!";
           }

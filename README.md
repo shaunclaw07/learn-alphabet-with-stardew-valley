@@ -93,11 +93,14 @@ alphabet/
 │   ├── materialien/               Karteikarten, Bingo, Übungsblätter
 │   └── phase1-druckversion.*      Druckbare A4-Fassung (HTML + PDF)
 ├── phase2/
-│   └── phase2-schule.html         Phase 2 (interaktiv)
+│   ├── phase2-schule.html         Phase 2 (interaktiv)
+│   └── phase2-druckversion.html   Phase 2 (druckbar, A4)
 ├── phase3/
-│   └── phase3-schule.html         Phase 3 (interaktiv)
+│   ├── phase3-schule.html         Phase 3 (interaktiv)
+│   └── phase3-druckversion.html   Phase 3 (druckbar, A4)
 ├── phase4/
-│   └── phase4-schule.html         Phase 4 (interaktiv)
+│   ├── phase4-schule.html         Phase 4 (interaktiv)
+│   └── phase4-druckversion.html   Phase 4 (druckbar, A4)
 ├── lehrplan.html                  Kompletter Lehrplan (HTML)
 ├── lesen-lernen-lehrplan.md       Kompletter Lehrplan (Master-Referenz)
 ├── CLAUDE.md / AGENTS.md          Konventionen für die Weiterentwicklung

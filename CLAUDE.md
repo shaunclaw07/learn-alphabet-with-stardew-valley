@@ -129,5 +129,8 @@ ergänzen).
 
 Neben den Apps gibt es Markdown-Lektionen und druckbare Materialien
 (`phase1/lektionen/`, `phase1/materialien/`, `phase1/phase1-druckversion.html`
-+ `.pdf`). Phase 1 hat eine druckbare A4-PDF; neue Phasen können analog eine
-bekommen. Phase 2 hat noch keine.
++ `.pdf`). **Jede Phase hat eine druckbare A4-HTML-Fassung**
+(`phaseN/phaseN-druckversion.html`, gleicher Aufbau: Deckblatt → Seiten je
+Lektion/Thema → Ausschneide-Karten/Streifen → Zertifikat). Nur Phase 1 hat
+zusätzlich eine fertige `.pdf`; für die anderen druckt man per Browser
+(„Drucken → Als PDF speichern"). Neue Druckversionen analog `phase1-druckversion.html`.

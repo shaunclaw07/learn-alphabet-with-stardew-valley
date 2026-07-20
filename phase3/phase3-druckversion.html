@@ -1,0 +1,205 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<title>Lesen lernen mit Stardew Valley &mdash; Phase 3 (Druckversion)</title>
+<style>
+  @page { size: A4; margin: 14mm 14mm 12mm; }
+  * { box-sizing: border-box; }
+  html,body { margin:0; padding:0; }
+  body { font-family: "Segoe UI", Arial, sans-serif; color:#2e2418; line-height:1.5; }
+  h1,h2,h3 { margin:0 0 .3em; }
+
+  .cover { page-break-after: always; text-align:center; padding-top:18mm; }
+  .cover .icons { font-size:34pt; letter-spacing:4px; }
+  .cover h1 { font-size:26pt; color:#3d6b22; margin-top:8mm; }
+  .cover .sub { font-size:14pt; color:#8b6914; font-weight:700; }
+  .cover .lead { max-width:150mm; margin:9mm auto; font-size:11pt; text-align:left;
+    background:#f4fae8; border:1.5pt solid #7ec850; border-radius:8pt; padding:6mm 8mm; }
+  .cover .lead b { color:#3d6b22; }
+  table.plan { width:100%; border-collapse:collapse; margin:6mm auto 0; font-size:10pt; }
+  table.plan th, table.plan td { border:1pt solid #c9b078; padding:2.2mm 2mm; text-align:left; }
+  table.plan th { background:#7ec850; color:#fff; }
+  table.plan td.wkcol { background:#fff3d6; font-weight:800; text-align:center; white-space:nowrap; }
+
+  .lp { page-break-after: always; padding-top:2mm; }
+  .lp-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:4mm; gap:4mm; }
+  .lektion { background:#ff6b35; color:#fff; font-weight:800; font-size:11pt;
+    padding:1.5mm 4mm; border-radius:5pt; }
+  .wk { background:#5da03c; color:#fff; font-weight:700; font-size:9.5pt;
+    padding:1.5mm 4mm; border-radius:5pt; }
+  .wordrow { display:flex; align-items:center; gap:6mm; margin:3mm 0; padding:3mm 4mm;
+    border:1pt solid #e0cfa0; border-radius:6pt; background:#fffdf6; break-inside:avoid; page-break-inside:avoid; }
+  .w-emoji { font-size:22pt; flex:0 0 auto; }
+  .w-word { font-size:19pt; font-weight:800; letter-spacing:1px; flex:0 0 48mm; color:#2e2418; }
+  .w-word .dot { color:#c49a2a; }
+  .w-bezug { font-size:10.5pt; flex:1; }
+  .w-bezug strong { color:#3d6b22; }
+  .eltern { border:1.2pt dashed #8b6914; border-radius:7pt; padding:4mm 5mm; background:#fffdf6; margin-top:5mm; }
+  .eltern h3 { font-size:11pt; color:#c1531d; text-transform:uppercase; letter-spacing:.5pt; margin-bottom:2mm; }
+  .eltern p { font-size:10.5pt; margin:0 0 2mm; }
+  .eltern .say { background:#fff3d6; border-left:3pt solid #ffaa00; padding:2mm 3mm;
+    border-radius:0 5pt 5pt 0; margin-top:3mm; font-size:10.5pt; }
+  .eltern .say::before { content:"\1F4AC  "; }
+
+  .kk-title, .cert-title { text-align:center; font-size:18pt; color:#3d6b22; margin:0 0 5mm; }
+  .cert-title { page-break-before: always; }
+  .kk-page { page-break-after: always; }
+  .kk-intro { text-align:center; font-size:10.5pt; color:#8b6914; margin:-3mm 0 5mm; }
+  .kk-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:5mm; }
+  .kk { border:1.2pt dashed #8b6914; border-radius:6pt; padding:3mm 2mm; text-align:center;
+    height:54mm; display:flex; flex-direction:column; justify-content:center; gap:2mm;
+    break-inside:avoid; page-break-inside:avoid; }
+  .kk-word { font-size:22pt; font-weight:800; letter-spacing:1px; }
+  .kk-emoji { font-size:26pt; }
+
+  .cert { border:4pt double #c49a2a; border-radius:12pt; padding:14mm 12mm; text-align:center; background:#fffef7; }
+  .cert h2 { font-size:20pt; color:#c49a2a; }
+  .cert .name { font-size:22pt; font-weight:800; border-bottom:2pt dashed #c49a2a;
+    display:inline-block; min-width:80mm; padding:0 8mm 3mm; margin:6mm 0; }
+  .cert .badges { margin:5mm 0; line-height:2; }
+  .cert .badge { display:inline-block; padding:1mm 3mm; margin:1mm;
+    background:#ffd700; border:1pt solid #c49a2a; border-radius:4pt; font-weight:800; font-size:10pt; }
+  .cert .stick { font-size:20pt; margin-top:4mm; }
+</style></head><body>
+
+<section class="cover">
+  <div class="icons">&#127806;&#128052;&#129365;&#127850;&#127843;&#128054;</div>
+  <h1>Lesen lernen mit Stardew Valley</h1>
+  <div class="sub">Phase 3 &middot; Stardew-Wortschatz &middot; f&uuml;r Kinder ab 5</div>
+  <div class="lead">
+    <p><b>So funktioniert's (10&ndash;15 Min pro Tag):</b></p>
+    <p>1. <b>Ganzes Wort lesen</b> &mdash; auf einen Blick, nicht mehr Buchstabe f&uuml;r Buchstabe.<br>
+       2. <b>Wort + Bild</b> &mdash; jedes Wort mit dem Stardew-Gegenstand verkn&uuml;pfen.<br>
+       3. <b>Wortkarten sammeln</b> &mdash; ausschneiden, in einer &bdquo;Schatzkiste&ldquo; sammeln, wiederholen.</p>
+    <p><b>Wichtig:</b> Bei l&auml;ngeren W&ouml;rtern helfen die Trennpunkte (KAR&middot;TOF&middot;FEL). Alle 28 W&ouml;rter sind
+       decodierbar &mdash; nur gelernte Buchstaben, kein Sch/ie/&auml;/&ouml;/&uuml;.</p>
+  </div>
+  <table class="plan">
+    <tr><th>Thema</th><th>W&ouml;rter</th></tr>
+    <tr><td class="wkcol">🌦️ Jahreszeiten</td><td>SOMMER, HERBST</td></tr>
+    <tr><td class="wkcol">🔧 Werkzeuge</td><td>ANGEL, SENSE</td></tr>
+    <tr><td class="wkcol">🐾 Tiere</td><td>ENTE, HASE, KATZE, HUND, PFERD</td></tr>
+    <tr><td class="wkcol">🌱 Pflanzen</td><td>KARTOFFEL, MELONE, ERDBEERE, TEE</td></tr>
+    <tr><td class="wkcol">🏘️ Orte</td><td>LADEN, MINE, STRAND, FLUSS, SEE</td></tr>
+    <tr><td class="wkcol">🧑‍🌾 Dorfbewohner</td><td>GUS, SAM, PAM, MARU, LINUS, LEWIS</td></tr>
+    <tr><td class="wkcol">💬 Im Gespräch</td><td>JA, HALLO, TAG, DUNKEL</td></tr>
+  </table>
+</section>
+
+<section class="lp">
+  <div class="lp-head"><span class="lektion">🌦️ Jahreszeiten</span><span class="wk">Thema 1</span></div>
+  <div class="wordrow"><span class="w-emoji">🌞</span><span class="w-word">SOM<span class="dot">&middot;</span>MER</span><span class="w-bezug">Im <strong>Sommer</strong> wächst am meisten auf deiner Farm.</span></div>
+  <div class="wordrow"><span class="w-emoji">🍂</span><span class="w-word">HERBST</span><span class="w-bezug">Im <strong>Herbst</strong> werden die Blätter bunt.</span></div>
+  <div class="eltern"><h3>👨‍🏫 Ganze Wörter lesen</h3><p>Zeig aufs Wort und lies es in einem Fluss &mdash; nicht Buchstabe für Buchstabe. Trennpunkte (SOM&middot;MER) helfen.</p><div class="say">Tippt in der App das Wort an, dann hört ihr es. Erst du, dann er.</div></div>
+</section>
+
+<section class="lp">
+  <div class="lp-head"><span class="lektion">🔧 Werkzeuge</span><span class="wk">Thema 2</span></div>
+  <div class="wordrow"><span class="w-emoji">🎣</span><span class="w-word">AN<span class="dot">&middot;</span>GEL</span><span class="w-bezug">Mit der <strong>Angel</strong> fängst du Fische im See.</span></div>
+  <div class="wordrow"><span class="w-emoji">🌾</span><span class="w-word">SEN<span class="dot">&middot;</span>SE</span><span class="w-bezug">Mit der <strong>Sense</strong> mähst du Gras und Unkraut.</span></div>
+  <div class="eltern"><h3>👨‍🏫 Wort und Bild verbinden</h3><p>Werkzeuge kennt er aus dem Spiel. &bdquo;Das ist die <strong>Angel</strong> &mdash; damit angelst du im See.&ldquo;</p><div class="say">Zeig ihm die Angel im Spiel, während er das Wort liest.</div></div>
+</section>
+
+<section class="lp">
+  <div class="lp-head"><span class="lektion">🐾 Tiere</span><span class="wk">Thema 3</span></div>
+  <div class="wordrow"><span class="w-emoji">🦆</span><span class="w-word">EN<span class="dot">&middot;</span>TE</span><span class="w-bezug"><strong>Enten</strong> schwimmen im Teich bei Marnie.</span></div>
+  <div class="wordrow"><span class="w-emoji">🐰</span><span class="w-word">HA<span class="dot">&middot;</span>SE</span><span class="w-bezug">Ein <strong>Hase</strong> hoppelt über deine Farm.</span></div>
+  <div class="wordrow"><span class="w-emoji">🐱</span><span class="w-word">KAT<span class="dot">&middot;</span>ZE</span><span class="w-bezug">Du kannst eine <strong>Katze</strong> als Haustier wählen.</span></div>
+  <div class="wordrow"><span class="w-emoji">🐶</span><span class="w-word">HUND</span><span class="w-bezug">Ein <strong>Hund</strong> passt treu auf deinen Hof auf.</span></div>
+  <div class="wordrow"><span class="w-emoji">🐴</span><span class="w-word">PFERD</span><span class="w-bezug">Auf dem <strong>Pferd</strong> reitest du viel schneller.</span></div>
+  <div class="eltern"><h3>👨‍🏫 Tiere motivieren</h3><p>Tiere ziehen immer! Lass ihn das Wort lesen und dann das Tier im Spiel oder auf Marnies Ranch suchen.</p><div class="say">&bdquo;Du liest <strong>Pferd</strong> &mdash; willst du gleich reiten?&ldquo;</div></div>
+</section>
+
+<section class="lp">
+  <div class="lp-head"><span class="lektion">🌱 Pflanzen</span><span class="wk">Thema 4</span></div>
+  <div class="wordrow"><span class="w-emoji">🥔</span><span class="w-word">KAR<span class="dot">&middot;</span>TOF<span class="dot">&middot;</span>FEL</span><span class="w-bezug"><strong>Kartoffeln</strong> pflanzt du im Frühling an.</span></div>
+  <div class="wordrow"><span class="w-emoji">🍈</span><span class="w-word">ME<span class="dot">&middot;</span>LO<span class="dot">&middot;</span>NE</span><span class="w-bezug"><strong>Melonen</strong> werden im Sommer groß und süß.</span></div>
+  <div class="wordrow"><span class="w-emoji">🍓</span><span class="w-word">ERD<span class="dot">&middot;</span>BEE<span class="dot">&middot;</span>RE</span><span class="w-bezug"><strong>Erdbeeren</strong> sind rot und schmecken lecker.</span></div>
+  <div class="wordrow"><span class="w-emoji">🍵</span><span class="w-word">TEE</span><span class="w-bezug">Aus grünen Blättern machst du <strong>Tee</strong>.</span></div>
+  <div class="eltern"><h3>👨‍🏫 Längere Wörter</h3><p>KAR&middot;TOF&middot;FEL und ERD&middot;BEE&middot;RE sind lang. Erst die Häppchen antippen, dann flüssig zusammenlesen. Ruhig zweimal.</p><div class="say">Loben nicht vergessen: &bdquo;So ein langes Wort &mdash; stark!&ldquo;</div></div>
+</section>
+
+<section class="lp">
+  <div class="lp-head"><span class="lektion">🏘️ Orte</span><span class="wk">Thema 5</span></div>
+  <div class="wordrow"><span class="w-emoji">🏪</span><span class="w-word">LA<span class="dot">&middot;</span>DEN</span><span class="w-bezug">Bei Pierre im <strong>Laden</strong> kaufst du Samen.</span></div>
+  <div class="wordrow"><span class="w-emoji">⛏️</span><span class="w-word">MI<span class="dot">&middot;</span>NE</span><span class="w-bezug">In der <strong>Mine</strong> gräbst du nach Erz und Steinen.</span></div>
+  <div class="wordrow"><span class="w-emoji">🏖️</span><span class="w-word">STRAND</span><span class="w-bezug">Am <strong>Strand</strong> findest du Muscheln und Korallen.</span></div>
+  <div class="wordrow"><span class="w-emoji">🌊</span><span class="w-word">FLUSS</span><span class="w-bezug">Im <strong>Fluss</strong> kannst du angeln gehen.</span></div>
+  <div class="wordrow"><span class="w-emoji">🏞️</span><span class="w-word">SEE</span><span class="w-bezug">Am <strong>See</strong> wohnt der Angler Willy.</span></div>
+  <div class="eltern"><h3>👨‍🏫 Orte in Pelikan Stadt</h3><p>Kurze Wörter wie <strong>See</strong> und <strong>Hof</strong> liest er auf einen Blick. Verbinde sie mit dem Ort auf der Karte.</p><div class="say">&bdquo;Am See wohnt Willy &mdash; da gehen wir gleich angeln!&ldquo;</div></div>
+</section>
+
+<section class="lp">
+  <div class="lp-head"><span class="lektion">🧑‍🌾 Dorfbewohner</span><span class="wk">Thema 6</span></div>
+  <div class="wordrow"><span class="w-emoji">🍺</span><span class="w-word">GUS</span><span class="w-bezug"><strong>Gus</strong> ist der Wirt im Saloon.</span></div>
+  <div class="wordrow"><span class="w-emoji">🎸</span><span class="w-word">SAM</span><span class="w-bezug"><strong>Sam</strong> spielt gern auf seiner Gitarre.</span></div>
+  <div class="wordrow"><span class="w-emoji">🚌</span><span class="w-word">PAM</span><span class="w-bezug"><strong>Pam</strong> fährt den großen Bus.</span></div>
+  <div class="wordrow"><span class="w-emoji">🔬</span><span class="w-word">MA<span class="dot">&middot;</span>RU</span><span class="w-bezug"><strong>Maru</strong> bastelt Roboter und hilft im Krankenhaus.</span></div>
+  <div class="wordrow"><span class="w-emoji">⛺</span><span class="w-word">LI<span class="dot">&middot;</span>NUS</span><span class="w-bezug"><strong>Linus</strong> wohnt in einem Zelt am Berg.</span></div>
+  <div class="wordrow"><span class="w-emoji">🎩</span><span class="w-word">LE<span class="dot">&middot;</span>WIS</span><span class="w-bezug"><strong>Lewis</strong> ist der Bürgermeister des Dorfes.</span></div>
+  <div class="eltern"><h3>👨‍🏫 Namen lesen</h3><p>Namen liest man wie normale Wörter. Zeig das Bild dazu: &bdquo;Das ist <strong>Gus</strong> &mdash; der Wirt im Saloon.&ldquo;</p><div class="say">Namen aus dem Spiel merkt er sich besonders leicht.</div></div>
+</section>
+
+<section class="lp">
+  <div class="lp-head"><span class="lektion">💬 Im Gespräch</span><span class="wk">Thema 7</span></div>
+  <div class="wordrow"><span class="w-emoji">✅</span><span class="w-word">JA</span><span class="w-bezug"><strong>Ja</strong> heißt: Ich bin einverstanden!</span></div>
+  <div class="wordrow"><span class="w-emoji">👋</span><span class="w-word">HAL<span class="dot">&middot;</span>LO</span><span class="w-bezug">Mit <strong>Hallo</strong> begrüßt du die Dorfbewohner.</span></div>
+  <div class="wordrow"><span class="w-emoji">☀️</span><span class="w-word">TAG</span><span class="w-bezug">Guten <strong>Tag</strong>! Ein neuer Tag beginnt.</span></div>
+  <div class="wordrow"><span class="w-emoji">🌙</span><span class="w-word">DUN<span class="dot">&middot;</span>KEL</span><span class="w-bezug">Wenn es <strong>dunkel</strong> wird, geht der Bauer ins Bett.</span></div>
+  <div class="eltern"><h3>👨‍🏫 Kleine Alltagswörter</h3><p>Diese kurzen Wörter kommen in Dialogen ständig vor. Bald liest er sie blitzschnell &mdash; perfekt als Übergang zu Phase 4 (ganze Sätze).</p><div class="say">&bdquo;Ja&ldquo;, &bdquo;Hallo&ldquo;, &bdquo;Tag&ldquo; &mdash; die tauchen im Spiel überall auf.</div></div>
+</section>
+
+<section class="kk-page"><h2 class="kk-title">&#9986; Wortkarten zum Ausschneiden (1/3)</h2>
+  <div class="kk-intro">Vorderseite lesen, umdrehen, Bild zeigen &mdash; oder in der &bdquo;Schatzkiste&ldquo; sammeln.</div>
+  <div class="kk-grid">
+    <div class="kk"><div class="kk-word">SOMMER</div><div class="kk-emoji">🌞</div></div>
+    <div class="kk"><div class="kk-word">HERBST</div><div class="kk-emoji">🍂</div></div>
+    <div class="kk"><div class="kk-word">ANGEL</div><div class="kk-emoji">🎣</div></div>
+    <div class="kk"><div class="kk-word">SENSE</div><div class="kk-emoji">🌾</div></div>
+    <div class="kk"><div class="kk-word">ENTE</div><div class="kk-emoji">🦆</div></div>
+    <div class="kk"><div class="kk-word">HASE</div><div class="kk-emoji">🐰</div></div>
+    <div class="kk"><div class="kk-word">KATZE</div><div class="kk-emoji">🐱</div></div>
+    <div class="kk"><div class="kk-word">HUND</div><div class="kk-emoji">🐶</div></div>
+    <div class="kk"><div class="kk-word">PFERD</div><div class="kk-emoji">🐴</div></div>
+    <div class="kk"><div class="kk-word">KARTOFFEL</div><div class="kk-emoji">🥔</div></div>
+  </div>
+</section>
+<section class="kk-page"><h2 class="kk-title">&#9986; Wortkarten (2/3)</h2>
+  <div class="kk-grid">
+    <div class="kk"><div class="kk-word">MELONE</div><div class="kk-emoji">🍈</div></div>
+    <div class="kk"><div class="kk-word">ERDBEERE</div><div class="kk-emoji">🍓</div></div>
+    <div class="kk"><div class="kk-word">TEE</div><div class="kk-emoji">🍵</div></div>
+    <div class="kk"><div class="kk-word">LADEN</div><div class="kk-emoji">🏪</div></div>
+    <div class="kk"><div class="kk-word">MINE</div><div class="kk-emoji">⛏️</div></div>
+    <div class="kk"><div class="kk-word">STRAND</div><div class="kk-emoji">🏖️</div></div>
+    <div class="kk"><div class="kk-word">FLUSS</div><div class="kk-emoji">🌊</div></div>
+    <div class="kk"><div class="kk-word">SEE</div><div class="kk-emoji">🏞️</div></div>
+    <div class="kk"><div class="kk-word">GUS</div><div class="kk-emoji">🍺</div></div>
+  </div>
+</section>
+<section class="kk-page"><h2 class="kk-title">&#9986; Wortkarten (3/3)</h2>
+  <div class="kk-grid">
+    <div class="kk"><div class="kk-word">SAM</div><div class="kk-emoji">🎸</div></div>
+    <div class="kk"><div class="kk-word">PAM</div><div class="kk-emoji">🚌</div></div>
+    <div class="kk"><div class="kk-word">MARU</div><div class="kk-emoji">🔬</div></div>
+    <div class="kk"><div class="kk-word">LINUS</div><div class="kk-emoji">⛺</div></div>
+    <div class="kk"><div class="kk-word">LEWIS</div><div class="kk-emoji">🎩</div></div>
+    <div class="kk"><div class="kk-word">JA</div><div class="kk-emoji">✅</div></div>
+    <div class="kk"><div class="kk-word">HALLO</div><div class="kk-emoji">👋</div></div>
+    <div class="kk"><div class="kk-word">TAG</div><div class="kk-emoji">☀️</div></div>
+    <div class="kk"><div class="kk-word">DUNKEL</div><div class="kk-emoji">🌙</div></div>
+  </div>
+</section>
+
+<h2 class="cert-title">&#127942; Zertifikat</h2>
+<div class="cert">
+  <h2>&#11088; WORTSCHATZ-MEISTER &#11088;</h2>
+  <p style="font-weight:700;color:#8b6914">Verliehen an</p>
+  <div class="name">&nbsp;</div>
+  <p style="color:#5da03c;font-weight:700">f&uuml;r das Lesen von 28 Stardew-Valley-W&ouml;rtern<br>
+     aus dem ganzen Dorf Pelikan Stadt!</p>
+  <div class="badges">
+    <span class="badge">SOMMER</span><span class="badge">HERBST</span><span class="badge">ANGEL</span><span class="badge">SENSE</span><span class="badge">ENTE</span><span class="badge">HASE</span><span class="badge">KATZE</span><span class="badge">HUND</span><span class="badge">PFERD</span><span class="badge">KARTOFFEL</span><span class="badge">MELONE</span><span class="badge">ERDBEERE</span><span class="badge">TEE</span><span class="badge">LADEN</span><span class="badge">MINE</span><span class="badge">STRAND</span><span class="badge">FLUSS</span><span class="badge">SEE</span><span class="badge">GUS</span><span class="badge">SAM</span><span class="badge">PAM</span><span class="badge">MARU</span><span class="badge">LINUS</span><span class="badge">LEWIS</span><span class="badge">JA</span><span class="badge">HALLO</span><span class="badge">TAG</span><span class="badge">DUNKEL</span>
+  </div>
+  <div class="stick">&#127806;&#128052;&#129365;&#127850;&#127843;&#128054;&#128049;&#11088;</div>
+  <p style="color:#8b6914;font-size:9pt;margin-top:4mm">Datum: ____________  &middot;  Unterschrift: ____________  &middot;  Bereit f&uuml;r Phase 4! 📖</p>
+</div>
+</body></html>

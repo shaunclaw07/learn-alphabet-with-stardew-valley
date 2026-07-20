@@ -44,9 +44,11 @@
 ### Lektion 2: E e
 
 - **Laut**: „eeee" (wie Esel – iaah, etwas kürzer)
-- **Merkwort**: **E**i (von den Hühnern im Hühnerstall 🥚)
+- **Merkwort**: **E**nte (watschelt auf Marnies Ranch 🦆)
 - **Übung**: E formen aus Knete, in Sand/in der Luft malen
-- **Spiel-Bezug**: „Deine Hühner legen Eier. E wie Ei!"
+- **Spiel-Bezug**: „Auf Marnies Ranch gibt es Enten. E wie Ente!"
+- ⚠️ **Hinweis für Eltern**: *nicht* „Ei" als Merkwort nehmen — „Ei" beginnt
+  mit dem Laut „ai", nicht mit E. „Ei" liest das Kind später als ganzes Wort.
 
 ### Lektion 3: I i
 
@@ -353,7 +355,7 @@ Wortkarten (Tomate, Kürbis, Erdbeere, Mais) der richtigen Jahreszeit zuordnen.
 
 ### Phase 1: Buchstaben
 
-- [ ] A (Alex)  [ ] E (Ei)  [ ] I (Iridium)  [ ] O (Obst)  [ ] U (Uhr)
+- [ ] A (Alex)  [ ] E (Ente)  [ ] I (Iridium)  [ ] O (Obst)  [ ] U (Uhr)
 - [ ] M (Milch)  [ ] L (Laden)  [ ] S (Samen)  [ ] T (Tomate)  [ ] R (Robin)
 - [ ] N (Nacht)  [ ] F (Frühling)  [ ] H (Hof/Huhn)  [ ] W (Winter/Wasser)
 - [ ] Wiederholungsfest 🎉

@@ -14,11 +14,11 @@
 ║                                                          ║
 ║              __________________________                  ║
 ║                                                          ║
-║    für das erfolgreiche Erlernen aller 14 Buchstaben     ║
+║    für das erfolgreiche Erlernen aller 21 Buchstaben     ║
 ║    und das Lesen der ersten Stardew-Valley-Wörter!       ║
 ║                                                          ║
 ║    ⭐ Gelernte Buchstaben: ⭐                            ║
-║    A E I O U   M L S T R   N F H W                      ║
+║    M A L O S   T E N I R   U F H K W   B G P D Z J      ║
 ║                                                          ║
 ║    ⭐ Erste Wörter: ⭐                                   ║
 ║    HOF  •  EI  •  HUHN  •  SAMEN  •  MAMA              ║
@@ -90,7 +90,7 @@ erstes Zertifikat bekommen hast?"
 ┌───────┬───────┬───────┐
 │Milch  │Hof    │Winter │
 ├───────┼───────┼───────┤
-│Ei     │Robin  │Nacht  │
+│Ente   │Robin  │Nacht  │
 ├───────┼───────┼───────┤
 │Uhr    │Tomate │Frühling│
 └───────┴───────┴───────┘
@@ -99,7 +99,7 @@ erstes Zertifikat bekommen hast?"
 **Deine Wortliste zum Vorlesen:**
 
 1. Hof (H)
-2. Ei (E)
+2. Ente (E)
 3. Milch (M)
 4. Robin (R)
 5. Nacht (N)

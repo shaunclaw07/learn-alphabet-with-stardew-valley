@@ -182,13 +182,30 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-family: "Press Start 2P", cursive;
-        font-size: 4rem;
+        /* Klare Lern-Schrift statt Pixel-Font: korrekte Buchstabenform */
+        font-family: "Nunito", sans-serif;
+        font-weight: 800;
+        font-size: 4.4rem;
         color: #4a3728;
         box-shadow:
           inset 0 0 20px rgba(255, 215, 0, 0.2),
           0 4px 12px rgba(0, 0, 0, 0.1);
         position: relative;
+        cursor: pointer;
+        user-select: none;
+      }
+      .letter-display:hover {
+        box-shadow:
+          inset 0 0 24px rgba(255, 215, 0, 0.35),
+          0 6px 16px rgba(0, 0, 0, 0.14);
+      }
+      .letter-display::after {
+        content: "🔊";
+        position: absolute;
+        top: 6px;
+        right: 8px;
+        font-size: 0.9rem;
+        opacity: 0.55;
       }
       .letter-display .small {
         position: absolute;
@@ -253,6 +270,54 @@
         border-radius: 20px;
         border: 2px solid #c49a2a;
         letter-spacing: 1px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+      }
+      .silben-chip::before {
+        content: "🔊 ";
+        font-size: 0.75rem;
+      }
+      .silben-chip:hover {
+        transform: scale(1.08);
+        box-shadow: 0 3px 10px rgba(196, 154, 42, 0.4);
+      }
+      .silben-chip:active {
+        transform: scale(0.96);
+      }
+
+      /* ===== WEEK DIVIDER ===== */
+      .week-divider {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 8px 0 20px;
+        color: #6b4f2a;
+        font-weight: 800;
+        font-size: 1rem;
+      }
+      .week-divider::before,
+      .week-divider::after {
+        content: "";
+        flex: 1;
+        height: 3px;
+        border-radius: 2px;
+        background: repeating-linear-gradient(
+          90deg,
+          #c49a2a 0,
+          #c49a2a 10px,
+          transparent 10px,
+          transparent 18px
+        );
+      }
+      .week-divider .wk-pill {
+        background: #7ec850;
+        color: #fff;
+        padding: 4px 14px;
+        border-radius: 20px;
+        border: 2px solid #3d6b22;
+        white-space: nowrap;
       }
 
       /* ===== NAVIGATION ===== */
@@ -276,8 +341,9 @@
         border-radius: 12px;
         border: 2px solid #8b6914;
         background: #fffaf0;
-        font-family: "Press Start 2P", cursive;
-        font-size: 0.55rem;
+        font-family: "Nunito", sans-serif;
+        font-weight: 800;
+        font-size: 1.1rem;
         cursor: pointer;
         transition: all 0.2s;
         color: #4a3728;
@@ -560,11 +626,14 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-family: "Press Start 2P", cursive;
-        font-size: 5rem;
+        font-family: "Nunito", sans-serif;
+        font-weight: 800;
+        font-size: 5.5rem;
         color: #4a3728;
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
         transition: transform 0.3s;
+        cursor: pointer;
+        user-select: none;
       }
       .quiz-letter-display.revealed {
         transform: scale(1.08);
@@ -644,6 +713,125 @@
           opacity: 1;
         }
       }
+
+      /* ===== LESE-WERKSTATT (BLENDING) ===== */
+      .workshop {
+        background: linear-gradient(135deg, #e8f5e0, #d4edc4);
+        border: 4px solid #5da03c;
+        border-radius: 24px;
+        padding: 32px 24px;
+        text-align: center;
+        margin: 40px 0;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      }
+      .workshop h2 {
+        font-family: "Press Start 2P", cursive;
+        font-size: 0.7rem;
+        color: #3d6b22;
+        margin-bottom: 8px;
+      }
+      .workshop .ws-subtitle {
+        font-size: 1rem;
+        color: #5da03c;
+        font-weight: 700;
+        margin-bottom: 20px;
+      }
+      .ws-word {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin: 18px 0;
+      }
+      .ws-letter {
+        width: 60px;
+        height: 72px;
+        background: #fffaf0;
+        border: 3px solid #c49a2a;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Nunito", sans-serif;
+        font-weight: 800;
+        font-size: 2.6rem;
+        color: #4a3728;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          background 0.15s,
+          border-color 0.15s;
+        user-select: none;
+      }
+      .ws-letter:hover {
+        transform: translateY(-3px);
+      }
+      .ws-letter.lit {
+        background: #ffd700;
+        border-color: #ff6b35;
+        transform: translateY(-6px) scale(1.08);
+      }
+      .ws-whole {
+        display: none;
+        font-size: 2.4rem;
+        font-weight: 800;
+        color: #3d6b22;
+        margin: 10px 0 4px;
+      }
+      .ws-whole.show {
+        display: block;
+        animation: popIn 0.3s ease;
+      }
+      .ws-hint {
+        font-size: 0.95rem;
+        color: #6b4f2a;
+        min-height: 1.3em;
+        margin-bottom: 14px;
+        font-weight: 700;
+      }
+      .ws-buttons {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .ws-btn {
+        font-family: "Nunito", sans-serif;
+        font-weight: 800;
+        font-size: 1rem;
+        padding: 12px 24px;
+        border-radius: 14px;
+        cursor: pointer;
+        border: 3px solid #3d6b22;
+        transition: all 0.2s;
+      }
+      .ws-btn.blend {
+        background: #ffd700;
+        color: #4a3728;
+        border-color: #c49a2a;
+      }
+      .ws-btn.blend:hover {
+        background: #ffe55c;
+        transform: scale(1.05);
+      }
+      .ws-btn.nextw {
+        background: #7ec850;
+        color: #fff;
+      }
+      .ws-btn.nextw:hover {
+        background: #6ab83e;
+        transform: scale(1.05);
+      }
+      .ws-progress {
+        margin-top: 16px;
+        font-weight: 800;
+        color: #5da03c;
+      }
+      .ws-stars {
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+        min-height: 1.6em;
+      }
     </style>
   </head>
   <body>
@@ -675,6 +863,31 @@
 
     <!-- ===== MAIN CONTENT ===== -->
     <div class="main-wrap" id="mainContent"></div>
+
+    <!-- ===== LESE-WERKSTATT (BLENDING) ===== -->
+    <div class="main-wrap" id="workshopWrap" style="display: none">
+      <div class="workshop">
+        <h2>🔨 Lese-Werkstatt</h2>
+        <div class="ws-subtitle">
+          Laute zusammenziehen — so entsteht ein Wort!
+        </div>
+        <div class="ws-word" id="wsWord"></div>
+        <div class="ws-whole" id="wsWhole"></div>
+        <div class="ws-hint" id="wsHint">
+          Tippe die Buchstaben an, dann drück „Zusammenlesen".
+        </div>
+        <div class="ws-buttons">
+          <button class="ws-btn blend" onclick="blendWord()">
+            🐌 Zusammenlesen
+          </button>
+          <button class="ws-btn nextw" onclick="nextWsWord()">▶ Weiter</button>
+        </div>
+        <div class="ws-progress">
+          <div class="ws-stars" id="wsStars"></div>
+          Wort <span id="wsIndex">1</span> / <span id="wsTotal">0</span>
+        </div>
+      </div>
+    </div>
 
     <!-- ===== QUIZ ===== -->
     <div class="main-wrap" id="quizWrap" style="display: none">
@@ -746,30 +959,7 @@
             für das erfolgreiche Erlernen aller 21 Buchstaben<br />
             und das Lesen der ersten Stardew-Valley-Wörter!
           </p>
-          <div class="letters-row">
-            <span class="letter-badge">A</span
-            ><span class="letter-badge">E</span>
-            <span class="letter-badge">I</span
-            ><span class="letter-badge">O</span>
-            <span class="letter-badge">U</span
-            ><span class="letter-badge">M</span>
-            <span class="letter-badge">L</span
-            ><span class="letter-badge">S</span>
-            <span class="letter-badge">T</span
-            ><span class="letter-badge">R</span>
-            <span class="letter-badge">N</span
-            ><span class="letter-badge">F</span>
-            <span class="letter-badge">H</span
-            ><span class="letter-badge">W</span> ><span class="letter-badge"
-              >K</span
-            ><span class="letter-badge">G</span> ><span class="letter-badge"
-              >P</span
-            ><span class="letter-badge">B</span> ><span class="letter-badge"
-              >D</span
-            ><span class="letter-badge">Z</span> ><span class="letter-badge"
-              >J</span
-            >
-          </div>
+          <div class="letters-row" id="certLetters"></div>
           <p style="color: #4a3728; font-weight: 700">
             ⭐ HOF &nbsp;·&nbsp; EI &nbsp;·&nbsp; HUHN &nbsp;·&nbsp; SAMEN
             &nbsp;·&nbsp; KUH &nbsp;·&nbsp; GOLD &nbsp;·&nbsp; BETT ⭐
@@ -801,13 +991,13 @@
           id: "E",
           small: "e",
           laut: "eeee",
-          emoji: "🥚",
-          merkwort: "Ei",
-          silben: ["ME", "LE", "SE", "RE", "TE"],
+          emoji: "🦆",
+          merkwort: "Ente",
+          silben: ["ME", "LE", "SE", "TE", "NE"],
           bezug:
-            "Deine Hühner legen <strong>Eier</strong> im Hühnerstall. <strong>E wie Ei!</strong>",
+            "Auf Marnies Ranch watscheln <strong>Enten</strong> herum — die legen auch Eier! <strong>E wie Ente!</strong>",
           elternInfo:
-            '<h3>👨‍🏫 So bringst du das E bei</h3><div class="step"><span class="step-label">① Wiederholung</span>Zeig die A-Karte: "Weißt du noch? A wie Alex!"</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das E sagen wir <strong>eeee</strong> — wie wenn ein Esel ruft: I-aaaaah!" Mach den Mund breit, wie beim Lächeln.</div><div class="step"><span class="step-label">③ Fühlen & formen</span>Aus Knete ein E formen oder in Sand/Grieß mit dem Finger malen.</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>Im Spiel die Hühner besuchen: "Deine Hühner legen <strong>Eier</strong>. E wie Ei!"</div><div class="say">Wo ist das E? <strong>E</strong>-i (Anfang!), Melon<strong>e</strong> (am Ende!), <strong>E</strong>mily (Anfang!), S<strong>e</strong>ns<strong>e</strong> (Mitte und Ende!), Huhn (kein E!)</div>',
+            '<h3>👨‍🏫 So bringst du das E bei</h3><div class="step"><span class="step-label">① Aufwärmen</span>Die letzten 2–3 Karten kurz als Laut wiederholen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das E sagen wir <strong>eeee</strong> — wie ein Esel: iaaah! Mach den Mund breit, wie beim Lächeln."</div><div class="step"><span class="step-label">③ Fühlen &amp; formen</span>Aus Knete ein E formen oder in Sand/Grieß mit dem Finger malen.</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>"Auf Marnies Ranch gibt es <strong>Enten</strong>. E wie Ente!" &nbsp;<em>Wichtig für dich: „Ei" fängt NICHT mit E an — das hört man wie „ai".</em></div><div class="say">Wo hörst du das E? <strong>E</strong>nte (Anfang!), <strong>E</strong>mily (Anfang!), B<strong>e</strong>tt (Mitte!), Melon<strong>e</strong> (Ende!), Huhn (kein E!)</div>',
         },
         {
           id: "I",
@@ -831,7 +1021,7 @@
           bezug:
             "Auf deiner Farm wachsen <strong>Obstbäume</strong> — Äpfel, Kirschen, Orangen! <strong>O wie Obst!</strong>",
           elternInfo:
-            '<h3>👨‍🏫 So bringst du das O bei</h3><div class="step"><span class="step-label">① Wiederholung</span>Alle drei Karten (A, E, I) durchgehen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das O sagen wir <strong>oooo</strong> — mach den Mund ganz rund, wie ein Luftballon!"</div><div class="step"><span class="step-label">③ O-Entdeckung</span>O mit Kreide draußen malen. O-förmige Dinge im Raum suchen: Uhr, Teller, Ball, Fenster...</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>Auf der Farm Obstbäume zeigen: "Äpfel und Kirschen sind Obst! O wie Obst!"</div><div class="say">Alle 4 Vokale mischen und schnell zeigen lassen: A, E, I, O — immer schneller!</div>',
+            '<h3>👨‍🏫 So bringst du das O bei</h3><div class="step"><span class="step-label">① Aufwärmen</span>M, A und L kurz durchgehen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das O sagen wir <strong>oooo</strong> — mach den Mund ganz rund, wie ein Luftballon!"</div><div class="step"><span class="step-label">③ O-Entdeckung</span>O mit Kreide draußen malen. O-förmige Dinge im Raum suchen: Uhr, Teller, Ball, Fenster...</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>Auf der Farm Obstbäume zeigen: "Äpfel und Kirschen sind Obst! O wie Obst!"</div><div class="say">Zeig A und O gemischt: „aaaa" … „oooo" — hört er den Unterschied?</div>',
         },
         {
           id: "U",
@@ -855,7 +1045,7 @@
           bezug:
             "Deine Kühe geben <strong>Milch</strong> — hol sie mit dem Melkkübel ab! Auch <strong>Marnie</strong> fängt mit M an. <strong>M wie Milch!</strong>",
           elternInfo:
-            '<h3>👨‍🏫 So bringst du das M bei</h3><div class="step"><span class="step-label">① Wiederholung</span>Alle 5 Vokale durchgehen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Lippen zusammenpressen und summen: <strong>mmmm</strong>. Spürst du das Kitzeln auf den Lippen?"</div><div class="step"><span class="step-label">③ ★ WICHTIG: Silben!</span> M-Karte links, Vokale rechts tauschen: M+A=MA, M+E=ME, M+I=MI, M+O=MO, M+U=MU. Von links nach rechts mit dem Finger!</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>"Deine Kühe geben Milch. M wie Milch! Und Marnie verkauft die Tiere!"</div><div class="say">Erste Silben lesen: "Mmmm-aaaa → <strong>MA</strong>! Mmmm-iiii → <strong>MI</strong>!"</div>',
+            '<h3>👨‍🏫 So bringst du das M bei</h3><div class="step"><span class="step-label">① Los geht\'s</span>M ist der allererste Buchstabe — kein Aufwärmen nötig, direkt starten!</div><div class="step"><span class="step-label">② Laut zeigen</span>"Lippen zusammenpressen und summen: <strong>mmmm</strong>. Spürst du das Kitzeln auf den Lippen?"</div><div class="step"><span class="step-label">③ M ist ein Zieh-Laut</span>Das M kann man ganz lange ziehen: mmmmmm. Genau solche Laute lassen sich später prima mit Vokalen verbinden.</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>"Deine Kühe geben Milch. M wie Milch! Und Marnie verkauft die Tiere!"</div><div class="say">Schon mit dem nächsten Buchstaben (A) lest ihr die erste Silbe: "Mmmm-aaaa → <strong>MA</strong>!"</div>',
         },
         {
           id: "L",
@@ -867,7 +1057,7 @@
           bezug:
             "In <strong>Pierres Gemischtwarenladen</strong> kaufst du Samen. <strong>Linus</strong> im Zelt hat auch ein L! <strong>L wie Laden!</strong>",
           elternInfo:
-            '<h3>👨‍🏫 So bringst du das L bei</h3><div class="step"><span class="step-label">① Wiederholung</span>M und Vokale. MA-ME-MI-MO-MU schnell wiederholen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Zunge an die oberen Zähne: <strong>llll</strong>. Wie wenn du ein Lied singst: Lalala!"</div><div class="step"><span class="step-label">③ Silben-Mix</span> Jetzt M und L mit Vokalen mischen: "Was ist M-A? MA! Und L-A? LA! Und M-A + M-A? <strong>MAMA!</strong>"</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>"Pierres Gemischtwarenladen — dort kaufst du Samen. <strong>L wie Laden!</strong> Und Linus im Zelt!"</div><div class="say">Erste Wörter mit M+L: <strong>MA-MA</strong>, <strong>LA-MA</strong>, <strong>O-MA</strong> — lies sie gemeinsam!</div>',
+            '<h3>👨‍🏫 So bringst du das L bei</h3><div class="step"><span class="step-label">① Aufwärmen</span>M und A kurz wiederholen: lest gemeinsam MA und AM.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Zunge an die oberen Zähne: <strong>llll</strong>. Wie wenn du ein Lied singst: Lalala!"</div><div class="step"><span class="step-label">③ Silben-Mix</span> Jetzt M und L mit Vokalen mischen: "Was ist M-A? MA! Und L-A? LA! Und M-A + M-A? <strong>MAMA!</strong>"</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>"Pierres Gemischtwarenladen — dort kaufst du Samen. <strong>L wie Laden!</strong> Und Linus im Zelt!"</div><div class="say">Erste Wörter mit M+L: <strong>MA-MA</strong>, <strong>LA-MA</strong>, <strong>O-MA</strong> — lies sie gemeinsam!</div>',
         },
         {
           id: "S",
@@ -879,7 +1069,7 @@
           bezug:
             "Ohne <strong>Samen</strong> wächst nichts! Du kaufst sie bei Pierre. Auch die <strong>Sense</strong> fängt mit S an. <strong>S wie Samen!</strong>",
           elternInfo:
-            '<h3>👨‍🏫 So bringst du das S bei</h3><div class="step"><span class="step-label">① Wiederholung</span>M, L und Vokale. Kurz MA, LA, MI, LO lesen lassen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das S zischt wie eine Schlange: <strong>sssss</strong>! Die Luft geht zwischen den Zähnen durch."</div><div class="step"><span class="step-label">③ Silben</span> S mit allen Vokalen: SA, SE, SI, SO, SU. "SA wie Samen! SE wie Sense! SI wie Silo!"</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>"Das wichtigste Wort: <strong>Samen!</strong> Ohne Samen wächst nichts. Und die <strong>Sense</strong> für Heu!"</div><div class="say">Jetzt SILBEN ZUSAMMENZIEHEN: "Ssss-aaaa-mmm-e-n → <strong>Samen!</strong>" — Finger drunter, langsam zusammenziehen!</div>',
+            '<h3>👨‍🏫 So bringst du das S bei</h3><div class="step"><span class="step-label">① Aufwärmen</span>M, L, A, O durchgehen. Kurz MA, LA, MO, LO lesen lassen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das S zischt wie eine Schlange: <strong>sssss</strong>! Die Luft geht zwischen den Zähnen durch."</div><div class="step"><span class="step-label">③ Silben</span> S mit allen Vokalen: SA, SE, SI, SO, SU. "SA wie Samen! SE wie Sense! SI wie Silo!"</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>"Das wichtigste Wort: <strong>Samen!</strong> Ohne Samen wächst nichts. Und die <strong>Sense</strong> für Heu!"</div><div class="say">Jetzt SILBEN ZUSAMMENZIEHEN: "Ssss-aaaa-mmm-e-n → <strong>Samen!</strong>" — Finger drunter, langsam zusammenziehen!</div>',
         },
         {
           id: "T",
@@ -915,7 +1105,7 @@
           bezug:
             "In der <strong>Nacht</strong> siehst du Sterne und Glühwürmchen. <strong>N wie Nacht!</strong>",
           elternInfo:
-            '<h3>👨‍🏫 So bringst du das N bei</h3><div class="step"><span class="step-label">① Wiederholung</span>M, L, S, T, R und Vokale durchgehen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das N ist lustig: <strong>nnnn</strong>. Halt dir die Nase zu! Merkst du? Es kommt nichts raus! Das N wohnt in der Nase."</div><div class="step"><span class="step-label">③ Silben</span>NA, NE, NI, NO, NU. "NA wie Nase! NE wie Nest!"</div><div class="step"><span class="step-label">④ Erste Wörter lesen</span> Aus den bisherigen Buchstaben: N-E-S-T → Nest! N-A-S-E → Nase! S-O-N-N-E → Sonne!</div><div class="say">Wenn er M und N verwechselt: "Halt die Nase zu — wenn Luft durch will, ist es N. Wenn nicht, M."</div>',
+            '<h3>👨‍🏫 So bringst du das N bei</h3><div class="step"><span class="step-label">① Aufwärmen</span>M, L, S, T und die Vokale durchgehen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das N ist lustig: <strong>nnnn</strong>. Halt dir die Nase zu! Merkst du? Es kommt nichts raus! Das N wohnt in der Nase."</div><div class="step"><span class="step-label">③ Silben</span>NA, NE, NI, NO, NU. "NA wie Nase! NE wie Nest!"</div><div class="step"><span class="step-label">④ Erste Wörter lesen</span> Aus den bisherigen Buchstaben: N-E-S-T → Nest! N-A-S-E → Nase! S-O-N-N-E → Sonne!</div><div class="say">Wenn er M und N verwechselt: "Halt die Nase zu — wenn Luft durch will, ist es N. Wenn nicht, M."</div>',
         },
         {
           id: "F",
@@ -951,7 +1141,7 @@
           bezug:
             "Im <strong>Winter</strong> schneit es in Pelikan Stadt. <strong>Willy</strong> am Strand — auch der fängt mit W an! Und das <strong>Wasser</strong> zum Gießen. <strong>W wie Winter!</strong>",
           elternInfo:
-            '<h3>👨‍🏫 So bringst du das W bei</h3><div class="step"><span class="step-label">① Wiederholung</span>Alle 20 bisherigen Buchstaben durchgehen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das W macht die Lippen rund: <strong>wwww</strong>. Spür mal den Hals — der brummt. Wie der Wind: www-ind!"</div><div class="step"><span class="step-label">③ Silben</span>WA, WE, WI, WO, WU. "WA wie Wald! WI wie Winter! WO wie Wolle!"</div><div class="step"><span class="step-label">④ Stardew-Bezug!</span> "Im Winter schneit es in Stardew Valley. Und Willy am Strand verkauft Angel-Zeug!"</div><div class="say">Jetzt mit allen Buchstaben: <strong>WIN-TER</strong>, <strong>WAS-SER</strong>, <strong>WALD</strong> — morgen kommt das K!</div>',
+            '<h3>👨‍🏫 So bringst du das W bei</h3><div class="step"><span class="step-label">① Aufwärmen</span>Die bisherigen Buchstaben in der Blitz-Runde durchgehen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das W macht die Lippen rund: <strong>wwww</strong>. Spür mal den Hals — der brummt. Wie der Wind: www-ind!"</div><div class="step"><span class="step-label">③ Silben</span>WA, WE, WI, WO, WU. "WA wie Wald! WI wie Winter! WO wie Wolle!"</div><div class="step"><span class="step-label">④ Stardew-Bezug!</span> "Im Winter schneit es in Stardew Valley. Und Willy am Strand verkauft Angel-Zeug!"</div><div class="say">Lies mit allen bisherigen Buchstaben: <strong>WIN-TER</strong> und <strong>WAS-SER</strong>! Jetzt fehlen nur noch die letzten Buchstaben.</div>',
         },
         // ===== Phase 1b: Weitere 7 Buchstaben =====
         {
@@ -964,7 +1154,7 @@
           bezug:
             "Die <strong>Kuh</strong> gibt Milch — und <strong>K</strong>ürbisse wachsen im Herbst! Gleich zwei tolle Wörter mit K. <strong>K wie Kuh!</strong>",
           elternInfo:
-            '<h3>👨‍🏫 So bringst du das K bei</h3><div class="step"><span class="step-label">① Wiederholung</span>Alle 20 bisherigen Buchstaben durchgehen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das K macht <strong>k</strong> — ganz kurz und hart, wie ein Huster: k! k! k! Hinten im Rachen."</div><div class="step"><span class="step-label">③ Silben</span>KA, KE, KI, KO, KU. "KA wie Katze! KO wie Korn! KU wie Kuh!"</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>"Die <strong>Kuh</strong> gibt Milch! Und der <strong>Kürbis</strong> wächst im Herbst."</div><div class="say">Lies gemeinsam: K-U-H → <strong>Kuh!</strong> K-Ü-R-B-I-S → <strong>Kürbis!</strong> (Ü lernt er später.)</div>',
+            '<h3>👨‍🏫 So bringst du das K bei</h3><div class="step"><span class="step-label">① Aufwärmen</span>Die bisherigen Buchstaben in der Blitz-Runde durchgehen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das K macht <strong>k</strong> — ganz kurz und hart, wie ein Huster: k! k! k! Hinten im Rachen."</div><div class="step"><span class="step-label">③ Silben</span>KA, KE, KI, KO, KU. "KA wie Katze! KO wie Korn! KU wie Kuh!"</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>"Die <strong>Kuh</strong> gibt Milch! Und der <strong>Kürbis</strong> wächst im Herbst."</div><div class="say">Lies gemeinsam: K-U-H → <strong>Kuh!</strong> K-Ü-R-B-I-S → <strong>Kürbis!</strong> (Ü lernt er später.)</div>',
         },
         {
           id: "G",
@@ -1000,7 +1190,7 @@
           bezug:
             "Im <strong>Bett</strong> schläfst du nachts! Und der <strong>Bauer</strong> (das bist du!) fängt auch mit B an. <strong>B wie Bett!</strong>",
           elternInfo:
-            '<h3>👨‍🏫 So bringst du das B bei</h3><div class="step"><span class="step-label">① Wiederholung</span>P und alle vorherigen durchgehen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das B brummt auf den Lippen: <strong>b-b-b</strong>. Wie beim P, aber mit Stimme! Spür den Hals vibrieren."</div><div class="step"><span class="step-label">③ Silben</span>BA, BE, BI, BO, BU. "BA wie Bauer! BE wie Bett! BI wie Bier!"</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>"Im <strong>Bett</strong> schläfst du. Und du bist der <strong>Bauer</strong> auf dem Hof!"</div><div class="say">Lies gemeinsam: B-E-T-T → <strong>Bett!</strong> B-AU-E-R → <strong>Bauer!</strong> (AU lernt er später.)</div>',
+            '<h3>👨‍🏫 So bringst du das B bei</h3><div class="step"><span class="step-label">① Aufwärmen</span>Die bisherigen Buchstaben kurz durchgehen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das B brummt auf den Lippen: <strong>b-b-b</strong>. Wie beim P, aber mit Stimme! Spür den Hals vibrieren."</div><div class="step"><span class="step-label">③ Silben</span>BA, BE, BI, BO, BU. "BA wie Bauer! BE wie Bett! BI wie Bier!"</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>"Im <strong>Bett</strong> schläfst du. Und du bist der <strong>Bauer</strong> auf dem Hof!"</div><div class="say">Lies gemeinsam: B-E-T-T → <strong>Bett!</strong> B-AU-E-R → <strong>Bauer!</strong> (AU lernt er später.)</div>',
         },
         {
           id: "D",
@@ -1040,6 +1230,64 @@
         },
       ];
 
+      // ===== AUDIO (Web Speech API — offline, kostenlos) =====
+      // Ermöglicht selbstständiges Lernen: das Kind HÖRT den Laut/das Wort.
+      let deVoice = null;
+      function pickVoice() {
+        if (!("speechSynthesis" in window)) return;
+        const vs = speechSynthesis.getVoices();
+        deVoice =
+          vs.find((v) => /^de(-|_)/i.test(v.lang)) ||
+          vs.find((v) => /german|deutsch/i.test(v.name)) ||
+          deVoice;
+      }
+      if ("speechSynthesis" in window) {
+        pickVoice();
+        speechSynthesis.onvoiceschanged = pickVoice;
+      }
+      function speak(text, rate) {
+        if (!("speechSynthesis" in window) || !text) return;
+        speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(String(text));
+        u.lang = "de-DE";
+        if (deVoice) u.voice = deVoice;
+        u.rate = rate || 0.85;
+        u.pitch = 1.05;
+        speechSynthesis.speak(u);
+      }
+      // "Hof & Huhn" -> "Hof" (ein sauber sprechbares Anlaut-Wort)
+      function spokenWord(mw) {
+        return String(mw).split("&")[0].trim();
+      }
+
+      // ===== REIHENFOLGE & WOCHEN (entzerrt) =====
+      // Prinzip: Vokale + „Zieh-Konsonanten" (M, L, S) zuerst, damit schon
+      // in Woche 1 echte Wörter entstehen (OMA, MAMA). Die schwer zu
+      // unterscheidenden Paare (m/n, t/d, p/b, k/g) sind über die Wochen
+      // verteilt statt alle am Ende gebündelt.
+      // prettier-ignore
+      const DISPLAY_ORDER = [
+        "M", "A", "L", "O", "S",
+        "T", "E", "N", "I", "R",
+        "U", "F", "H", "K", "W",
+        "B", "G", "P", "D", "Z", "J",
+      ];
+      // prettier-ignore
+      const WEEK_OF = {
+        M: 1, A: 1, L: 1, O: 1, S: 1,
+        T: 2, E: 2, N: 2, I: 2, R: 2,
+        U: 3, F: 3, H: 3, K: 3, W: 3,
+        B: 4, G: 4, P: 4, D: 4, Z: 4, J: 4,
+      };
+      const WEEK_LABEL = {
+        1: "Woche 1 · Erste Wörter — M A L O S",
+        2: "Woche 2 · Mehr Laute — T E N I R",
+        3: "Woche 3 · Bauernhof-Wörter — U F H K W",
+        4: "Woche 4 · Die letzten Buchstaben — B G P D Z J",
+      };
+      const byId = Object.fromEntries(letters.map((l) => [l.id, l]));
+      const orderedLetters = DISPLAY_ORDER.map((id) => byId[id]).filter(Boolean);
+
       const STORAGE_KEY = "sv_lesen_phase1_progress";
       function loadProgress() {
         try {
@@ -1069,14 +1317,14 @@
 
         // Progress
         const done = completed.size;
-        const total = letters.length;
+        const total = orderedLetters.length;
         const pct = Math.round((done / total) * 100);
         progressFill.style.width = pct + "%";
         progressLabel.textContent = done + " von " + total + " Buchstaben ⭐";
 
         // Nav
         navRow.replaceChildren();
-        letters.forEach((l) => {
+        orderedLetters.forEach((l) => {
           const btn = document.createElement("button");
           btn.className = "nav-btn" + (completed.has(l.id) ? " done" : "");
           btn.textContent = l.id;
@@ -1092,7 +1340,21 @@
 
         // Cards
         mainContent.replaceChildren();
-        letters.forEach((l, i) => {
+        let lastWeek = 0;
+        orderedLetters.forEach((l, i) => {
+          // Wochen-Trenner einfügen, wenn eine neue Woche beginnt
+          const wk = WEEK_OF[l.id];
+          if (wk && wk !== lastWeek) {
+            lastWeek = wk;
+            const wd = document.createElement("div");
+            wd.className = "week-divider";
+            const pill = document.createElement("span");
+            pill.className = "wk-pill";
+            pill.textContent = WEEK_LABEL[wk] || "Woche " + wk;
+            wd.appendChild(pill);
+            mainContent.appendChild(wd);
+          }
+
           const card = document.createElement("div");
           card.className = "card";
           card.id = "letter-" + l.id;
@@ -1133,6 +1395,12 @@
           small.className = "small";
           small.textContent = l.small;
           display.appendChild(small);
+          display.title = "Antippen zum Hören";
+          // Anlaut-Prinzip: das Merkwort vorsprechen — das Kind hört den
+          // Anfangslaut im echten Wort (nicht den Buchstaben-NAMEN).
+          display.addEventListener("click", () =>
+            speak(spokenWord(l.merkwort)),
+          );
           content.appendChild(display);
 
           const info = document.createElement("div");
@@ -1184,6 +1452,9 @@
             const chip = document.createElement("span");
             chip.className = "silben-chip";
             chip.textContent = s;
+            chip.title = "Antippen zum Hören";
+            // Silbe langsam vorsprechen — direkte Blending-Hilfe
+            chip.addEventListener("click", () => speak(s, 0.7));
             silbenRow.appendChild(chip);
           });
           info.appendChild(silbenRow);
@@ -1224,8 +1495,19 @@
           mainContent.appendChild(card);
         });
 
+        // Zertifikat-Badges (in neuer Reihenfolge, einmalig füllen)
+        const certLetters = document.getElementById("certLetters");
+        if (certLetters && certLetters.childElementCount === 0) {
+          orderedLetters.forEach((l) => {
+            const b = document.createElement("span");
+            b.className = "letter-badge";
+            b.textContent = l.id;
+            certLetters.appendChild(b);
+          });
+        }
+
         // Certificate visibility
-        certSection.style.display = done >= 21 ? "block" : "none";
+        certSection.style.display = done >= total ? "block" : "none";
       }
 
       function scrollToLetter(id) {
@@ -1298,6 +1580,9 @@
         const answerEl = document.getElementById("quizAnswer");
         letterEl.classList.add("revealed");
         answerEl.classList.add("show");
+        // Auflösung vorsprechen — Kind hört den Anlaut im Merkwort
+        const cur = quizDeck[quizIndex];
+        if (cur) speak(spokenWord(cur.merkwort));
         document.getElementById("quizRevealBtn").style.display = "none";
         document.getElementById("quizCorrectBtn").style.display =
           "inline-block";
@@ -1351,15 +1636,110 @@
         showQuizCard();
       }
 
-      // Show quiz link when all 14 are done
+      // ===== LESE-WERKSTATT (BLENDING) =====
+      // Übt die EIGENTLICHE Lesefähigkeit: Laute verschleifen. Alle Wörter
+      // bestehen nur aus Buchstaben, die in Phase 1 vorkommen.
+      // prettier-ignore
+      const WS_WORDS = [
+        "OMA", "MAMA", "TOR", "ROT", "NASE",
+        "HOF", "HUHN", "KUH", "TOMATE",
+        "GOLD", "BETT", "ZELT",
+      ];
+      let wsIdx = 0;
+      let wsStars = 0;
+
+      function startWorkshop() {
+        document.getElementById("workshopWrap").style.display = "block";
+        document.getElementById("wsTotal").textContent = WS_WORDS.length;
+        wsIdx = 0;
+        wsStars = 0;
+        document.getElementById("wsStars").textContent = "";
+        renderWsWord();
+        document
+          .getElementById("workshopWrap")
+          .scrollIntoView({ behavior: "smooth" });
+      }
+
+      function renderWsWord() {
+        const word = WS_WORDS[wsIdx];
+        const wsWord = document.getElementById("wsWord");
+        wsWord.replaceChildren();
+        [...word].forEach((ch) => {
+          const el = document.createElement("div");
+          el.className = "ws-letter";
+          el.textContent = ch;
+          el.addEventListener("click", () => {
+            el.classList.add("lit");
+            speak(ch, 0.7);
+            setTimeout(() => el.classList.remove("lit"), 400);
+          });
+          wsWord.appendChild(el);
+        });
+        const whole = document.getElementById("wsWhole");
+        whole.classList.remove("show");
+        whole.textContent = word;
+        document.getElementById("wsHint").textContent =
+          "Tippe die Buchstaben an, dann auf Zusammenlesen drücken.";
+        document.getElementById("wsIndex").textContent = wsIdx + 1;
+      }
+
+      function blendWord() {
+        const word = WS_WORDS[wsIdx];
+        const tiles = [...document.querySelectorAll("#wsWord .ws-letter")];
+        if (tiles.length === 0) return;
+        document.getElementById("wsHint").textContent = "Hör genau hin …";
+        speak(word, 0.5); // erst langsam vorlesen
+        let i = 0;
+        const step = () => {
+          tiles.forEach((t) => t.classList.remove("lit"));
+          if (i < tiles.length) {
+            tiles[i].classList.add("lit");
+            i++;
+            setTimeout(step, 520);
+          } else {
+            const whole = document.getElementById("wsWhole");
+            whole.classList.add("show");
+            speak(word, 0.85); // dann flüssig
+            document.getElementById("wsHint").textContent =
+              "🎉 Das Wort heißt: " + word + "!";
+          }
+        };
+        setTimeout(step, 750);
+      }
+
+      function nextWsWord() {
+        wsStars = Math.min(WS_WORDS.length, wsStars + 1);
+        document.getElementById("wsStars").textContent = "⭐".repeat(wsStars);
+        wsIdx++;
+        if (wsIdx >= WS_WORDS.length) {
+          document.getElementById("wsWord").replaceChildren();
+          const whole = document.getElementById("wsWhole");
+          whole.textContent = "🏆";
+          whole.classList.add("show");
+          document.getElementById("wsHint").textContent =
+            "Super gelesen — alle Wörter geschafft!";
+          document.getElementById("wsIndex").textContent = WS_WORDS.length;
+          return;
+        }
+        renderWsWord();
+      }
+
+      // ===== NAV-BUTTONS (Quiz + Werkstatt) =====
       const origRender = render;
       render = function () {
         origRender();
-        const quizWrap = document.getElementById("quizWrap");
-        if (completed.size >= 21 && quizWrap.style.display === "none") {
-          // Don't auto-show quiz, but make the cert 🏆 button also trigger quiz
+        // Lese-Werkstatt: ab 5 Buchstaben (Ende Woche 1) verfügbar
+        if (completed.size >= 5 && !document.getElementById("wsNavBtn")) {
+          const navRow = document.getElementById("navRow");
+          const wbtn = document.createElement("button");
+          wbtn.id = "wsNavBtn";
+          wbtn.className = "nav-btn special";
+          wbtn.textContent = "🔨";
+          wbtn.title = "Lese-Werkstatt öffnen";
+          wbtn.addEventListener("click", startWorkshop);
+          navRow.appendChild(wbtn);
         }
-        // Add quiz button to nav if not there
+        // Buchstaben-Quiz: ab 3 Buchstaben verfügbar
         if (completed.size >= 3 && !document.getElementById("quizNavBtn")) {
           const navRow = document.getElementById("navRow");
           const qbtn = document.createElement("button");

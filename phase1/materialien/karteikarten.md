@@ -46,9 +46,10 @@
 ```
 
 **Rückseite:**
-> **Ei** 🥚
-> *(Bild: Ei aus dem Inventar)*
-> E wie Eeee-i
+> **Ente** 🦆
+> *(Bild: Ente von Marnies Ranch)*
+> E wie E-nte
+> *(Nicht „Ei" — das klingt wie „ai", nicht wie E!)*
 
 ---
 

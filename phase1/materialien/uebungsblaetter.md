@@ -49,7 +49,7 @@ Verbinde den Konsonanten mit dem Vokal und lies, was rauskommt:
 
 ```
          🐄  _uh            (K)
-         🥚  _i             (E)
+         🦆  _nte           (E)
          🌱  _amen          (S)
          ⭐  _ridium        (I)
          🌸  _rühling       (F)

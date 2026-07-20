@@ -54,7 +54,7 @@ Für jedes richtig gelesene Wort: Jubeln und abklatschen! ✋
 *Druck das Zertifikat aus (Vorlage in `zertifikat.md`) und überreiche es feierlich:*
 
 > „Hiermit bist du offiziell ein **BUCHSTABEN-MEISTER**!
-> Alle 14 Buchstaben und deine ersten 5 Wörter — geschafft!"
+> Alle 21 Buchstaben und deine ersten Wörter — geschafft!"
 
 Kleiner Preis (optional): Aufkleber, Stardew-Valley-Sticker, ein besonderer Stift,
 oder: „Morgen spielen wir 10 Minuten Stardew Valley und DU liest, was du erkennst!"

@@ -1,0 +1,1606 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🧩 Lesen lernen mit Stardew Valley – Phase 2</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ===== RESET & BASE ===== */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Nunito", sans-serif;
+        background: #f5eedc;
+        background-image:
+          radial-gradient(ellipse at 20% 20%, #e8d5a3 0%, transparent 50%),
+          radial-gradient(ellipse at 80% 80%, #c8e6a5 0%, transparent 50%),
+          radial-gradient(ellipse at 50% 50%, #f5eedc 0%, transparent 70%);
+        min-height: 100vh;
+        color: #4a3728;
+        overflow-x: hidden;
+      }
+
+      /* ===== HEADER ===== */
+      .header {
+        background: linear-gradient(180deg, #7ec850 0%, #5da03c 100%);
+        border-bottom: 6px solid #3d6b22;
+        padding: 20px 16px 24px;
+        text-align: center;
+        position: relative;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      }
+      .header::after {
+        content: "";
+        position: absolute;
+        bottom: -12px;
+        left: 0;
+        right: 0;
+        height: 12px;
+        background: repeating-linear-gradient(
+          90deg,
+          #8b6914 0px,
+          #8b6914 8px,
+          #c49a2a 8px,
+          #c49a2a 16px
+        );
+      }
+      .back-link {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        background: #fffaf0;
+        color: #4a3728;
+        text-decoration: none;
+        font-weight: 800;
+        font-size: 0.82rem;
+        padding: 6px 12px;
+        border-radius: 10px;
+        border: 2px solid #8b6914;
+        transition: all 0.2s;
+      }
+      .back-link:hover {
+        background: #ffd700;
+        transform: scale(1.05);
+      }
+      .header-icons {
+        font-size: 2rem;
+        letter-spacing: 4px;
+        margin-bottom: 6px;
+      }
+      .header h1 {
+        font-family: "Press Start 2P", cursive;
+        font-size: clamp(0.7rem, 2.5vw, 1.1rem);
+        color: #fff;
+        text-shadow:
+          2px 2px 0 #3d6b22,
+          0 0 12px rgba(255, 255, 255, 0.3);
+        line-height: 1.6;
+        letter-spacing: 1px;
+      }
+      .header .subtitle {
+        font-size: 1rem;
+        color: #e8f5e0;
+        font-weight: 700;
+        margin-top: 4px;
+      }
+
+      /* ===== PROGRESS BAR ===== */
+      .progress-wrap {
+        max-width: 700px;
+        margin: 24px auto 0;
+        padding: 0 16px;
+      }
+      .progress-bar {
+        background: #d7c9a8;
+        height: 22px;
+        border-radius: 11px;
+        border: 3px solid #8b6914;
+        overflow: hidden;
+        position: relative;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+      }
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #ffd700, #ffaa00);
+        width: 0%;
+        transition: width 0.5s ease;
+        border-radius: 9px;
+        position: relative;
+      }
+      .progress-fill::after {
+        content: "⭐";
+        position: absolute;
+        right: -2px;
+        top: -8px;
+        font-size: 18px;
+        animation: bounce 1s infinite;
+      }
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-6px);
+        }
+      }
+      .progress-label {
+        text-align: center;
+        font-weight: 800;
+        font-size: 0.85rem;
+        margin-top: 6px;
+        color: #6b4f2a;
+      }
+
+      /* ===== VOICE PICKER ===== */
+      .voice-wrap {
+        max-width: 700px;
+        margin: 12px auto 0;
+        padding: 0 16px;
+        text-align: center;
+        font-weight: 700;
+        color: #6b4f2a;
+        font-size: 0.9rem;
+      }
+      .voice-wrap select {
+        font-family: "Nunito", sans-serif;
+        font-weight: 700;
+        padding: 4px 8px;
+        border-radius: 8px;
+        border: 2px solid #8b6914;
+        background: #fffaf0;
+        color: #4a3728;
+        margin-left: 6px;
+        max-width: 100%;
+      }
+      .voice-hint {
+        margin-top: 8px;
+        background: #fff3d6;
+        border: 2px dashed #c49a2a;
+        border-radius: 10px;
+        padding: 8px 12px;
+        font-weight: 600;
+        font-size: 0.82rem;
+        line-height: 1.45;
+        text-align: left;
+      }
+
+      /* ===== MAIN LAYOUT ===== */
+      .main-wrap {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 24px 16px 60px;
+      }
+
+      /* ===== NAVIGATION ===== */
+      .nav-row {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin: 20px auto 0;
+        max-width: 900px;
+        position: sticky;
+        top: 10px;
+        z-index: 10;
+        background: #f5eedcee;
+        backdrop-filter: blur(6px);
+        padding: 10px;
+        border-radius: 16px;
+      }
+      .nav-btn {
+        height: 42px;
+        padding: 0 14px;
+        border-radius: 12px;
+        border: 2px solid #8b6914;
+        background: #fffaf0;
+        font-family: "Nunito", sans-serif;
+        font-weight: 800;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        color: #4a3728;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .nav-btn:hover,
+      .nav-btn.active {
+        background: #7ec850;
+        color: #fff;
+        border-color: #3d6b22;
+        transform: scale(1.08);
+        box-shadow: 0 4px 12px rgba(126, 200, 80, 0.4);
+      }
+      .nav-btn.special {
+        background: #ff6b35;
+        color: #fff;
+        border-color: #c44220;
+      }
+      .nav-btn.special:hover {
+        background: #ff8155;
+      }
+
+      /* ===== EXPLAINER CARD ===== */
+      .explainer {
+        background: linear-gradient(135deg, #e8f5e0, #d4edc4);
+        border: 4px solid #5da03c;
+        border-radius: 20px;
+        padding: 22px 24px;
+        margin-bottom: 30px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      }
+      .explainer h2 {
+        font-family: "Press Start 2P", cursive;
+        font-size: 0.7rem;
+        color: #3d6b22;
+        margin-bottom: 12px;
+      }
+      .explainer p {
+        font-size: 1rem;
+        line-height: 1.6;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+      .demo-blend {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 8px 0 4px;
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: #4a3728;
+      }
+      .demo-syl {
+        background: linear-gradient(135deg, #ffd700, #ffaa00);
+        border: 2px solid #c49a2a;
+        border-radius: 14px;
+        padding: 6px 16px;
+        cursor: pointer;
+        user-select: none;
+        transition: transform 0.15s;
+      }
+      .demo-syl:hover {
+        transform: scale(1.08);
+      }
+      .demo-arrow {
+        color: #5da03c;
+      }
+      .demo-word {
+        color: #3d6b22;
+        border-bottom: 3px dashed #5da03c;
+        cursor: pointer;
+      }
+
+      /* ===== LESSON CARD ===== */
+      .card {
+        background: #fffaf0;
+        border: 4px solid #8b6914;
+        border-radius: 20px;
+        padding: 28px 24px;
+        margin-bottom: 32px;
+        box-shadow:
+          0 8px 30px rgba(0, 0, 0, 0.1),
+          0 0 0 8px #d7c9a8;
+        position: relative;
+      }
+      .card-number {
+        position: absolute;
+        top: -16px;
+        left: 20px;
+        background: #ff6b35;
+        color: #fff;
+        font-family: "Press Start 2P", cursive;
+        font-size: 0.6rem;
+        padding: 6px 12px;
+        border-radius: 8px;
+        border: 2px solid #c44220;
+      }
+      .card h2.lesson-title {
+        font-family: "Press Start 2P", cursive;
+        font-size: 0.8rem;
+        color: #5da03c;
+        margin-bottom: 14px;
+        line-height: 1.5;
+        padding-right: 34px;
+      }
+
+      /* Silben-Familie */
+      .familie-label {
+        font-weight: 800;
+        color: #6b4f2a;
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+      }
+      .silben-row {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 18px;
+      }
+      .silben-chip {
+        background: linear-gradient(135deg, #fff8e7, #ffe4b5);
+        color: #4a3728;
+        font-weight: 800;
+        font-size: 1.05rem;
+        padding: 6px 14px;
+        border-radius: 20px;
+        border: 2px solid #c49a2a;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+      }
+      .silben-chip::before {
+        content: "🔊 ";
+        font-size: 0.7rem;
+      }
+      .silben-chip:hover {
+        transform: scale(1.08);
+        box-shadow: 0 3px 10px rgba(196, 154, 42, 0.4);
+      }
+      .silben-chip:active {
+        transform: scale(0.96);
+      }
+
+      /* Wort-Kacheln */
+      .words-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+        gap: 14px;
+      }
+      .word-tile {
+        background: linear-gradient(135deg, #fff8e7, #ffe4b5);
+        border: 3px solid #c49a2a;
+        border-radius: 16px;
+        padding: 14px 12px 12px;
+        text-align: center;
+        position: relative;
+        transition:
+          transform 0.15s,
+          border-color 0.2s;
+      }
+      .word-tile.done {
+        border-color: #5da03c;
+        background: linear-gradient(135deg, #eafbe0, #cdefb8);
+      }
+      .word-emoji {
+        font-size: 2.6rem;
+        line-height: 1;
+        margin-bottom: 6px;
+        cursor: pointer;
+        user-select: none;
+      }
+      .word-syllables {
+        font-size: 1.7rem;
+        font-weight: 800;
+        color: #4a3728;
+        letter-spacing: 1px;
+        margin-bottom: 4px;
+        cursor: pointer;
+        user-select: none;
+      }
+      .word-syllables .syl {
+        border-radius: 8px;
+        padding: 0 3px;
+        transition: background 0.15s;
+      }
+      .word-syllables .syl.lit {
+        background: #ffd700;
+      }
+      .word-syllables .dot {
+        color: #c49a2a;
+        margin: 0 1px;
+      }
+      .word-hear {
+        font-size: 0.78rem;
+        color: #8b6914;
+        font-weight: 700;
+        margin-bottom: 10px;
+      }
+      .word-bezug {
+        font-size: 0.82rem;
+        line-height: 1.4;
+        color: #6b4f2a;
+        background: #ffffff88;
+        border-radius: 8px;
+        padding: 6px 8px;
+        margin-bottom: 10px;
+        min-height: 2.6em;
+      }
+      .word-done-btn {
+        font-family: "Nunito", sans-serif;
+        font-weight: 800;
+        font-size: 0.85rem;
+        padding: 7px 14px;
+        border-radius: 10px;
+        cursor: pointer;
+        border: 2px solid #5da03c;
+        background: #e8f5e0;
+        color: #3d6b22;
+        transition: all 0.2s;
+        width: 100%;
+      }
+      .word-tile.done .word-done-btn {
+        background: #ffd700;
+        color: #4a3728;
+        border-color: #c49a2a;
+      }
+
+      /* Eltern-Info */
+      .info-toggle-btn {
+        position: absolute;
+        top: 12px;
+        right: 16px;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 2px solid #8b6914;
+        background: #fffaf0;
+        font-family: "Press Start 2P", cursive;
+        font-size: 0.55rem;
+        cursor: pointer;
+        color: #8b6914;
+        z-index: 5;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .info-toggle-btn:hover {
+        background: #7ec850;
+        color: #fff;
+        border-color: #3d6b22;
+        transform: scale(1.15);
+      }
+      .info-toggle-btn.open {
+        background: #ff6b35;
+        color: #fff;
+        border-color: #c44220;
+      }
+      .parent-info {
+        display: none;
+        background: #fffef7;
+        border: 2px dashed #8b6914;
+        border-radius: 14px;
+        padding: 16px 18px;
+        margin-top: 16px;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        color: #4a3728;
+      }
+      .parent-info.visible {
+        display: block;
+      }
+      .parent-info h3 {
+        font-family: "Press Start 2P", cursive;
+        font-size: 0.5rem;
+        color: #ff6b35;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .parent-info .say {
+        background: #fff8e7;
+        border-left: 3px solid #ffaa00;
+        padding: 6px 10px;
+        margin: 6px 0;
+        border-radius: 0 8px 8px 0;
+        font-style: italic;
+      }
+      .parent-info .say::before {
+        content: "💬 ";
+        font-style: normal;
+      }
+
+      /* ===== SILBEN-BAUER ===== */
+      .builder {
+        background: linear-gradient(135deg, #fff8e7, #ffe4b5);
+        border: 4px solid #c49a2a;
+        border-radius: 24px;
+        padding: 32px 24px;
+        text-align: center;
+        margin: 40px 0;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      }
+      .builder h2 {
+        font-family: "Press Start 2P", cursive;
+        font-size: 0.7rem;
+        color: #c49a2a;
+        margin-bottom: 8px;
+      }
+      .builder .b-subtitle {
+        font-size: 1rem;
+        color: #8b6914;
+        font-weight: 700;
+        margin-bottom: 20px;
+      }
+      .b-picture {
+        font-size: 4rem;
+        line-height: 1;
+        margin-bottom: 14px;
+        cursor: pointer;
+        user-select: none;
+      }
+      .b-slots {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+      }
+      .b-slot {
+        min-width: 74px;
+        height: 74px;
+        border-radius: 16px;
+        border: 3px dashed #c49a2a;
+        background: #fffaf0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 1.9rem;
+        color: #4a3728;
+        padding: 0 10px;
+        transition:
+          background 0.2s,
+          border-color 0.2s,
+          transform 0.15s;
+      }
+      .b-slot.filled {
+        border-style: solid;
+        border-color: #5da03c;
+        background: linear-gradient(135deg, #eafbe0, #cdefb8);
+        animation: popIn 0.3s ease;
+      }
+      .b-bank {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+        min-height: 60px;
+      }
+      .b-chip {
+        background: linear-gradient(135deg, #ffd700, #ffaa00);
+        color: #4a3728;
+        font-weight: 800;
+        font-size: 1.5rem;
+        padding: 12px 22px;
+        border-radius: 16px;
+        border: 3px solid #c49a2a;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        user-select: none;
+      }
+      .b-chip:hover {
+        transform: scale(1.06);
+        box-shadow: 0 4px 12px rgba(196, 154, 42, 0.4);
+      }
+      .b-chip.used {
+        opacity: 0.35;
+        pointer-events: none;
+        transform: scale(0.9);
+      }
+      .b-chip.wrong {
+        animation: shake 0.4s;
+        border-color: #d24a2a;
+      }
+      @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        20%, 60% { transform: translateX(-8px); }
+        40%, 80% { transform: translateX(8px); }
+      }
+      .b-hint {
+        font-size: 1rem;
+        color: #6b4f2a;
+        font-weight: 800;
+        min-height: 1.4em;
+        margin-bottom: 16px;
+      }
+      .b-buttons {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .b-btn {
+        font-family: "Nunito", sans-serif;
+        font-weight: 800;
+        font-size: 1rem;
+        padding: 12px 24px;
+        border-radius: 14px;
+        cursor: pointer;
+        border: 3px solid #3d6b22;
+        transition: all 0.2s;
+      }
+      .b-btn.hearw {
+        background: #ffd700;
+        color: #4a3728;
+        border-color: #c49a2a;
+      }
+      .b-btn.hearw:hover {
+        background: #ffe55c;
+        transform: scale(1.05);
+      }
+      .b-btn.nextw {
+        background: #7ec850;
+        color: #fff;
+      }
+      .b-btn.nextw:hover {
+        background: #6ab83e;
+        transform: scale(1.05);
+      }
+      .b-progress {
+        margin-top: 16px;
+        font-weight: 800;
+        color: #8b6914;
+      }
+      .b-stars {
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+        min-height: 1.6em;
+      }
+
+      /* ===== BLITZ-WÖRTER (FLASHCARDS) ===== */
+      .flash {
+        background: linear-gradient(135deg, #e8f5e0, #d4edc4);
+        border: 4px solid #5da03c;
+        border-radius: 24px;
+        padding: 32px 24px;
+        text-align: center;
+        margin: 40px 0;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      }
+      .flash h2 {
+        font-family: "Press Start 2P", cursive;
+        font-size: 0.7rem;
+        color: #3d6b22;
+        margin-bottom: 8px;
+      }
+      .flash .f-subtitle {
+        font-size: 1rem;
+        color: #5da03c;
+        font-weight: 700;
+        margin-bottom: 20px;
+      }
+      .f-card {
+        width: 260px;
+        max-width: 100%;
+        height: 180px;
+        margin: 0 auto 20px;
+        background: #fffaf0;
+        border: 5px solid #c49a2a;
+        border-radius: 24px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        cursor: pointer;
+        user-select: none;
+        transition: transform 0.3s;
+      }
+      .f-card.flipped {
+        transform: scale(1.05);
+        border-color: #5da03c;
+        background: linear-gradient(135deg, #eafbe0, #cdefb8);
+      }
+      .f-word {
+        font-weight: 800;
+        font-size: 3rem;
+        color: #4a3728;
+        letter-spacing: 2px;
+      }
+      .f-emoji {
+        font-size: 3.4rem;
+        line-height: 1;
+        display: none;
+      }
+      .f-card.flipped .f-emoji {
+        display: block;
+        animation: popIn 0.3s ease;
+      }
+      .f-card.flipped .f-word {
+        font-size: 1.8rem;
+        color: #3d6b22;
+      }
+      .f-buttons {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .f-btn {
+        font-family: "Nunito", sans-serif;
+        font-weight: 800;
+        font-size: 1rem;
+        padding: 12px 24px;
+        border-radius: 14px;
+        cursor: pointer;
+        border: 3px solid #3d6b22;
+        transition: all 0.2s;
+      }
+      .f-btn.read {
+        background: #ffd700;
+        color: #4a3728;
+        border-color: #c49a2a;
+      }
+      .f-btn.read:hover {
+        background: #ffe55c;
+        transform: scale(1.05);
+      }
+      .f-btn.flip {
+        background: #fffaf0;
+        color: #3d6b22;
+      }
+      .f-btn.flip:hover {
+        background: #eafbe0;
+        transform: scale(1.05);
+      }
+      .f-btn.next {
+        background: #7ec850;
+        color: #fff;
+      }
+      .f-btn.next:hover {
+        background: #6ab83e;
+        transform: scale(1.05);
+      }
+      .f-progress {
+        margin-top: 16px;
+        font-weight: 800;
+        color: #5da03c;
+      }
+
+      @keyframes popIn {
+        0% {
+          transform: scale(0.8);
+          opacity: 0;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      /* ===== CERTIFICATE ===== */
+      .certificate {
+        background: linear-gradient(135deg, #fffef7, #fff8e7);
+        border: 6px double #c49a2a;
+        border-radius: 24px;
+        padding: 32px 24px;
+        text-align: center;
+        margin-top: 20px;
+        box-shadow:
+          0 8px 30px rgba(0, 0, 0, 0.1),
+          inset 0 0 50px rgba(255, 215, 0, 0.08);
+        position: relative;
+      }
+      .certificate::before {
+        content: "⭐";
+        font-size: 3rem;
+        position: absolute;
+        top: -20px;
+        left: 20px;
+      }
+      .certificate::after {
+        content: "⭐";
+        font-size: 3rem;
+        position: absolute;
+        bottom: -20px;
+        right: 20px;
+      }
+      .certificate h2 {
+        font-family: "Press Start 2P", cursive;
+        font-size: 0.7rem;
+        color: #c49a2a;
+        margin-bottom: 16px;
+      }
+      .certificate .big-name {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: #4a3728;
+        margin: 16px 0;
+        border-bottom: 3px dashed #c49a2a;
+        display: inline-block;
+        padding: 0 20px 8px;
+        min-width: 200px;
+      }
+      .certificate .words-row {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 16px 0;
+      }
+      .certificate .word-badge {
+        background: #ffd700;
+        border: 2px solid #c49a2a;
+        border-radius: 8px;
+        padding: 6px 12px;
+        font-weight: 800;
+        font-size: 0.95rem;
+      }
+      .stickers {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        font-size: 2rem;
+        margin: 20px 0;
+        flex-wrap: wrap;
+      }
+
+      /* ===== FARM BACKGROUND ===== */
+      .farm-decoration {
+        position: fixed;
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.12;
+        font-size: 4rem;
+      }
+      .farm-1 { top: 10%; left: 2%; }
+      .farm-2 { top: 25%; right: 3%; }
+      .farm-3 { bottom: 15%; left: 4%; }
+      .farm-4 { bottom: 8%; right: 5%; }
+
+      /* ===== RESPONSIVE ===== */
+      @media (max-width: 600px) {
+        .header h1 {
+          font-size: 0.6rem;
+        }
+        .words-grid {
+          grid-template-columns: 1fr;
+        }
+        .b-slot {
+          min-width: 60px;
+          height: 60px;
+          font-size: 1.5rem;
+        }
+        .b-chip {
+          font-size: 1.3rem;
+          padding: 10px 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Farm decorations -->
+    <div class="farm-decoration farm-1">🌻</div>
+    <div class="farm-decoration farm-2">🐄</div>
+    <div class="farm-decoration farm-3">🌽</div>
+    <div class="farm-decoration farm-4">🐔</div>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+      <a class="back-link" href="../index.html">← Übersicht</a>
+      <div class="header-icons">🧩🐔🌾🥕🐄🌻</div>
+      <h1>Lesen lernen mit<br />Stardew Valley</h1>
+      <div class="subtitle">Phase 2 — Silben &amp; erste Wörter</div>
+    </header>
+
+    <!-- ===== PROGRESS ===== -->
+    <div class="progress-wrap">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-label" id="progressLabel">0 von 15 Wörtern ⭐</div>
+    </div>
+
+    <!-- ===== VOICE PICKER ===== -->
+    <div class="voice-wrap">
+      <span>🔊 Vorlese-Stimme:</span>
+      <select id="voicePick" aria-label="Vorlese-Stimme"></select>
+      <div id="voiceStatus" style="margin-top: 6px; font-size: 0.82rem"></div>
+      <div class="voice-hint" id="voiceHint" style="display: none">
+        ⚠️ <strong>Keine deutsche Stimme gefunden</strong> — die Wörter klingen
+        sonst englisch. So installierst du eine (einmalig): <strong>Windows →
+        Einstellungen → Zeit &amp; Sprache → Sprache → „Deutsch" → Optionen →
+        Sprache/Stimme herunterladen</strong>. Danach den Browser neu starten
+        und hier oben die deutsche Stimme auswählen.
+      </div>
+    </div>
+
+    <!-- ===== NAVIGATION ===== -->
+    <div class="nav-row" id="navRow"></div>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <div class="main-wrap" id="mainContent"></div>
+
+    <!-- ===== SILBEN-BAUER ===== -->
+    <div class="main-wrap" id="builderWrap">
+      <div class="builder">
+        <h2>🧱 Silben-Bauer</h2>
+        <div class="b-subtitle">
+          Baue das Wort aus Silben — tippe sie in der richtigen Reihenfolge an!
+        </div>
+        <div class="b-picture" id="bPicture" title="Antippen zum Hören">🧩</div>
+        <div class="b-slots" id="bSlots"></div>
+        <div class="b-bank" id="bBank"></div>
+        <div class="b-hint" id="bHint">
+          Tippe die erste Silbe an, um zu starten.
+        </div>
+        <div class="b-buttons">
+          <button class="b-btn hearw" onclick="builderHear()">
+            🔊 Silben hören
+          </button>
+          <button class="b-btn nextw" onclick="builderNext()">▶ Weiter</button>
+        </div>
+        <div class="b-progress">
+          <div class="b-stars" id="bStars"></div>
+          Wort <span id="bIndex">1</span> / <span id="bTotal">0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== BLITZ-WÖRTER ===== -->
+    <div class="main-wrap" id="flashWrap">
+      <div class="flash">
+        <h2>⚡ Blitz-Wörter</h2>
+        <div class="f-subtitle">
+          Lies das Wort — dann dreh die Karte um und schau, ob's stimmt!
+        </div>
+        <div class="f-card" id="fCard" onclick="flashFlip()">
+          <div class="f-word" id="fWord">HOF</div>
+          <div class="f-emoji" id="fEmoji">🏡</div>
+        </div>
+        <div class="f-buttons">
+          <button class="f-btn read" onclick="flashRead()">🔊 Vorlesen</button>
+          <button class="f-btn flip" onclick="flashFlip()">🔄 Umdrehen</button>
+          <button class="f-btn next" onclick="flashNext()">▶ Weiter</button>
+        </div>
+        <div class="f-progress">
+          <div class="b-stars" id="fStars"></div>
+          Karte <span id="fIndex">1</span> / <span id="fTotal">0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== CERTIFICATE ===== -->
+    <div id="certSection" style="display: none">
+      <div class="main-wrap">
+        <div class="certificate">
+          <h2>⭐ SILBEN-MEISTER ⭐</h2>
+          <p style="font-size: 1.1rem; color: #8b6914; font-weight: 700">
+            Verliehen an
+          </p>
+          <div class="big-name" contenteditable="true">DEIN NAME</div>
+          <p style="color: #5da03c; font-weight: 700; margin: 10px 0">
+            für das Zusammenziehen von Silben<br />
+            und das Lesen der ersten 15 Stardew-Valley-Wörter!
+          </p>
+          <div class="words-row" id="certWords"></div>
+          <div class="stickers">🐔🐄🌱🍅🏡🔨❄️⭐</div>
+          <p style="color: #8b6914; font-size: 0.85rem; margin-top: 12px">
+            Pelikan Stadt · Stardew Valley · Bereit für Phase 3! 🌾
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ===== WÖRTER (nur mit Buchstaben aus Phase 1) =====
+      // prettier-ignore
+      const WORDS = [
+        // Lektion 16 — Silben mit M und L
+        { id: "OMA",    silben: ["O", "MA"],           emoji: "👵", lektion: 16,
+          bezug: "Evelyn ist die <strong>Oma</strong> von Pelikan Stadt." },
+        { id: "MAMA",   silben: ["MA", "MA"],          emoji: "👩", lektion: 16,
+          bezug: "Zwei gleiche Silben: MA + MA = <strong>Mama</strong>!" },
+        { id: "LAMA",   silben: ["LA", "MA"],          emoji: "🦙", lektion: 16,
+          bezug: "Ein <strong>Lama</strong> ist flauschig — L wie Lama!" },
+        // Lektion 17 — Silben mit S und T
+        { id: "SAMEN",  silben: ["SA", "MEN"],         emoji: "🌱", lektion: 17,
+          bezug: "<strong>Samen</strong> kaufst du bei Pierre." },
+        { id: "TOMATE", silben: ["TO", "MA", "TE"],    emoji: "🍅", lektion: 17,
+          bezug: "<strong>Tomaten</strong> wachsen im Sommer." },
+        { id: "TOR",    silben: ["T", "O", "R"],       emoji: "🚪", lektion: 17, kurz: true,
+          bezug: "Das <strong>Tor</strong> vom Stall öffnest du für die Tiere." },
+        // Lektion 18 — Silben mit H und F
+        { id: "HOF",    silben: ["H", "O", "F"],       emoji: "🏡", lektion: 18, kurz: true,
+          bezug: "Dein <strong>Hof</strong> ist dein Zuhause im Spiel!" },
+        { id: "HUHN",   silben: ["H", "U", "H", "N"],  emoji: "🐔", lektion: 18, kurz: true,
+          bezug: "Dein <strong>Huhn</strong> legt jeden Morgen ein Ei." },
+        { id: "FELD",   silben: ["F", "E", "L", "D"],  emoji: "🌾", lektion: 18, kurz: true,
+          bezug: "Auf dem <strong>Feld</strong> pflanzt du deine Samen." },
+        // Lektion 19 — Silben mit W und R
+        { id: "WALD",   silben: ["W", "A", "L", "D"],  emoji: "🌲", lektion: 19, kurz: true,
+          bezug: "Im <strong>Wald</strong> sammelst du Holz und Beeren." },
+        { id: "ROBIN",  silben: ["RO", "BIN"],         emoji: "🔨", lektion: 19,
+          bezug: "<strong>Robin</strong> baut dir neue Gebäude." },
+        { id: "WINTER", silben: ["WIN", "TER"],        emoji: "❄️", lektion: 19,
+          bezug: "Im <strong>Winter</strong> schneit es in Pelikan Stadt." },
+        // Lektion 20 — Blitz: flüssig lesen
+        { id: "KUH",    silben: ["K", "U", "H"],       emoji: "🐄", lektion: 20, kurz: true,
+          bezug: "Die <strong>Kuh</strong> gibt dir Milch." },
+        { id: "GOLD",   silben: ["G", "O", "L", "D"],  emoji: "💰", lektion: 20, kurz: true,
+          bezug: "<strong>Gold</strong> ist das Geld im Spiel." },
+        { id: "BETT",   silben: ["B", "E", "T", "T"],  emoji: "🛏️", lektion: 20, kurz: true,
+          bezug: "Im <strong>Bett</strong> schläfst du bis zum nächsten Tag." },
+      ];
+
+      // ===== LEKTIONEN =====
+      // prettier-ignore
+      const LEKTIONEN = [
+        { nr: 16, titel: "Silben mit M und L",
+          familie: ["MA", "ME", "MI", "MO", "MU", "LA", "LE", "LI", "LO", "LU"],
+          elternInfo:
+            '<h3>👨‍🏫 So übt ihr Silben</h3><p>Zeig auf die Silbe und zieh die Laute <strong>langsam zusammen</strong>: „mmm-aaa → MA". Dann zwei Silben hintereinander: „MA-MA → Mama!"</p><div class="say">Erst du machst es vor, dann er. Finger von links nach rechts unter die Silben halten.</div>' },
+        { nr: 17, titel: "Silben mit S und T",
+          familie: ["SA", "SE", "SI", "SO", "SU", "TA", "TE", "TI", "TO", "TU"],
+          elternInfo:
+            '<h3>👨‍🏫 Von Silben zu Wörtern</h3><p>„Ssss-aaa → SA", „mmm-eee-nnn → MEN". Zusammen: <strong>SA-MEN → Samen!</strong> Das erste Wort, das er im Spiel bei Pierre liest.</p><div class="say">Bei Tomate sind es drei Silben: TO-MA-TE. Ruhig zweimal wiederholen.</div>' },
+        { nr: 18, titel: "Silben mit H und F",
+          familie: ["HA", "HE", "HI", "HO", "HU", "FA", "FE", "FI", "FO", "FU"],
+          elternInfo:
+            '<h3>👨‍🏫 Kurze Wörter — ein Rutsch</h3><p>Hof, Huhn und Feld sind kurz. Zieh alle Laute in einem Rutsch zusammen: „H-O-F → Hof!" Nicht Buchstaben einzeln benennen, sondern die <strong>Laute</strong>.</p><div class="say">Feiert es: „Du liest ein echtes Stardew-Wort — <strong>Hof</strong>!" 🎉</div>' },
+        { nr: 19, titel: "Silben mit W und R",
+          familie: ["WA", "WE", "WI", "WO", "WU", "RA", "RE", "RI", "RO", "RU"],
+          elternInfo:
+            '<h3>👨‍🏫 Namen &amp; Jahreszeiten</h3><p>„RO-BIN → Robin" und „WIN-TER → Winter". Solche zweisilbigen Wörter kann er im <strong>Silben-Bauer</strong> unten üben.</p><div class="say">Zeig ihm Robin im Spiel: „Sie baut dir den Hühnerstall — R wie Robin!"</div>' },
+        { nr: 20, titel: "Blitz-Wörter — flüssig lesen",
+          familie: [],
+          elternInfo:
+            '<h3>👨‍🏫 Blitz-Runde</h3><p>Jetzt geht es um <strong>Tempo</strong>: Wort zeigen, er liest, dann Bild aufdecken. Übt das mit den <strong>Blitz-Wörtern</strong> unten. 5 richtig = kleine Belohnung im Spiel!</p><div class="say">Kein Buchstabieren mehr — das ganze Wort auf einen Blick. Das ist echtes Lesen!</div>' },
+      ];
+
+      // ===== AUDIO (Web Speech API — offline, kostenlos) =====
+      let voices = [];
+      let chosenVoice = null;
+      const VOICE_KEY = "sv_lesen_voice"; // gleiche Stimme wie Phase 1
+      function isGermanVoice(v) {
+        return /^de([-_]|$)/i.test(v.lang) || /deutsch|german/i.test(v.name);
+      }
+      function updateVoiceStatus() {
+        const st = document.getElementById("voiceStatus");
+        if (!st) return;
+        if (!chosenVoice) {
+          st.textContent = "";
+          return;
+        }
+        const ok = isGermanVoice(chosenVoice);
+        st.textContent =
+          (ok ? "✅ Aktiv: " : "❌ Aktiv (nicht Deutsch!): ") +
+          chosenVoice.name +
+          " · " +
+          chosenVoice.lang;
+        st.style.color = ok ? "#3d6b22" : "#b23b1e";
+        st.style.fontWeight = "800";
+      }
+      function buildVoicePicker(german) {
+        const sel = document.getElementById("voicePick");
+        const hint = document.getElementById("voiceHint");
+        if (!sel) return;
+        const list = [...german, ...voices.filter((v) => !isGermanVoice(v))];
+        sel.replaceChildren();
+        list.forEach((v) => {
+          const o = document.createElement("option");
+          o.value = v.name;
+          o.textContent = (isGermanVoice(v) ? "🇩🇪 " : "🌐 ") + v.name;
+          if (chosenVoice && v.name === chosenVoice.name) o.selected = true;
+          sel.appendChild(o);
+        });
+        sel.onchange = () => {
+          chosenVoice = voices.find((v) => v.name === sel.value) || chosenVoice;
+          if (chosenVoice) localStorage.setItem(VOICE_KEY, chosenVoice.name);
+          updateVoiceStatus();
+          speak("Hallo, ich lese dir vor!");
+        };
+        if (hint) hint.style.display = german.length ? "none" : "block";
+        updateVoiceStatus();
+      }
+      function refreshVoices() {
+        if (!("speechSynthesis" in window)) return;
+        voices = speechSynthesis.getVoices() || [];
+        if (!voices.length) return;
+        const german = voices.filter(isGermanVoice);
+        const saved = localStorage.getItem(VOICE_KEY);
+        chosenVoice =
+          german.find((v) => v.name === saved) ||
+          german[0] ||
+          voices.find((v) => v.name === saved) ||
+          chosenVoice ||
+          voices[0] ||
+          null;
+        buildVoicePicker(german);
+      }
+      if ("speechSynthesis" in window) {
+        refreshVoices();
+        speechSynthesis.onvoiceschanged = refreshVoices;
+      }
+      function speak(text, rate) {
+        if (!("speechSynthesis" in window) || !text) return;
+        speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(String(text));
+        u.lang = (chosenVoice && chosenVoice.lang) || "de-DE";
+        if (chosenVoice) u.voice = chosenVoice;
+        u.rate = rate || 0.85;
+        u.pitch = 1.05;
+        speechSynthesis.speak(u);
+      }
+      // Kleinschreibung, damit die Stimme Silben/Wörter liest statt buchstabiert.
+      function saySyllable(syl) {
+        speak(String(syl).toLowerCase(), 0.7);
+      }
+      function sayWord(w) {
+        speak(String(w).toLowerCase(), 0.85);
+      }
+
+      // ===== FORTSCHRITT =====
+      const STORAGE_KEY = "sv_lesen_phase2_progress";
+      function loadProgress() {
+        try {
+          return new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"));
+        } catch (e) {
+          return new Set();
+        }
+      }
+      let completed = loadProgress();
+      function save() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify([...completed]));
+      }
+      function toggleWord(id) {
+        if (completed.has(id)) completed.delete(id);
+        else completed.add(id);
+        save();
+        render();
+      }
+
+      function shuffle(a) {
+        for (let i = a.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+      }
+
+      // Silben eines Wortes als getrennte Spans (mit Trenn-Punkt) rendern.
+      function renderSyllables(container, word) {
+        container.replaceChildren();
+        word.silben.forEach((syl, i) => {
+          if (i > 0) {
+            const dot = document.createElement("span");
+            dot.className = "dot";
+            dot.textContent = "·";
+            container.appendChild(dot);
+          }
+          const s = document.createElement("span");
+          s.className = "syl";
+          s.textContent = syl;
+          container.appendChild(s);
+        });
+      }
+
+      // Wort silbenweise vorsprechen + optisch mitleuchten, dann flüssig.
+      function speakWordBySyllables(word, sylSpans) {
+        let i = 0;
+        const step = () => {
+          if (sylSpans) sylSpans.forEach((s) => s.classList.remove("lit"));
+          if (i < word.silben.length) {
+            if (sylSpans && sylSpans[i]) sylSpans[i].classList.add("lit");
+            saySyllable(word.silben[i]);
+            i++;
+            setTimeout(step, 620);
+          } else {
+            setTimeout(() => {
+              sayWord(word.id);
+              if (sylSpans) sylSpans.forEach((s) => s.classList.remove("lit"));
+            }, 120);
+          }
+        };
+        step();
+      }
+
+      // ===== RENDER LEKTIONEN =====
+      function render() {
+        const navRow = document.getElementById("navRow");
+        const mainContent = document.getElementById("mainContent");
+        const certSection = document.getElementById("certSection");
+        const progressFill = document.getElementById("progressFill");
+        const progressLabel = document.getElementById("progressLabel");
+
+        const done = completed.size;
+        const total = WORDS.length;
+        const pct = Math.round((done / total) * 100);
+        progressFill.style.width = pct + "%";
+        progressLabel.textContent = done + " von " + total + " Wörtern ⭐";
+
+        // Navigation
+        navRow.replaceChildren();
+        LEKTIONEN.forEach((lk) => {
+          const btn = document.createElement("button");
+          btn.className = "nav-btn";
+          btn.textContent = lk.nr;
+          btn.title = lk.titel;
+          btn.addEventListener("click", () =>
+            scrollTo2("lektion-" + lk.nr),
+          );
+          navRow.appendChild(btn);
+        });
+        const bBtn = document.createElement("button");
+        bBtn.className = "nav-btn special";
+        bBtn.textContent = "🧱 Silben-Bauer";
+        bBtn.addEventListener("click", () => scrollTo2("builderWrap"));
+        navRow.appendChild(bBtn);
+        const fBtn = document.createElement("button");
+        fBtn.className = "nav-btn special";
+        fBtn.textContent = "⚡ Blitz";
+        fBtn.addEventListener("click", () => scrollTo2("flashWrap"));
+        navRow.appendChild(fBtn);
+        const cBtn = document.createElement("button");
+        cBtn.className = "nav-btn special";
+        cBtn.textContent = "🏆";
+        cBtn.title = "Zertifikat";
+        cBtn.addEventListener("click", () => scrollTo2("certSection"));
+        navRow.appendChild(cBtn);
+
+        // Inhalt
+        mainContent.replaceChildren();
+
+        // Erklär-Karte
+        const ex = document.createElement("div");
+        ex.className = "explainer";
+        const exH = document.createElement("h2");
+        exH.textContent = "🧩 Was ist Silben-Lesen?";
+        ex.appendChild(exH);
+        const exP = document.createElement("p");
+        exP.textContent =
+          "Ein Wort besteht aus kleinen Häppchen — den Silben. Wenn du sie langsam hintereinander liest und zusammenziehst, entsteht ein Wort. Probier es:";
+        ex.appendChild(exP);
+        const demo = document.createElement("div");
+        demo.className = "demo-blend";
+        const dOma = { id: "OMA", silben: ["O", "MA"] };
+        ["O", "MA"].forEach((syl, i) => {
+          if (i > 0) {
+            const plus = document.createElement("span");
+            plus.className = "demo-arrow";
+            plus.textContent = "+";
+            demo.appendChild(plus);
+          }
+          const chip = document.createElement("span");
+          chip.className = "demo-syl";
+          chip.textContent = syl;
+          chip.title = "Antippen zum Hören";
+          chip.addEventListener("click", () => saySyllable(syl));
+          demo.appendChild(chip);
+        });
+        const arr = document.createElement("span");
+        arr.className = "demo-arrow";
+        arr.textContent = "→";
+        demo.appendChild(arr);
+        const dw = document.createElement("span");
+        dw.className = "demo-word";
+        dw.textContent = "OMA 👵";
+        dw.title = "Antippen zum Hören";
+        dw.addEventListener("click", () => speakWordBySyllables(dOma, null));
+        demo.appendChild(dw);
+        ex.appendChild(demo);
+        mainContent.appendChild(ex);
+
+        // Lektions-Karten
+        LEKTIONEN.forEach((lk) => {
+          const card = document.createElement("div");
+          card.className = "card";
+          card.id = "lektion-" + lk.nr;
+
+          // Eltern-Info-Button
+          const infoBtn = document.createElement("button");
+          infoBtn.className = "info-toggle-btn";
+          infoBtn.textContent = "i";
+          infoBtn.title = "Eltern-Info ein-/ausblenden";
+          infoBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const panel = card.querySelector(".parent-info");
+            if (panel.classList.contains("visible")) {
+              panel.classList.remove("visible");
+              infoBtn.classList.remove("open");
+              infoBtn.textContent = "i";
+            } else {
+              panel.classList.add("visible");
+              infoBtn.classList.add("open");
+              infoBtn.textContent = "✕";
+            }
+          });
+          card.appendChild(infoBtn);
+
+          const num = document.createElement("div");
+          num.className = "card-number";
+          num.textContent = "Lektion " + lk.nr;
+          card.appendChild(num);
+
+          const title = document.createElement("h2");
+          title.className = "lesson-title";
+          title.textContent = lk.titel;
+          card.appendChild(title);
+
+          // Silben-Familie
+          if (lk.familie.length) {
+            const fl = document.createElement("div");
+            fl.className = "familie-label";
+            fl.textContent = "Diese Silben kannst du üben (antippen zum Hören):";
+            card.appendChild(fl);
+            const row = document.createElement("div");
+            row.className = "silben-row";
+            lk.familie.forEach((syl) => {
+              const chip = document.createElement("span");
+              chip.className = "silben-chip";
+              chip.textContent = syl;
+              chip.title = "Antippen zum Hören";
+              chip.addEventListener("click", () => saySyllable(syl));
+              row.appendChild(chip);
+            });
+            card.appendChild(row);
+          }
+
+          // Wort-Kacheln dieser Lektion
+          const grid = document.createElement("div");
+          grid.className = "words-grid";
+          WORDS.filter((w) => w.lektion === lk.nr).forEach((w) => {
+            grid.appendChild(makeWordTile(w));
+          });
+          card.appendChild(grid);
+
+          // Eltern-Info-Panel
+          if (lk.elternInfo) {
+            const parentInfo = document.createElement("div");
+            parentInfo.className = "parent-info";
+            const frag = new DOMParser().parseFromString(
+              lk.elternInfo,
+              "text/html",
+            );
+            while (frag.body.firstChild) {
+              parentInfo.appendChild(frag.body.firstChild);
+            }
+            card.appendChild(parentInfo);
+          }
+
+          mainContent.appendChild(card);
+        });
+
+        // Zertifikat-Badges
+        const certWords = document.getElementById("certWords");
+        if (certWords && certWords.childElementCount === 0) {
+          WORDS.forEach((w) => {
+            const b = document.createElement("span");
+            b.className = "word-badge";
+            b.textContent = w.id;
+            certWords.appendChild(b);
+          });
+        }
+        certSection.style.display = done >= total ? "block" : "none";
+      }
+
+      function makeWordTile(w) {
+        const tile = document.createElement("div");
+        tile.className = "word-tile" + (completed.has(w.id) ? " done" : "");
+        tile.id = "word-" + w.id;
+
+        const emoji = document.createElement("div");
+        emoji.className = "word-emoji";
+        emoji.textContent = w.emoji;
+        emoji.title = "Antippen zum Hören";
+        const syll = document.createElement("div");
+        syll.className = "word-syllables";
+        renderSyllables(syll, w);
+        syll.title = "Antippen zum Hören";
+
+        const sylSpans = () => [...syll.querySelectorAll(".syl")];
+        const hearIt = () => speakWordBySyllables(w, sylSpans());
+        emoji.addEventListener("click", hearIt);
+        syll.addEventListener("click", hearIt);
+
+        tile.appendChild(emoji);
+        tile.appendChild(syll);
+
+        const hear = document.createElement("div");
+        hear.className = "word-hear";
+        hear.textContent = "🔊 antippen & zusammenlesen";
+        tile.appendChild(hear);
+
+        const bezug = document.createElement("div");
+        bezug.className = "word-bezug";
+        const frag = new DOMParser().parseFromString(w.bezug, "text/html");
+        while (frag.body.firstChild) bezug.appendChild(frag.body.firstChild);
+        tile.appendChild(bezug);
+
+        const btn = document.createElement("button");
+        btn.className = "word-done-btn";
+        btn.textContent = completed.has(w.id)
+          ? "⭐ Kann ich!"
+          : "✋ Kann ich lesen";
+        btn.addEventListener("click", () => toggleWord(w.id));
+        tile.appendChild(btn);
+
+        return tile;
+      }
+
+      function scrollTo2(id) {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      // ===== SILBEN-BAUER =====
+      // Nur mehrsilbige Wörter (2–3 Silben, nicht „kurz").
+      const BUILDER_WORDS = WORDS.filter((w) => !w.kurz && w.silben.length >= 2);
+      let bDeck = [];
+      let bIdx = 0;
+      let bStars = 0;
+      let bNextNeeded = 0; // Index der nächsten benötigten Silbe
+
+      function startBuilder() {
+        bDeck = shuffle([...BUILDER_WORDS]);
+        bIdx = 0;
+        bStars = 0;
+        document.getElementById("bStars").textContent = "";
+        document.getElementById("bTotal").textContent = bDeck.length;
+        renderBuilder();
+      }
+
+      function renderBuilder() {
+        const w = bDeck[bIdx];
+        bNextNeeded = 0;
+        document.getElementById("bIndex").textContent = bIdx + 1;
+        document.getElementById("bPicture").textContent = w.emoji;
+        document.getElementById("bPicture").onclick = () =>
+          speakWordBySyllables(w, null);
+
+        // Slots
+        const slots = document.getElementById("bSlots");
+        slots.replaceChildren();
+        w.silben.forEach(() => {
+          const slot = document.createElement("div");
+          slot.className = "b-slot";
+          slots.appendChild(slot);
+        });
+
+        // Bank (Silben gemischt)
+        const bank = document.getElementById("bBank");
+        bank.replaceChildren();
+        shuffle([...w.silben.keys()]).forEach((origIdx) => {
+          const chip = document.createElement("div");
+          chip.className = "b-chip";
+          chip.textContent = w.silben[origIdx];
+          chip.dataset.pos = origIdx;
+          chip.addEventListener("click", () => pickChip(chip, w));
+          bank.appendChild(chip);
+        });
+
+        document.getElementById("bHint").textContent =
+          "Tippe die erste Silbe von „" + w.id + "“ an.";
+      }
+
+      function pickChip(chip, w) {
+        // Nach TEXT prüfen, nicht nach Position — so sind doppelte Silben
+        // (z. B. MA + MA in MAMA) egal, egal welchen Chip das Kind antippt.
+        if (chip.textContent === w.silben[bNextNeeded]) {
+          // richtig
+          const slots = document.querySelectorAll("#bSlots .b-slot");
+          const slot = slots[bNextNeeded];
+          slot.textContent = w.silben[bNextNeeded];
+          slot.classList.add("filled");
+          chip.classList.add("used");
+          saySyllable(w.silben[bNextNeeded]);
+          bNextNeeded++;
+          if (bNextNeeded >= w.silben.length) {
+            document.getElementById("bHint").textContent =
+              "🎉 Zusammen: " + w.id + "!";
+            setTimeout(() => sayWord(w.id), 500);
+          } else {
+            document.getElementById("bHint").textContent =
+              "Super! Jetzt die nächste Silbe.";
+          }
+        } else {
+          // falsch
+          chip.classList.add("wrong");
+          setTimeout(() => chip.classList.remove("wrong"), 450);
+          document.getElementById("bHint").textContent =
+            "Fast! Erst die Silbe „" + w.silben[bNextNeeded] + "“.";
+          saySyllable(w.silben[bNextNeeded]);
+        }
+      }
+
+      function builderHear() {
+        const w = bDeck[bIdx];
+        if (w) speakWordBySyllables(w, null);
+      }
+
+      function builderNext() {
+        // Stern nur, wenn das aktuelle Wort fertig gebaut ist.
+        const w = bDeck[bIdx];
+        if (w && bNextNeeded >= w.silben.length) {
+          bStars = Math.min(bDeck.length, bStars + 1);
+          document.getElementById("bStars").textContent = "⭐".repeat(bStars);
+        }
+        bIdx++;
+        if (bIdx >= bDeck.length) {
+          document.getElementById("bSlots").replaceChildren();
+          document.getElementById("bBank").replaceChildren();
+          document.getElementById("bPicture").textContent = "🏆";
+          document.getElementById("bPicture").onclick = null;
+          document.getElementById("bHint").textContent =
+            "Super gebaut — alle Wörter geschafft! Nochmal? Tippe 🧱 in der Leiste.";
+          document.getElementById("bIndex").textContent = bDeck.length;
+          return;
+        }
+        renderBuilder();
+      }
+
+      // ===== BLITZ-WÖRTER =====
+      let fDeck = [];
+      let fIdx = 0;
+      let fStars = 0;
+      let fFlipped = false;
+
+      function startFlash() {
+        fDeck = shuffle([...WORDS]);
+        fIdx = 0;
+        fStars = 0;
+        document.getElementById("fStars").textContent = "";
+        document.getElementById("fTotal").textContent = fDeck.length;
+        renderFlash();
+      }
+
+      function renderFlash() {
+        const w = fDeck[fIdx];
+        fFlipped = false;
+        const card = document.getElementById("fCard");
+        card.classList.remove("flipped");
+        document.getElementById("fWord").textContent = w.id;
+        document.getElementById("fEmoji").textContent = w.emoji;
+        document.getElementById("fIndex").textContent = fIdx + 1;
+      }
+
+      function flashRead() {
+        const w = fDeck[fIdx];
+        if (w) sayWord(w.id);
+      }
+
+      function flashFlip() {
+        const card = document.getElementById("fCard");
+        fFlipped = !fFlipped;
+        card.classList.toggle("flipped", fFlipped);
+        if (fFlipped) {
+          const w = fDeck[fIdx];
+          if (w) sayWord(w.id);
+        }
+      }
+
+      function flashNext() {
+        fStars = Math.min(fDeck.length, fStars + 1);
+        document.getElementById("fStars").textContent = "⭐".repeat(fStars);
+        fIdx++;
+        if (fIdx >= fDeck.length) {
+          document.getElementById("fWord").textContent = "🏆";
+          document.getElementById("fEmoji").textContent = "🎉";
+          document.getElementById("fCard").classList.add("flipped");
+          document.getElementById("fIndex").textContent = fDeck.length;
+          return;
+        }
+        renderFlash();
+      }
+
+      // ===== START =====
+      render();
+      startBuilder();
+      startFlash();
+    </script>
+  </body>
+</html>

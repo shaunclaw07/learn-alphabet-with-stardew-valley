@@ -23,7 +23,28 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # ─── Tests vor dem Deploy ────────────────────────────────────────────
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: tests/package-lock.json
+      - run: npm ci
+        working-directory: tests
+      - run: npx playwright install --with-deps chromium
+        working-directory: tests
+      - run: npx playwright test
+        working-directory: tests
+
+  # ─── Deployment (nur wenn Tests grün) ────────────────────────────────
   deploy:
+    needs: test
     runs-on: ubuntu-latest
     environment:
       name: github-pages

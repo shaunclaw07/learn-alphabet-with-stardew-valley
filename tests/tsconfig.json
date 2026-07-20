@@ -1,0 +1,10 @@
+{
+  "extends": "@playwright/test/tsconfig.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "target": "ESNext",
+    "lib": ["ESNext"]
+  },
+  "include": ["spec/**/*.ts", "playwright.config.ts"]
+}

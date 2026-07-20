@@ -1,2 +1,8 @@
 # Superpowers-Arbeitsdateien (Pläne etc.) nicht versionieren
 docs/superpowers/
+
+# Playwright-Tests (node_modules in tests/)
+tests/node_modules/
+tests/test-results/
+tests/playwright-report/
+

@@ -1203,10 +1203,35 @@
         if (hint) hint.style.display = german.length ? "none" : "block";
         updateVoiceStatus();
       }
+      // Zeigt Klartext, wenn das Gerät gar keine Stimme liefert (typisch:
+      // Amazon-Kids-Modus gibt die Web Speech API nicht frei, oder es ist
+      // keine TTS-Engine installiert).
+      function showNoVoices() {
+        const sel = document.getElementById("voicePick");
+        const st = document.getElementById("voiceStatus");
+        if (sel) {
+          sel.replaceChildren();
+          const o = document.createElement("option");
+          o.textContent = "— keine Vorlese-Stimme verfügbar —";
+          sel.appendChild(o);
+          sel.disabled = true;
+        }
+        if (st) {
+          st.innerHTML =
+            "🔇 <strong>Kein Vorlesen verfügbar.</strong> Bitte die App " +
+            "<strong>außerhalb des Kids-Modus</strong> öffnen und unter " +
+            "Einstellungen → Bedienungshilfen → Text-to-Speech eine deutsche " +
+            "Stimme installieren.";
+          st.style.color = "#b23b1e";
+          st.style.fontWeight = "800";
+        }
+      }
       function refreshVoices() {
         if (!("speechSynthesis" in window)) return;
         voices = speechSynthesis.getVoices() || [];
         if (!voices.length) return;
+        const sel = document.getElementById("voicePick");
+        if (sel) sel.disabled = false;
         const german = voices.filter(isGermanVoice);
         const saved = localStorage.getItem(VOICE_KEY);
         chosenVoice =
@@ -1218,9 +1243,24 @@
           null;
         buildVoicePicker(german);
       }
+      // Fire OS & Co. feuern "voiceschanged" oft unzuverlässig — daher die
+      // Stimmen mehrfach nachladen; bleibt die Liste dauerhaft leer, einen
+      // Klartext-Hinweis zeigen statt still ein leeres Dropdown zu lassen.
       if ("speechSynthesis" in window) {
-        refreshVoices();
+        let voiceTries = 0;
+        const pollVoices = () => {
+          refreshVoices();
+          if (voices.length) return;
+          if (++voiceTries >= 12) {
+            showNoVoices();
+            return;
+          }
+          setTimeout(pollVoices, 250);
+        };
+        pollVoices();
         speechSynthesis.onvoiceschanged = refreshVoices;
+      } else {
+        showNoVoices();
       }
       function speak(text, rate) {
         if (!("speechSynthesis" in window) || !text) return;

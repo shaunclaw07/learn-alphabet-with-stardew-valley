@@ -1,6 +1,6 @@
 // Service Worker der Lese-Schule: Precache aller Seiten + Runtime-Cache für Fonts.
 // Bei NEUER PHASE: Seite zu PRECACHE ergänzen UND CACHE_VERSION erhöhen.
-const CACHE_VERSION = "sv-lesen-v1";
+const CACHE_VERSION = "sv-lesen-v2";
 const PRECACHE = "precache-" + CACHE_VERSION;
 const RUNTIME = "runtime-" + CACHE_VERSION;
 

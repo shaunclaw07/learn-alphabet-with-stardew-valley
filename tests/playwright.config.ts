@@ -13,7 +13,7 @@ export default defineConfig({
     trace: process.env.CI ? "on-first-retry" : "off",
   },
   webServer: {
-    command: "cd .. && python3 -m http.server 3100",
+    command: "cd .. && python3 -m http.server 3100 --directory dist",
     port: 3100,
     reuseExistingServer: !process.env.CI,
     timeout: 10_000,

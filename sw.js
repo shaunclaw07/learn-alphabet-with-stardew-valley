@@ -1,8 +1,12 @@
-// Service Worker der Lese-Schule: Precache aller Seiten + Runtime-Cache für Fonts.
-// Bei NEUER PHASE: Seite zu PRECACHE ergänzen UND CACHE_VERSION erhöhen.
-const CACHE_VERSION = "sv-lesen-v2";
+// Service Worker der Lese-Schule: Precache aller Seiten + Fonts für volles Offline-Erlebnis.
+// Bei NEUER PHASE: Seite zu APP_SHELL ergänzen UND CACHE_VERSION erhöhen.
+const CACHE_VERSION = "sv-lesen-v3";
 const PRECACHE = "precache-" + CACHE_VERSION;
 const RUNTIME = "runtime-" + CACHE_VERSION;
+
+// ─── Google-Fonts-URL (muss mit den <link>-Tags im HTML übereinstimmen) ───
+const FONTS_CSS_URL =
+  "https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800&display=swap";
 
 const APP_SHELL = [
   "/index.html",
@@ -10,6 +14,11 @@ const APP_SHELL = [
   "/phase2/phase2-schule.html",
   "/phase3/phase3-schule.html",
   "/phase4/phase4-schule.html",
+  "/lehrplan.html",
+  "/phase1/phase1-druckversion.html",
+  "/phase2/phase2-druckversion.html",
+  "/phase3/phase3-druckversion.html",
+  "/phase4/phase4-druckversion.html",
   "/manifest.webmanifest",
   "/icons/icon-192.png",
   "/icons/icon-512.png",
@@ -18,12 +27,53 @@ const APP_SHELL = [
   "/icons/favicon-32.png",
 ];
 
+// ─── Font-Precaching: Lädt Google-Fonts-CSS und cached WOFF2-Dateien ───
+async function precacheFonts(cache) {
+  try {
+    const cssResp = await fetch(FONTS_CSS_URL);
+    if (!cssResp.ok) return;
+    const css = await cssResp.text();
+
+    // Parse alle url(...)-Referenzen (WOFF2-Dateien auf fonts.gstatic.com)
+    const fontUrls = [];
+    const urlRe = /url\((https:\/\/fonts\.gstatic\.com\/[^)]+)\)/g;
+    let m;
+    while ((m = urlRe.exec(css)) !== null) {
+      fontUrls.push(m[1]);
+    }
+
+    if (fontUrls.length === 0) return;
+
+    // Fonts parallel laden und cachen
+    await Promise.all(
+      fontUrls.map(async (fontUrl) => {
+        try {
+          const resp = await fetch(fontUrl);
+          if (resp.ok) await cache.put(fontUrl, resp);
+        } catch (_) {
+          // Font-Ladefehler sind nicht fatal — fällt auf Runtime-Cache zurück
+        }
+      })
+    );
+
+    // Auch die CSS selbst cachen
+    await cache.put(FONTS_CSS_URL, cssResp.clone());
+  } catch (_) {
+    // Wenn Font-Precaching fehlschlägt, ist das okay — Runtime-Cache fängt's
+  }
+}
+
+// ─── Install ─────────────────────────────────────────────────────────
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(PRECACHE).then((cache) => cache.addAll(APP_SHELL)).then(() => self.skipWaiting())
+    caches.open(PRECACHE).then(async (cache) => {
+      await cache.addAll(APP_SHELL);
+      await precacheFonts(cache);
+    }).then(() => self.skipWaiting())
   );
 });
 
+// ─── Activate: alte Caches aufräumen ─────────────────────────────────
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
@@ -34,6 +84,7 @@ self.addEventListener("activate", (event) => {
   );
 });
 
+// ─── Fetch ───────────────────────────────────────────────────────────
 function isFont(url) {
   return url.hostname === "fonts.googleapis.com" || url.hostname === "fonts.gstatic.com";
 }
@@ -43,7 +94,7 @@ self.addEventListener("fetch", (event) => {
   if (req.method !== "GET") return;
   const url = new URL(req.url);
 
-  // Google Fonts: stale-while-revalidate (opaque erlaubt)
+  // Google Fonts: stale-while-revalidate
   if (isFont(url)) {
     event.respondWith(
       caches.open(RUNTIME).then((cache) =>

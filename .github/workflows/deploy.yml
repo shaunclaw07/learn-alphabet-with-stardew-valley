@@ -1,8 +1,7 @@
 name: Deploy zu GitHub Pages
 
-# Deployt die statische Lese-Schule (index.html + phase1/ + phase2/) zu
-# GitHub Pages. Reine statische Dateien — kein Build nötig, das ganze Repo
-# wird als Pages-Artefakt hochgeladen.
+# Baut die Lese-Schule mit node build.js (Shared-Includes → self-contained HTML)
+# und deployt den dist/-Ordner zu GitHub Pages. Tests laufen gegen dist/.
 
 on:
   # Bei jedem Push auf master automatisch deployen
@@ -39,6 +38,8 @@ jobs:
         working-directory: tests
       - run: npx playwright install --with-deps chromium
         working-directory: tests
+      - name: Build (Shared-Includes → self-contained HTML)
+        run: node build.js
       - run: npx playwright test
         working-directory: tests
 
@@ -53,14 +54,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Build (Shared-Includes → self-contained HTML)
+        run: node build.js
+
       - name: Pages konfigurieren
         uses: actions/configure-pages@v5
 
       - name: Seite als Artefakt hochladen
         uses: actions/upload-pages-artifact@v3
         with:
-          # Das komplette Repo-Root ist die Website (Einstieg: index.html)
-          path: "."
+          path: "dist"
 
       - name: Zu GitHub Pages deployen
         id: deployment

@@ -33,6 +33,14 @@ sowie den kanonischen PWA-`<head>`-Block und die Service-Worker-Registrierung
 
 ## Verbindliche Konventionen (für ALLE Phasen)
 
+**Build-System (NEU seit 2026-07)**
+- Source-Dateien nutzen `<!-- #INCLUDE shared/datei -->`, `/* #INCLUDE shared/datei */` 
+  und `// #INCLUDE shared/datei.js` Marker für geteilte Blöcke.
+- **`node build.js`** baut self-contained HTML-Dateien nach `dist/`.
+- `dist/` ist das Deployment-Ziel — NICHT direkt die Source-HTMLs.
+- Lokal: `dist/index.html` per Doppelklick öffnen. `dist/` ist `.gitignore`d.
+- Bei neuen Shared-Blöcken: in `shared/` ablegen und Marker in den Phasen setzen.
+
 **Struktur**
 - Eine Phase = **eine** self-contained HTML-Datei in eigenem Ordner
   (`phaseN/…-schule.html`). **Alles inline** — CSS und JS in der Datei, keine

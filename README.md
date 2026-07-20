@@ -82,6 +82,27 @@ Gesprochene Inhalte → Stimmen → Deutsch` eine deutsche Stimme laden.
 
 ---
 
+## 🖨️ Zum Ausdrucken
+
+Neben den interaktiven Apps hat **jede Phase eine druckbare A4-Fassung** als
+Papier-Backup für unterwegs oder offline. Aufbau jeweils gleich: Deckblatt
+(„So funktioniert's") → eine Seite pro Lektion/Thema mit Merkbildern und
+Eltern-Tipps → **Ausschneide-Material** → Zertifikat.
+
+| Phase | Druckdatei | Ausschneide-Material |
+|-------|-----------|----------------------|
+| 1 | [`phase1/phase1-druckversion.html`](phase1/phase1-druckversion.html) · [PDF](phase1/phase1-druckversion.pdf) | 21 Buchstaben-Karteikarten |
+| 2 | [`phase2/phase2-druckversion.html`](phase2/phase2-druckversion.html) | 15 Wortkarten |
+| 3 | [`phase3/phase3-druckversion.html`](phase3/phase3-druckversion.html) | 28 Wortkarten |
+| 4 | [`phase4/phase4-druckversion.html`](phase4/phase4-druckversion.html) | 17 Satzstreifen |
+
+**So druckst du:** Datei im Browser öffnen → `Strg`/`Cmd + P` → drucken oder
+**„Als PDF speichern"**. Tipp: im Druckdialog **Hintergrundgrafiken aktivieren**,
+damit die farbigen Karten und Badges mitgedruckt werden. Phase 1 liegt zusätzlich
+als fertige **PDF** bei.
+
+---
+
 ## 🗂️ Projektstruktur
 
 ```

@@ -658,27 +658,28 @@
     </script>
     <script>
       // Install-Button: nur zeigen, wenn der Browser die Installation anbietet.
-      (function () {
-        var deferred = null;
-        var btn = document.getElementById("pwa-install");
+      {
+        let deferred = null;
+        const btn = document.getElementById("pwa-install");
         if (!btn) return;
-        window.addEventListener("beforeinstallprompt", function (e) {
+
+        window.addEventListener("beforeinstallprompt", (e) => {
           e.preventDefault();
           deferred = e;
           btn.hidden = false;
         });
-        btn.addEventListener("click", function () {
+        btn.addEventListener("click", () => {
           if (!deferred) return;
           deferred.prompt();
-          deferred.userChoice.finally(function () {
+          deferred.userChoice.finally(() => {
             deferred = null;
             btn.hidden = true;
           });
         });
-        window.addEventListener("appinstalled", function () {
+        window.addEventListener("appinstalled", () => {
           btn.hidden = true;
         });
-      })();
+      }
     </script>
   </body>
 </html>

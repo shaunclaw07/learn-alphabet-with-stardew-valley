@@ -452,3 +452,133 @@ select:focus-visible,
   top: 60%;
   left: 50%;
 }
+
+/* ===== DARK MODE (Nacht auf der Farm) ===== */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #1a1a2e;
+    background-image:
+      radial-gradient(ellipse at 20% 20%, #2a2540 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, #1e3a2a 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, #1a1a2e 0%, transparent 70%);
+    color: #e0d6c2;
+  }
+
+  .header {
+    background: linear-gradient(180deg, #4a7a30 0%, #3a6628 100%);
+    border-bottom-color: #2d4a1e;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
+  .header::after {
+    background: repeating-linear-gradient(
+      90deg, #5a4420 0px, #5a4420 8px, #8b7030 8px, #8b7030 16px
+    );
+  }
+  .header h1 {
+    text-shadow: 2px 2px 0 #1a3010, 0 0 12px rgba(255, 255, 255, 0.15);
+  }
+  .header .subtitle {
+    color: #c8e0b0;
+  }
+
+  .back-link {
+    background: #2d2d44;
+    color: #e0d6c2;
+    border-color: #6b5a3e;
+  }
+  @media (hover: hover) {
+    .back-link:hover {
+      background: #8b7030;
+    }
+  }
+
+  .progress-bar {
+    background: #3a3050;
+    border-color: #6b5a3e;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+  }
+  .progress-label {
+    color: #b0a090;
+  }
+
+  .voice-wrap {
+    color: #b0a090;
+  }
+  .voice-wrap select {
+    background: #2d2d44;
+    color: #e0d6c2;
+    border-color: #6b5a3e;
+  }
+  .voice-hint {
+    background: #2a2535;
+    border-color: #8b7030;
+  }
+
+  .nav-row {
+    background: #1a1a2eee;
+  }
+  .nav-row::-webkit-scrollbar-thumb {
+    background: #8b7030;
+  }
+  .nav-btn {
+    background: #2d2d44;
+    color: #e0d6c2;
+    border-color: #6b5a3e;
+  }
+  .nav-btn.done {
+    background: #8b7030;
+    border-color: #a08840;
+  }
+  .nav-btn.active {
+    background: #4a7a30;
+    color: #fff;
+    border-color: #2d4a1e;
+  }
+  @media (hover: hover) {
+    .nav-btn:hover,
+    .nav-btn.active {
+      background: #4a7a30;
+      box-shadow: 0 4px 12px rgba(74, 122, 48, 0.4);
+    }
+  }
+
+  .info-toggle-btn {
+    background: #2d2d44;
+    color: #b0a090;
+    border-color: #6b5a3e;
+  }
+  @media (hover: hover) {
+    .info-toggle-btn:hover {
+      background: #4a7a30;
+    }
+  }
+
+  .parent-info {
+    background: #252540;
+    border-color: #6b5a3e;
+    color: #e0d6c2;
+  }
+  .parent-info h3 {
+    color: #ff8a55;
+  }
+  .parent-info .step .step-label {
+    color: #6a9a50;
+  }
+  .parent-info .say {
+    background: #2a2530;
+    border-left-color: #b08030;
+  }
+
+  /* Sichtbarer Fokusring heller für Dark Mode */
+  a:focus-visible,
+  button:focus-visible,
+  select:focus-visible,
+  .nav-btn:focus-visible,
+  .info-toggle-btn:focus-visible {
+    outline-color: #6a9a50;
+  }
+
+  .farm-decoration {
+    opacity: 0.18;
+  }
+}

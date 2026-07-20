@@ -1,0 +1,208 @@
+/* ===== DARK MODE – Phase-Elemente (Cards, Quiz, Workshop, Certificate) ===== */
+/* Wird NACH den phase-spezifischen Regeln inkludiert, damit die Overrides greifen. */
+@media (prefers-color-scheme: dark) {
+  /* ─── Cards (alle Phasen) ─── */
+  .card,
+  .certificate {
+    background: #252540;
+    border-color: #6b5a3e;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3), 0 0 0 8px #3a3050;
+    color: #e0d6c2;
+  }
+  .card:hover {
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4), 0 0 0 8px #4a3a60;
+  }
+  .card-number {
+    background: #b84a20;
+    border-color: #8a3010;
+  }
+  .card h2.lesson-title,
+  .card-info h2,
+  .card-info .merkwort {
+    color: #e0d6c2;
+  }
+  .card-info .laut {
+    color: #a08850;
+  }
+  .card-info .bezug {
+    background: #1e3020;
+    border-left-color: #4a7a30;
+  }
+  .card-info .bezug strong {
+    color: #6a9a50;
+  }
+
+  /* ─── Letter Display (Phase 1) ─── */
+  .letter-display {
+    background: linear-gradient(135deg, #353050, #2a2540);
+    border-color: #8b7030;
+    color: #e0d6c2;
+    box-shadow: inset 0 0 20px rgba(180, 140, 60, 0.1), 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  .letter-display:hover {
+    box-shadow: inset 0 0 24px rgba(180, 140, 60, 0.2), 0 6px 16px rgba(0, 0, 0, 0.3);
+  }
+
+  /* ─── Silben-Chips (Phase 1) ─── */
+  .silben-chip {
+    background: linear-gradient(135deg, #8b7030, #a08030);
+    color: #f0e8d0;
+    border-color: #a08840;
+  }
+
+  /* ─── Week Divider (Phase 1) ─── */
+  .week-divider {
+    color: #b0a090;
+  }
+  .week-divider::before,
+  .week-divider::after {
+    background: repeating-linear-gradient(
+      90deg, #8b7030 0, #8b7030 10px, transparent 10px, transparent 18px
+    );
+  }
+  .week-divider .wk-pill {
+    background: #4a7a30;
+    border-color: #2d4a1e;
+  }
+
+  /* ─── Explainer Card (Phase 2-4) ─── */
+  .explainer {
+    background: linear-gradient(135deg, #1e3020, #1a2a1a);
+    border-color: #3a6628;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  }
+  .explainer h2 {
+    color: #6a9a50;
+  }
+  .explainer p {
+    color: #c8d8b8;
+  }
+
+  /* ─── Quiz (Phase 1) ─── */
+  .quiz-section {
+    background: linear-gradient(135deg, #302840, #2a2035);
+    border-color: #8b7030;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  }
+  .quiz-section h2 {
+    color: #b09840;
+  }
+  .quiz-section .quiz-subtitle {
+    color: #a08850;
+  }
+  .quiz-letter-display {
+    background: #2d2d44;
+    border-color: #8b7030;
+    color: #e0d6c2;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  }
+  .quiz-score {
+    color: #e0d6c2;
+  }
+  .quiz-score span {
+    color: #6a9a50;
+  }
+  .quiz-btn.reveal-btn {
+    background: #8b7030;
+    color: #f0e8d0;
+    border-color: #a08840;
+  }
+  .quiz-btn.reset-btn {
+    background: #2d2d44;
+    color: #b0a090;
+    border-color: #6b5a3e;
+  }
+
+  /* ─── Workshop/Lesewerkstatt (Phase 1) ─── */
+  .workshop {
+    background: linear-gradient(135deg, #1e3020, #1a2a1a);
+    border-color: #3a6628;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  }
+  .workshop h2 {
+    color: #6a9a50;
+  }
+  .workshop .ws-subtitle {
+    color: #6a9a50;
+  }
+  .ws-letter {
+    background: #2d2d44;
+    border-color: #8b7030;
+    color: #e0d6c2;
+  }
+  .ws-letter.lit {
+    background: #8b7030;
+    border-color: #c06030;
+  }
+  .ws-whole {
+    color: #6a9a50;
+  }
+  .ws-hint {
+    color: #b0a090;
+  }
+  .ws-btn.blend {
+    background: #8b7030;
+    color: #f0e8d0;
+    border-color: #a08840;
+  }
+
+  /* ─── Blitz-Wörter (Phase 2) ─── */
+  .b-chip {
+    background: #2d2d44;
+    border-color: #6b5a3e;
+    color: #e0d6c2;
+  }
+  .b-chip.correct {
+    background: #4a7a30;
+    border-color: #2d4a1e;
+  }
+  .b-slot {
+    background: #1e1e35;
+    border-color: #6b5a3e;
+  }
+
+  /* ─── Wort-Kacheln / Word Cards (Phase 3) ─── */
+  .word-emoji,
+  .word-syllables {
+    color: #e0d6c2;
+  }
+  .words-grid .word-card {
+    background: #2d2d44;
+    border-color: #6b5a3e;
+  }
+
+  /* ─── Satz-Karten (Phase 4) ─── */
+  .satz-card {
+    background: #252540;
+    border-color: #6b5a3e;
+    color: #e0d6c2;
+  }
+
+  /* ─── Certificate ─── */
+  .certificate {
+    background: linear-gradient(135deg, #2a2540, #252540);
+    border-color: #8b7030;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3), inset 0 0 50px rgba(180, 140, 60, 0.05);
+  }
+  .certificate h2 {
+    color: #b09840;
+  }
+  .certificate .big-name {
+    color: #e0d6c2;
+    border-bottom-color: #8b7030;
+  }
+  .certificate .letter-badge,
+  .certificate .word-badge {
+    background: #8b7030;
+    border-color: #a08840;
+  }
+
+  /* ─── Demo-Blend (Phase 3) ─── */
+  .demo-word {
+    color: #6a9a50;
+    border-bottom-color: #4a7a30;
+  }
+  .demo-arrow {
+    color: #4a7a30;
+  }
+}

@@ -1,0 +1,1779 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>📖 Lesen lernen mit Stardew Valley – Phase 4</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ===== RESET & BASE ===== */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Nunito", sans-serif;
+        background: #f5eedc;
+        background-image:
+          radial-gradient(ellipse at 20% 20%, #e8d5a3 0%, transparent 50%),
+          radial-gradient(ellipse at 80% 80%, #c8e6a5 0%, transparent 50%),
+          radial-gradient(ellipse at 50% 50%, #f5eedc 0%, transparent 70%);
+        min-height: 100dvh;
+        color: #4a3728;
+        overflow-x: hidden;
+      }
+
+      /* ===== DESIGN TOKENS (mobile-first) ===== */
+      :root {
+        --tap: 44px; /* Mindest-Touch-Target */
+        --sp-1: 4px;
+        --sp-2: 8px;
+        --sp-3: 12px;
+        --sp-4: 16px;
+        --sp-6: 24px;
+        --sp-8: 32px;
+      }
+
+      /* ===== TOUCH & MOTION (global) ===== */
+      button,
+      a,
+      select,
+      .nav-btn,
+      .s-word,
+      .quiz-btn,
+      .b-chip,
+      .b-slot,
+      .info-toggle-btn,
+      .back-link {
+        touch-action: manipulation; /* entfernt 300ms-Tap-Delay */
+      }
+
+      /* Press-Feedback für Touch (funktioniert ohne Hover) */
+      .nav-btn:active,
+      .s-word:active,
+      .quiz-btn:active,
+      .b-chip:active,
+      .word-done-btn:active,
+      .s-btn:active,
+      .back-link:active,
+      .info-toggle-btn:active {
+        transform: scale(0.96);
+      }
+
+      /* Sichtbarer Fokusring für Tastatur/Screenreader */
+      a:focus-visible,
+      button:focus-visible,
+      select:focus-visible,
+      .nav-btn:focus-visible,
+      .quiz-btn:focus-visible,
+      .s-word:focus-visible,
+      .info-toggle-btn:focus-visible {
+        outline: 3px solid #3d6b22;
+        outline-offset: 2px;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
+
+      /* ===== HEADER ===== */
+      .header {
+        background: linear-gradient(180deg, #7ec850 0%, #5da03c 100%);
+        border-bottom: 6px solid #3d6b22;
+        padding: 20px 16px 24px;
+        padding-top: calc(20px + env(safe-area-inset-top, 0px));
+        text-align: center;
+        position: relative;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      }
+      .header::after {
+        content: "";
+        position: absolute;
+        bottom: -12px;
+        left: 0;
+        right: 0;
+        height: 12px;
+        background: repeating-linear-gradient(
+          90deg,
+          #8b6914 0px,
+          #8b6914 8px,
+          #c49a2a 8px,
+          #c49a2a 16px
+        );
+      }
+      /* ===== BACK-LINK ===== */
+      .back-link {
+        position: absolute;
+        top: calc(14px + env(safe-area-inset-top, 0px));
+        left: 14px;
+        background: #fffaf0;
+        color: #4a3728;
+        text-decoration: none;
+        font-weight: 800;
+        font-size: 0.9rem;
+        min-height: var(--tap);
+        display: inline-flex;
+        align-items: center;
+        padding: 6px 14px;
+        border-radius: 10px;
+        border: 2px solid #8b6914;
+        transition:
+          background 0.2s,
+          transform 0.2s;
+        z-index: 6;
+      }
+      @media (hover: hover) {
+        .back-link:hover {
+          background: #ffd700;
+          transform: scale(1.05);
+        }
+      }
+      .header-icons {
+        font-size: 2rem;
+        letter-spacing: 4px;
+        margin-bottom: 6px;
+      }
+      .header h1 {
+        font-family: "Press Start 2P", cursive;
+        font-size: clamp(0.7rem, 2.5vw, 1.1rem);
+        color: #fff;
+        text-shadow:
+          2px 2px 0 #3d6b22,
+          0 0 12px rgba(255, 255, 255, 0.3);
+        line-height: 1.6;
+        letter-spacing: 1px;
+      }
+      .header .subtitle {
+        font-size: 1rem;
+        color: #e8f5e0;
+        font-weight: 700;
+        margin-top: 4px;
+      }
+
+      /* ===== PROGRESS BAR ===== */
+      .progress-wrap {
+        max-width: 700px;
+        margin: 24px auto 0;
+        padding: 0 16px;
+      }
+      .progress-bar {
+        background: #d7c9a8;
+        height: 22px;
+        border-radius: 11px;
+        border: 3px solid #8b6914;
+        overflow: hidden;
+        position: relative;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+      }
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #ffd700, #ffaa00);
+        width: 0%;
+        transition: width 0.5s ease;
+        border-radius: 9px;
+        position: relative;
+      }
+      .progress-fill::after {
+        content: "⭐";
+        position: absolute;
+        right: -2px;
+        top: -8px;
+        font-size: 18px;
+        animation: bounce 1s infinite;
+      }
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-6px);
+        }
+      }
+      .progress-label {
+        text-align: center;
+        font-weight: 800;
+        font-size: 0.85rem;
+        margin-top: 6px;
+        color: #6b4f2a;
+      }
+
+      /* ===== VOICE PICKER ===== */
+      .voice-wrap {
+        max-width: 700px;
+        margin: 12px auto 0;
+        padding: 0 16px;
+        text-align: center;
+        font-weight: 700;
+        color: #6b4f2a;
+        font-size: 0.9rem;
+      }
+      .voice-wrap select {
+        font-family: "Nunito", sans-serif;
+        font-weight: 700;
+        padding: 4px 8px;
+        border-radius: 8px;
+        border: 2px solid #8b6914;
+        background: #fffaf0;
+        color: #4a3728;
+        margin-left: 6px;
+        max-width: 100%;
+      }
+      .voice-hint {
+        margin-top: 8px;
+        background: #fff3d6;
+        border: 2px dashed #c49a2a;
+        border-radius: 10px;
+        padding: 8px 12px;
+        font-weight: 600;
+        font-size: 0.82rem;
+        line-height: 1.45;
+        text-align: left;
+      }
+
+      /* ===== MAIN LAYOUT ===== */
+      .main-wrap {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 24px 16px 60px;
+      }
+
+      /* ===== NAVIGATION (mobile-first: scroll-streifen) ===== */
+      .nav-row {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        gap: var(--sp-2);
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x proximity;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        margin: 20px auto 0;
+        max-width: 900px;
+        position: sticky;
+        top: calc(10px + env(safe-area-inset-top, 0px));
+        z-index: 10;
+        background: #f5eedcee;
+        backdrop-filter: blur(6px);
+        padding: 10px;
+        border-radius: 16px;
+      }
+      .nav-row::-webkit-scrollbar {
+        height: 6px;
+      }
+      .nav-row::-webkit-scrollbar-thumb {
+        background: #c49a2a;
+        border-radius: 3px;
+      }
+
+      .nav-btn {
+        flex: 0 0 auto;
+        min-width: var(--tap);
+        height: var(--tap);
+        padding: 0 12px;
+        scroll-snap-align: start;
+        border-radius: 12px;
+        border: 2px solid #8b6914;
+        background: #fffaf0;
+        font-family: "Nunito", sans-serif;
+        font-weight: 800;
+        font-size: 1.15rem;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          color 0.2s,
+          border-color 0.2s;
+        color: #4a3728;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .nav-btn.special {
+        min-width: auto;
+        padding: 0 14px;
+        font-size: 0.55rem;
+        font-family: "Press Start 2P", cursive;
+        background: #ff6b35;
+        color: #fff;
+        border-color: #c44220;
+      }
+
+      /* Ab Tablet: Umbruch + Zentrierung statt Scroll */
+      @media (min-width: 768px) {
+        .nav-row {
+          flex-wrap: wrap;
+          overflow: visible;
+          justify-content: center;
+        }
+      }
+      /* Hover nur auf Hover-Geräten (kein Sticky-Hover auf Touch) */
+      @media (hover: hover) {
+        .nav-btn:hover {
+          background: #7ec850;
+          color: #fff;
+          border-color: #3d6b22;
+          box-shadow: 0 4px 12px rgba(126, 200, 80, 0.4);
+        }
+      }
+
+      /* ===== EXPLAINER CARD ===== */
+      .explainer {
+        background: linear-gradient(135deg, #e8f5e0, #d4edc4);
+        border: 4px solid #5da03c;
+        border-radius: 20px;
+        padding: 22px 24px;
+        margin-bottom: 30px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      }
+      .explainer h2 {
+        font-family: "Press Start 2P", cursive;
+        font-size: 0.7rem;
+        color: #3d6b22;
+        margin-bottom: 12px;
+        line-height: 1.5;
+      }
+      .explainer p {
+        font-size: 1rem;
+        line-height: 1.6;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+      .demo-sentence {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 14px 0 4px;
+      }
+
+      /* ===== KATEGORIE-/LEKTIONS-KARTE ===== */
+      .card {
+        background: #fffaf0;
+        border: 4px solid #8b6914;
+        border-radius: 20px;
+        padding: 28px 24px;
+        margin-bottom: 32px;
+        box-shadow:
+          0 8px 30px rgba(0, 0, 0, 0.1),
+          0 0 0 8px #d7c9a8;
+        position: relative;
+      }
+      .card-number {
+        position: absolute;
+        top: -16px;
+        left: 20px;
+        background: #ff6b35;
+        color: #fff;
+        font-family: "Press Start 2P", cursive;
+        font-size: 0.6rem;
+        padding: 6px 12px;
+        border-radius: 8px;
+        border: 2px solid #c44220;
+      }
+      .card h2.lesson-title {
+        font-family: "Press Start 2P", cursive;
+        font-size: 0.8rem;
+        color: #5da03c;
+        margin-bottom: 16px;
+        line-height: 1.5;
+        padding-right: 34px;
+      }
+
+      /* ===== SATZ-KARTEN ===== */
+      .sent-grid {
+        display: grid;
+        gap: 16px;
+      }
+      .sent-tile {
+        background: linear-gradient(135deg, #fff8e7, #ffe4b5);
+        border: 3px solid #c49a2a;
+        border-radius: 16px;
+        padding: 16px 14px 14px;
+        position: relative;
+        transition: border-color 0.2s;
+      }
+      .sent-tile.done {
+        border-color: #5da03c;
+        background: linear-gradient(135deg, #eafbe0, #cdefb8);
+      }
+      .sent-emoji {
+        font-size: 2.2rem;
+        line-height: 1;
+        text-align: center;
+        margin-bottom: 8px;
+      }
+      .sent-line {
+        display: flex;
+        gap: 6px 8px;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: baseline;
+        margin-bottom: 8px;
+      }
+      .sent-line.answer {
+        margin-top: 2px;
+      }
+      .s-word {
+        font-family: "Nunito", sans-serif;
+        font-weight: 800;
+        font-size: 1.5rem;
+        letter-spacing: 1px;
+        color: #4a3728;
+        background: #ffffffaa;
+        border: 2px solid transparent;
+        border-radius: 10px;
+        padding: 2px 8px;
+        cursor: pointer;
+        transition:
+          background 0.15s,
+          border-color 0.15s;
+      }
+      .s-word.lit {
+        background: #ffd700;
+        border-color: #c49a2a;
+      }
+      @media (hover: hover) {
+        .s-word:hover {
+          border-color: #c49a2a;
+        }
+      }
+      .s-punct {
+        font-weight: 800;
+        font-size: 1.5rem;
+        color: #8b6914;
+      }
+      .s-speaker {
+        font-size: 0.85rem;
+        font-weight: 800;
+        color: #8b6914;
+        margin-right: 4px;
+        align-self: center;
+      }
+      .sent-hear {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
+        align-items: center;
+        margin: 6px 0 4px;
+      }
+      .sent-hear-btn {
+        font-family: "Nunito", sans-serif;
+        font-weight: 800;
+        font-size: 0.85rem;
+        padding: 7px 14px;
+        border-radius: 10px;
+        cursor: pointer;
+        border: 2px solid #c49a2a;
+        background: #ffd700;
+        color: #4a3728;
+        transition: all 0.2s;
+      }
+      .sent-finger {
+        font-size: 0.78rem;
+        color: #8b6914;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+      .word-done-btn {
+        font-family: "Nunito", sans-serif;
+        font-weight: 800;
+        font-size: 0.85rem;
+        padding: 8px 14px;
+        border-radius: 10px;
+        cursor: pointer;
+        border: 2px solid #5da03c;
+        background: #e8f5e0;
+        color: #3d6b22;
+        transition: all 0.2s;
+        width: 100%;
+      }
+      .sent-tile.done .word-done-btn {
+        background: #ffd700;
+        color: #4a3728;
+        border-color: #c49a2a;
+      }
+
+      /* Eltern-Info */
+      .info-toggle-btn {
+        position: absolute;
+        top: 12px;
+        right: 16px;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 2px solid #8b6914;
+        background: #fffaf0;
+        font-family: "Press Start 2P", cursive;
+        font-size: 0.55rem;
+        cursor: pointer;
+        color: #8b6914;
+        z-index: 5;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .info-toggle-btn::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: var(--tap);
+        height: var(--tap);
+        transform: translate(-50%, -50%);
+      }
+      @media (hover: hover) {
+        .info-toggle-btn:hover {
+          background: #7ec850;
+          color: #fff;
+          border-color: #3d6b22;
+          transform: scale(1.15);
+        }
+      }
+      .info-toggle-btn.open {
+        background: #ff6b35;
+        color: #fff;
+        border-color: #c44220;
+      }
+      .parent-info {
+        display: none;
+        background: #fffef7;
+        border: 2px dashed #8b6914;
+        border-radius: 14px;
+        padding: 16px 18px;
+        margin-top: 16px;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        color: #4a3728;
+      }
+      .parent-info.visible {
+        display: block;
+      }
+      .parent-info h3 {
+        font-family: "Press Start 2P", cursive;
+        font-size: 0.5rem;
+        color: #ff6b35;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .parent-info .say {
+        background: #fff8e7;
+        border-left: 3px solid #ffaa00;
+        padding: 6px 10px;
+        margin: 6px 0;
+        border-radius: 0 8px 8px 0;
+        font-style: italic;
+      }
+      .parent-info .say::before {
+        content: "💬 ";
+        font-style: normal;
+      }
+
+      /* ===== SATZ-BAUER ===== */
+      .builder {
+        background: linear-gradient(135deg, #fff8e7, #ffe4b5);
+        border: 4px solid #c49a2a;
+        border-radius: 24px;
+        padding: 32px 24px;
+        text-align: center;
+        margin: 40px 0;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      }
+      .builder h2 {
+        font-family: "Press Start 2P", cursive;
+        font-size: 0.7rem;
+        color: #c49a2a;
+        margin-bottom: 8px;
+      }
+      .builder .b-subtitle {
+        font-size: 1rem;
+        color: #8b6914;
+        font-weight: 700;
+        margin-bottom: 20px;
+      }
+      .b-picture {
+        font-size: 4rem;
+        line-height: 1;
+        margin-bottom: 14px;
+        cursor: pointer;
+        user-select: none;
+      }
+      .b-slots {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+      }
+      .b-slot {
+        min-width: 84px;
+        height: 56px;
+        border-radius: 14px;
+        border: 3px dashed #c49a2a;
+        background: #fffaf0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 1.3rem;
+        color: #4a3728;
+        padding: 0 12px;
+        transition:
+          background 0.2s,
+          border-color 0.2s,
+          transform 0.15s;
+      }
+      .b-slot.filled {
+        border-style: solid;
+        border-color: #5da03c;
+        background: linear-gradient(135deg, #eafbe0, #cdefb8);
+        animation: popIn 0.3s ease;
+      }
+      .b-bank {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+        min-height: 56px;
+      }
+      .b-chip {
+        background: linear-gradient(135deg, #ffd700, #ffaa00);
+        color: #4a3728;
+        font-weight: 800;
+        font-size: 1.25rem;
+        padding: 12px 20px;
+        min-height: var(--tap);
+        border-radius: 14px;
+        border: 3px solid #c49a2a;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        user-select: none;
+      }
+      @media (hover: hover) {
+        .b-chip:hover {
+          transform: scale(1.06);
+          box-shadow: 0 4px 12px rgba(196, 154, 42, 0.4);
+        }
+      }
+      .b-chip.used {
+        opacity: 0.35;
+        pointer-events: none;
+        transform: scale(0.9);
+      }
+      .b-chip.wrong {
+        animation: shake 0.4s;
+        border-color: #d24a2a;
+      }
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        20%,
+        60% {
+          transform: translateX(-8px);
+        }
+        40%,
+        80% {
+          transform: translateX(8px);
+        }
+      }
+      .b-hint {
+        font-size: 1rem;
+        color: #6b4f2a;
+        font-weight: 800;
+        min-height: 1.4em;
+        margin-bottom: 16px;
+      }
+      .b-buttons {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .s-btn {
+        font-family: "Nunito", sans-serif;
+        font-weight: 800;
+        font-size: 1rem;
+        padding: 12px 24px;
+        min-height: var(--tap);
+        border-radius: 14px;
+        cursor: pointer;
+        border: 3px solid #3d6b22;
+        transition: all 0.2s;
+      }
+      .s-btn.hearw {
+        background: #ffd700;
+        color: #4a3728;
+        border-color: #c49a2a;
+      }
+      .s-btn.nextw {
+        background: #7ec850;
+        color: #fff;
+      }
+      @media (hover: hover) {
+        .s-btn:hover {
+          transform: scale(1.05);
+          filter: brightness(1.05);
+        }
+      }
+      .b-progress {
+        margin-top: 16px;
+        font-weight: 800;
+        color: #8b6914;
+      }
+      .b-stars {
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+        min-height: 1.6em;
+      }
+
+      /* ===== LÜCKEN-QUIZ ===== */
+      .quiz {
+        background: linear-gradient(135deg, #e8f5e0, #d4edc4);
+        border: 4px solid #5da03c;
+        border-radius: 24px;
+        padding: 32px 24px;
+        text-align: center;
+        margin: 40px 0;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      }
+      .quiz h2 {
+        font-family: "Press Start 2P", cursive;
+        font-size: 0.7rem;
+        color: #3d6b22;
+        margin-bottom: 8px;
+      }
+      .quiz .q-subtitle {
+        font-size: 1rem;
+        color: #5da03c;
+        font-weight: 700;
+        margin-bottom: 20px;
+      }
+      .q-sentence {
+        display: flex;
+        gap: 6px 8px;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: baseline;
+        font-weight: 800;
+        font-size: 1.6rem;
+        color: #4a3728;
+        letter-spacing: 1px;
+        margin-bottom: 20px;
+        min-height: 2em;
+      }
+      .q-gap {
+        display: inline-block;
+        min-width: 90px;
+        border-bottom: 4px solid #5da03c;
+        color: #5da03c;
+      }
+      .q-gap.filled {
+        color: #3d6b22;
+        border-bottom-color: #c49a2a;
+      }
+      .q-options {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 18px;
+      }
+      .quiz-btn {
+        font-family: "Nunito", sans-serif;
+        font-weight: 800;
+        font-size: 1.4rem;
+        letter-spacing: 1px;
+        padding: 14px 22px;
+        min-height: var(--tap);
+        border-radius: 16px;
+        cursor: pointer;
+        border: 3px solid #c49a2a;
+        background: linear-gradient(135deg, #fffaf0, #ffefcf);
+        color: #4a3728;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s,
+          background 0.2s,
+          border-color 0.2s;
+      }
+      @media (hover: hover) {
+        .quiz-btn:hover {
+          transform: scale(1.05);
+          box-shadow: 0 4px 12px rgba(196, 154, 42, 0.4);
+        }
+      }
+      .quiz-btn.correct {
+        background: linear-gradient(135deg, #eafbe0, #cdefb8);
+        border-color: #5da03c;
+        color: #3d6b22;
+      }
+      .quiz-btn.wrong {
+        animation: shake 0.4s;
+        border-color: #d24a2a;
+        background: #ffe6df;
+      }
+      .quiz-btn.locked {
+        pointer-events: none;
+      }
+      .q-hint {
+        font-size: 1rem;
+        color: #6b4f2a;
+        font-weight: 800;
+        min-height: 1.4em;
+        margin-bottom: 12px;
+      }
+      .q-progress {
+        margin-top: 8px;
+        font-weight: 800;
+        color: #5da03c;
+      }
+
+      @keyframes popIn {
+        0% {
+          transform: scale(0.8);
+          opacity: 0;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      /* ===== CERTIFICATE ===== */
+      .certificate {
+        background: linear-gradient(135deg, #fffef7, #fff8e7);
+        border: 6px double #c49a2a;
+        border-radius: 24px;
+        padding: 32px 24px;
+        text-align: center;
+        margin-top: 20px;
+        box-shadow:
+          0 8px 30px rgba(0, 0, 0, 0.1),
+          inset 0 0 50px rgba(255, 215, 0, 0.08);
+        position: relative;
+      }
+      .certificate::before {
+        content: "⭐";
+        font-size: 3rem;
+        position: absolute;
+        top: -20px;
+        left: 20px;
+      }
+      .certificate::after {
+        content: "⭐";
+        font-size: 3rem;
+        position: absolute;
+        bottom: -20px;
+        right: 20px;
+      }
+      .certificate h2 {
+        font-family: "Press Start 2P", cursive;
+        font-size: 0.7rem;
+        color: #c49a2a;
+        margin-bottom: 16px;
+        line-height: 1.5;
+      }
+      .certificate .big-name {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: #4a3728;
+        margin: 16px 0;
+        border-bottom: 3px dashed #c49a2a;
+        display: inline-block;
+        padding: 0 20px 8px;
+        min-width: 200px;
+      }
+      .certificate .sent-row {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        align-items: center;
+        margin: 16px 0;
+      }
+      .certificate .sent-badge {
+        background: #ffd700;
+        border: 2px solid #c49a2a;
+        border-radius: 8px;
+        padding: 6px 12px;
+        font-weight: 800;
+        font-size: 0.95rem;
+      }
+      .stickers {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        font-size: 2rem;
+        margin: 20px 0;
+        flex-wrap: wrap;
+      }
+
+      /* ===== FARM BACKGROUND ===== */
+      .farm-decoration {
+        position: fixed;
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.12;
+        font-size: 4rem;
+      }
+      .farm-1 {
+        top: 10%;
+        left: 2%;
+      }
+      .farm-2 {
+        top: 25%;
+        right: 3%;
+      }
+      .farm-3 {
+        bottom: 15%;
+        left: 4%;
+      }
+      .farm-4 {
+        bottom: 8%;
+        right: 5%;
+      }
+
+      /* ===== RESPONSIVE ===== */
+      @media (max-width: 600px) {
+        .header {
+          padding-top: 56px;
+        }
+        .header h1 {
+          font-size: 0.6rem;
+        }
+        .s-word,
+        .q-sentence,
+        .quiz-btn {
+          font-size: 1.25rem;
+        }
+        .b-chip {
+          font-size: 1.1rem;
+          padding: 10px 16px;
+        }
+      }
+      @media (min-width: 700px) {
+        .sent-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Farm decorations -->
+    <div class="farm-decoration farm-1">📖</div>
+    <div class="farm-decoration farm-2">🐴</div>
+    <div class="farm-decoration farm-3">🌾</div>
+    <div class="farm-decoration farm-4">💬</div>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+      <a class="back-link" href="../index.html">← Übersicht</a>
+      <div class="header-icons">📖💬🐴🌾🍵💰</div>
+      <h1>Lesen lernen mit<br />Stardew Valley</h1>
+      <div class="subtitle">Phase 4 — Erste Sätze</div>
+    </header>
+
+    <!-- ===== PROGRESS ===== -->
+    <div class="progress-wrap">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-label" id="progressLabel">0 von 17 Sätzen ⭐</div>
+    </div>
+
+    <!-- ===== VOICE PICKER ===== -->
+    <div class="voice-wrap">
+      <span>🔊 Vorlese-Stimme:</span>
+      <select id="voicePick" aria-label="Vorlese-Stimme"></select>
+      <div id="voiceStatus" style="margin-top: 6px; font-size: 0.82rem"></div>
+      <div class="voice-hint" id="voiceHint" style="display: none">
+        ⚠️ <strong>Keine deutsche Stimme gefunden</strong> — die Sätze klingen
+        sonst englisch. So installierst du eine (einmalig):
+        <strong
+          >Windows → Einstellungen → Zeit &amp; Sprache → Sprache → „Deutsch" →
+          Optionen → Sprache/Stimme herunterladen</strong
+        >. Danach den Browser neu starten und hier oben die deutsche Stimme
+        auswählen.
+      </div>
+    </div>
+
+    <!-- ===== NAVIGATION ===== -->
+    <div class="nav-row" id="navRow"></div>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <div class="main-wrap" id="mainContent"></div>
+
+    <!-- ===== SATZ-BAUER ===== -->
+    <div class="main-wrap" id="builderWrap">
+      <div class="builder">
+        <h2>🧱 Satz-Bauer</h2>
+        <div class="b-subtitle">
+          Baue den Satz aus Wörtern — tippe sie in der richtigen Reihenfolge an!
+        </div>
+        <div class="b-picture" id="bPicture" title="Antippen zum Hören">🧱</div>
+        <div class="b-slots" id="bSlots"></div>
+        <div class="b-bank" id="bBank"></div>
+        <div class="b-hint" id="bHint">
+          Tippe das erste Wort an, um zu starten.
+        </div>
+        <div class="b-buttons">
+          <button class="s-btn hearw" onclick="builderHear()">
+            🔊 Satz hören
+          </button>
+          <button class="s-btn nextw" onclick="builderNext()">▶ Weiter</button>
+        </div>
+        <div class="b-progress">
+          <div class="b-stars" id="bStars"></div>
+          Satz <span id="bIndex">1</span> / <span id="bTotal">0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== LÜCKEN-QUIZ ===== -->
+    <div class="main-wrap" id="quizWrap">
+      <div class="quiz">
+        <h2>🧩 Lücken-Quiz</h2>
+        <div class="q-subtitle">
+          Welches Wort fehlt? Lies den Satz und tippe das richtige Wort an!
+        </div>
+        <div class="q-sentence" id="qSentence"></div>
+        <div class="q-options" id="qOptions"></div>
+        <div class="q-hint" id="qHint">Tippe das Wort an, das in die Lücke passt.</div>
+        <div class="q-progress">
+          <div class="b-stars" id="qStars"></div>
+          Frage <span id="qIndex">1</span> / <span id="qTotal">10</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== CERTIFICATE ===== -->
+    <div id="certSection" style="display: none">
+      <div class="main-wrap">
+        <div class="certificate">
+          <h2>⭐ LESE-MEISTER ⭐</h2>
+          <p style="font-size: 1.1rem; color: #8b6914; font-weight: 700">
+            Verliehen an
+          </p>
+          <div class="big-name" contenteditable="true">DEIN NAME</div>
+          <p style="color: #5da03c; font-weight: 700; margin: 10px 0">
+            für das Lesen der ersten Stardew-Sätze und Gespräche —<br />
+            jetzt kannst du im Spiel selbst lesen!
+          </p>
+          <div class="sent-row" id="certSents"></div>
+          <div class="stickers">📖🐴🌾🍵💰🐔🐱⭐</div>
+          <p style="color: #8b6914; font-size: 0.85rem; margin-top: 12px">
+            Pelikan Stadt · Stardew Valley · Freies Lesen im Spiel! 🎉
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ===== LEKTIONEN =====
+      // prettier-ignore
+      const LEKTIONEN = [
+        { key: "gruss", nr: 1, icon: "👋", titel: "Grüße",
+          elternInfo:
+            '<h3>👨‍🏫 Wort für Wort lesen</h3><p>Zeig mit dem Finger unter jedes Wort und lies es einzeln — dann den ganzen Satz. Antippen liest jedes Wort vor. Der 🔊-Knopf liest erst Wort für Wort, dann flüssig.</p><div class="say">Erst du zeigst und liest, dann er. Immer von links nach rechts.</div>' },
+        { key: "klein", nr: 2, icon: "🗣️", titel: "Kleine Sätze",
+          elternInfo:
+            '<h3>👨‍🏫 Drei Wörter — ein Satz</h3><p>„GUS · IST · DA." Erst jedes Wort, dann zusammen. Wichtig ist der <strong>Sinn</strong>: Was sagt der Satz? Frag nach: „Wer ist da?"</p><div class="say">Loben nach jedem Satz — das motiviert enorm!</div>' },
+        { key: "hof", nr: 3, icon: "🌾", titel: "Auf dem Hof",
+          elternInfo:
+            '<h3>👨‍🏫 Vier Wörter</h3><p>Jetzt kommen kleine Wörter wie DER, DAS, IM dazu. Die liest er bald blitzschnell. Verknüpfe den Satz mit dem Bild und dem Spiel.</p><div class="say">„DER · HUND · IST · DA." — zeig ihm gleich einen Hund im Spiel!</div>' },
+        { key: "dorf", nr: 4, icon: "🌦️", titel: "Im Dorf",
+          elternInfo:
+            '<h3>👨‍🏫 Fünf Wörter</h3><p>Längere Sätze. Ruhig eine kurze Pause in der Mitte machen. Wenn er müde wird: lieber aufhören und morgen weiter.</p><div class="say">„IM · SOMMER · IST · ES · WARM." Passt zur Jahreszeit im Spiel.</div>' },
+        { key: "dialog", nr: 5, icon: "💬", titel: "Kleine Gespräche",
+          elternInfo:
+            '<h3>👨‍🏫 Frage und Antwort</h3><p>Zwei Zeilen: eine <strong>Frage</strong> und eine <strong>Antwort</strong>. Spielt es wie ein kleines Puppentheater — du fragst, er liest die Antwort (oder umgekehrt).</p><div class="say">Genau so laufen die Gespräche im Spiel. Jetzt kann er mitlesen! 🎉</div>' },
+      ];
+
+      // ===== SÄTZE (jedes Wort decodierbar: Phase-1-Buchstaben, keine Digraphen/Umlaute) =====
+      // words = Hauptzeile, antwort = zweite Zeile (nur bei Dialogen).
+      // end = Satzzeichen der Hauptzeile, endA = Satzzeichen der Antwort.
+      // prettier-ignore
+      const SENTENCES = [
+        // 👋 Grüße (2 Wörter)
+        { id: "g1", lek: "gruss", emoji: "👋", words: ["HALLO", "SAM"],  end: "!" },
+        { id: "g2", lek: "gruss", emoji: "☀️", words: ["GUTEN", "TAG"],  end: "!" },
+        { id: "g3", lek: "gruss", emoji: "🍺", words: ["HALLO", "GUS"],  end: "!" },
+
+        // 🗣️ Kleine Sätze (3 Wörter)
+        { id: "k1", lek: "klein", emoji: "🍺", words: ["GUS", "IST", "DA"],    end: "." },
+        { id: "k2", lek: "klein", emoji: "💰", words: ["SAM", "HAT", "GOLD"],  end: "." },
+        { id: "k3", lek: "klein", emoji: "🍵", words: ["ROBIN", "MAG", "TEE"], end: "." },
+        { id: "k4", lek: "klein", emoji: "🔬", words: ["MARU", "IST", "DA"],   end: "." },
+
+        // 🌾 Auf dem Hof (4 Wörter)
+        { id: "h1", lek: "hof", emoji: "🐶", words: ["DER", "HUND", "IST", "DA"],    end: "." },
+        { id: "h2", lek: "hof", emoji: "🏪", words: ["GUS", "IST", "IM", "LADEN"],   end: "." },
+        { id: "h3", lek: "hof", emoji: "🌾", words: ["DAS", "FELD", "IST", "GUT"],   end: "." },
+        { id: "h4", lek: "hof", emoji: "🍵", words: ["DER", "TEE", "IST", "WARM"],   end: "." },
+
+        // 🌦️ Im Dorf (5 Wörter)
+        { id: "d1", lek: "dorf", emoji: "🐴", words: ["DAS", "PFERD", "IST", "AM", "HOF"],    end: "." },
+        { id: "d2", lek: "dorf", emoji: "🌞", words: ["IM", "SOMMER", "IST", "ES", "WARM"],   end: "." },
+        { id: "d3", lek: "dorf", emoji: "❄️", words: ["IM", "WINTER", "IST", "ES", "DUNKEL"], end: "." },
+        { id: "d4", lek: "dorf", emoji: "🎸", words: ["SAM", "UND", "PAM", "SIND", "DA"],     end: "." },
+
+        // 💬 Kleine Gespräche (Frage + Antwort)
+        { id: "q1", lek: "dialog", emoji: "🍵",
+          words: ["MAGST", "DU", "TEE"], end: "?",
+          antwort: ["JA", "TEE", "IST", "GUT"], endA: "!" },
+        { id: "q2", lek: "dialog", emoji: "💰",
+          words: ["HAST", "DU", "GOLD"], end: "?",
+          antwort: ["JA", "DA", "IST", "GOLD"], endA: "!" },
+      ];
+
+      // ===== AUDIO (Web Speech API — offline, kostenlos) =====
+      let voices = [];
+      let chosenVoice = null;
+      const VOICE_KEY = "sv_lesen_voice"; // gleiche Stimme wie Phase 1–3
+      function isGermanVoice(v) {
+        return /^de([-_]|$)/i.test(v.lang) || /deutsch|german/i.test(v.name);
+      }
+      function updateVoiceStatus() {
+        const st = document.getElementById("voiceStatus");
+        if (!st) return;
+        if (!chosenVoice) {
+          st.textContent = "";
+          return;
+        }
+        const ok = isGermanVoice(chosenVoice);
+        st.textContent =
+          (ok ? "✅ Aktiv: " : "❌ Aktiv (nicht Deutsch!): ") +
+          chosenVoice.name +
+          " · " +
+          chosenVoice.lang;
+        st.style.color = ok ? "#3d6b22" : "#b23b1e";
+        st.style.fontWeight = "800";
+      }
+      function buildVoicePicker(german) {
+        const sel = document.getElementById("voicePick");
+        const hint = document.getElementById("voiceHint");
+        if (!sel) return;
+        const list = [...german, ...voices.filter((v) => !isGermanVoice(v))];
+        sel.replaceChildren();
+        list.forEach((v) => {
+          const o = document.createElement("option");
+          o.value = v.name;
+          o.textContent = (isGermanVoice(v) ? "🇩🇪 " : "🌐 ") + v.name;
+          if (chosenVoice && v.name === chosenVoice.name) o.selected = true;
+          sel.appendChild(o);
+        });
+        sel.onchange = () => {
+          chosenVoice = voices.find((v) => v.name === sel.value) || chosenVoice;
+          if (chosenVoice) localStorage.setItem(VOICE_KEY, chosenVoice.name);
+          updateVoiceStatus();
+          speak("Hallo, ich lese dir vor!");
+        };
+        if (hint) hint.style.display = german.length ? "none" : "block";
+        updateVoiceStatus();
+      }
+      function refreshVoices() {
+        if (!("speechSynthesis" in window)) return;
+        voices = speechSynthesis.getVoices() || [];
+        if (!voices.length) return;
+        const german = voices.filter(isGermanVoice);
+        const saved = localStorage.getItem(VOICE_KEY);
+        chosenVoice =
+          german.find((v) => v.name === saved) ||
+          german[0] ||
+          voices.find((v) => v.name === saved) ||
+          chosenVoice ||
+          voices[0] ||
+          null;
+        buildVoicePicker(german);
+      }
+      if ("speechSynthesis" in window) {
+        refreshVoices();
+        speechSynthesis.onvoiceschanged = refreshVoices;
+      }
+      function speak(text, rate) {
+        if (!("speechSynthesis" in window) || !text) return;
+        speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(String(text));
+        u.lang = (chosenVoice && chosenVoice.lang) || "de-DE";
+        if (chosenVoice) u.voice = chosenVoice;
+        u.rate = rate || 0.85;
+        u.pitch = 1.05;
+        speechSynthesis.speak(u);
+      }
+      // Kleinschreibung, damit die Stimme Wörter liest statt buchstabiert.
+      function sayWord(w) {
+        speak(String(w).toLowerCase(), 0.8);
+      }
+      function saySentence(words) {
+        speak(words.join(" ").toLowerCase(), 0.85);
+      }
+
+      // ===== FORTSCHRITT =====
+      const STORAGE_KEY = "sv_lesen_phase4_progress";
+      function loadProgress() {
+        try {
+          return new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"));
+        } catch (e) {
+          return new Set();
+        }
+      }
+      let completed = loadProgress();
+      function save() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify([...completed]));
+      }
+      function toggleSentence(id) {
+        if (completed.has(id)) completed.delete(id);
+        else completed.add(id);
+        save();
+        render();
+      }
+
+      function shuffle(a) {
+        for (let i = a.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+      }
+
+      // Alle im Kurs vorkommenden Wörter (für Quiz-Distraktoren).
+      const ALL_WORDS = [
+        ...new Set(
+          SENTENCES.flatMap((s) => [...s.words, ...(s.antwort || [])]),
+        ),
+      ];
+
+      // Eine Satzzeile als antippbare Wort-Spans rendern (mit Satzzeichen).
+      function renderSentenceLine(container, words, endMark, speakerLabel) {
+        container.replaceChildren();
+        if (speakerLabel) {
+          const sp = document.createElement("span");
+          sp.className = "s-speaker";
+          sp.textContent = speakerLabel;
+          container.appendChild(sp);
+        }
+        words.forEach((w, i) => {
+          const span = document.createElement("span");
+          span.className = "s-word";
+          span.textContent = w;
+          span.title = "Antippen zum Hören";
+          span.setAttribute("role", "button");
+          span.tabIndex = 0;
+          span.addEventListener("click", () => {
+            flashLit(span);
+            sayWord(w);
+          });
+          span.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              flashLit(span);
+              sayWord(w);
+            }
+          });
+          container.appendChild(span);
+          if (i === words.length - 1 && endMark) {
+            const p = document.createElement("span");
+            p.className = "s-punct";
+            p.textContent = endMark;
+            container.appendChild(p);
+          }
+        });
+      }
+      function flashLit(span) {
+        span.classList.add("lit");
+        setTimeout(() => span.classList.remove("lit"), 500);
+      }
+
+      // Satz Wort für Wort vorlesen (mitleuchtend), dann flüssig.
+      function speakLineByWords(spans, words, done) {
+        let i = 0;
+        const step = () => {
+          spans.forEach((s) => s.classList.remove("lit"));
+          if (i < words.length) {
+            if (spans[i]) spans[i].classList.add("lit");
+            sayWord(words[i]);
+            i++;
+            setTimeout(step, 720);
+          } else {
+            setTimeout(() => {
+              saySentence(words);
+              spans.forEach((s) => s.classList.remove("lit"));
+              if (done) done();
+            }, 160);
+          }
+        };
+        step();
+      }
+
+      // ===== RENDER =====
+      function render() {
+        const navRow = document.getElementById("navRow");
+        const mainContent = document.getElementById("mainContent");
+        const certSection = document.getElementById("certSection");
+        const progressFill = document.getElementById("progressFill");
+        const progressLabel = document.getElementById("progressLabel");
+
+        const done = completed.size;
+        const total = SENTENCES.length;
+        const pct = total ? Math.round((done / total) * 100) : 0;
+        progressFill.style.width = pct + "%";
+        progressLabel.textContent = done + " von " + total + " Sätzen ⭐";
+
+        // Navigation
+        navRow.replaceChildren();
+        LEKTIONEN.forEach((lk) => {
+          const btn = document.createElement("button");
+          btn.className = "nav-btn";
+          btn.textContent = lk.icon;
+          btn.title = lk.titel;
+          btn.setAttribute("aria-label", lk.titel);
+          btn.addEventListener("click", () => scrollTo2("lek-" + lk.key));
+          navRow.appendChild(btn);
+        });
+        const bBtn = document.createElement("button");
+        bBtn.className = "nav-btn special";
+        bBtn.textContent = "🧱 Satz-Bauer";
+        bBtn.addEventListener("click", () => scrollTo2("builderWrap"));
+        navRow.appendChild(bBtn);
+        const qBtn = document.createElement("button");
+        qBtn.className = "nav-btn special";
+        qBtn.textContent = "🧩 Lücken";
+        qBtn.addEventListener("click", () => scrollTo2("quizWrap"));
+        navRow.appendChild(qBtn);
+        const cBtn = document.createElement("button");
+        cBtn.className = "nav-btn special";
+        cBtn.textContent = "🏆";
+        cBtn.title = "Zertifikat";
+        cBtn.setAttribute("aria-label", "Zertifikat");
+        cBtn.addEventListener("click", () => scrollTo2("certSection"));
+        navRow.appendChild(cBtn);
+
+        // Inhalt
+        mainContent.replaceChildren();
+
+        // Erklär-Karte
+        const ex = document.createElement("div");
+        ex.className = "explainer";
+        const exH = document.createElement("h2");
+        exH.textContent = "📖 Ganze Sätze lesen!";
+        ex.appendChild(exH);
+        const exP = document.createElement("p");
+        exP.textContent =
+          "Jetzt liest du echte Stardew-Sätze — Wort für Wort. Tippe einzelne Wörter an, um sie zu hören, oder den 🔊-Knopf für den ganzen Satz. Zeig immer mit dem Finger mit!";
+        ex.appendChild(exP);
+        const demo = document.createElement("div");
+        demo.className = "demo-sentence";
+        const demoWords = ["GUS", "IST", "DA"];
+        renderSentenceLine(demo, demoWords, ".", null);
+        ex.appendChild(demo);
+        mainContent.appendChild(ex);
+
+        // Lektions-Karten
+        LEKTIONEN.forEach((lk, li) => {
+          const card = document.createElement("div");
+          card.className = "card";
+          card.id = "lek-" + lk.key;
+
+          // Eltern-Info-Button
+          const infoBtn = document.createElement("button");
+          infoBtn.className = "info-toggle-btn";
+          infoBtn.setAttribute("aria-label", "Eltern-Info anzeigen");
+          infoBtn.textContent = "i";
+          infoBtn.title = "Eltern-Info ein-/ausblenden";
+          infoBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const panel = card.querySelector(".parent-info");
+            if (panel.classList.contains("visible")) {
+              panel.classList.remove("visible");
+              infoBtn.classList.remove("open");
+              infoBtn.textContent = "i";
+            } else {
+              panel.classList.add("visible");
+              infoBtn.classList.add("open");
+              infoBtn.textContent = "✕";
+            }
+          });
+          card.appendChild(infoBtn);
+
+          const num = document.createElement("div");
+          num.className = "card-number";
+          num.textContent = "Lektion " + lk.nr;
+          card.appendChild(num);
+
+          const title = document.createElement("h2");
+          title.className = "lesson-title";
+          title.textContent = lk.icon + " " + lk.titel;
+          card.appendChild(title);
+
+          const grid = document.createElement("div");
+          grid.className = "sent-grid";
+          SENTENCES.filter((s) => s.lek === lk.key).forEach((s) => {
+            grid.appendChild(makeSentenceTile(s));
+          });
+          card.appendChild(grid);
+
+          if (lk.elternInfo) {
+            const parentInfo = document.createElement("div");
+            parentInfo.className = "parent-info";
+            const frag = new DOMParser().parseFromString(
+              lk.elternInfo,
+              "text/html",
+            );
+            while (frag.body.firstChild) {
+              parentInfo.appendChild(frag.body.firstChild);
+            }
+            card.appendChild(parentInfo);
+          }
+
+          mainContent.appendChild(card);
+        });
+
+        // Zertifikat-Sätze
+        const certSents = document.getElementById("certSents");
+        if (certSents && certSents.childElementCount === 0) {
+          SENTENCES.forEach((s) => {
+            const b = document.createElement("span");
+            b.className = "sent-badge";
+            b.textContent = s.words.join(" ") + (s.end || "");
+            certSents.appendChild(b);
+          });
+        }
+        certSection.style.display = done >= total ? "block" : "none";
+      }
+
+      function makeSentenceTile(s) {
+        const tile = document.createElement("div");
+        tile.className = "sent-tile" + (completed.has(s.id) ? " done" : "");
+        tile.id = "sent-" + s.id;
+
+        const emoji = document.createElement("div");
+        emoji.className = "sent-emoji";
+        emoji.textContent = s.emoji;
+        tile.appendChild(emoji);
+
+        const isDialog = !!s.antwort;
+
+        // Hauptzeile (bei Dialog: Frage)
+        const line1 = document.createElement("div");
+        line1.className = "sent-line";
+        renderSentenceLine(line1, s.words, s.end, isDialog ? "❓" : null);
+        tile.appendChild(line1);
+
+        // Antwortzeile (nur Dialog)
+        let line2 = null;
+        if (isDialog) {
+          line2 = document.createElement("div");
+          line2.className = "sent-line answer";
+          renderSentenceLine(line2, s.antwort, s.endA, "💬");
+          tile.appendChild(line2);
+        }
+
+        // Hören
+        const hearRow = document.createElement("div");
+        hearRow.className = "sent-hear";
+        const hearBtn = document.createElement("button");
+        hearBtn.className = "sent-hear-btn";
+        hearBtn.textContent = "🔊 Satz vorlesen";
+        hearBtn.addEventListener("click", () => {
+          const spans1 = [...line1.querySelectorAll(".s-word")];
+          if (isDialog) {
+            const spans2 = [...line2.querySelectorAll(".s-word")];
+            speakLineByWords(spans1, s.words, () => {
+              setTimeout(
+                () => speakLineByWords(spans2, s.antwort, null),
+                500,
+              );
+            });
+          } else {
+            speakLineByWords(spans1, s.words, null);
+          }
+        });
+        hearRow.appendChild(hearBtn);
+        tile.appendChild(hearRow);
+
+        const finger = document.createElement("div");
+        finger.className = "sent-finger";
+        finger.textContent = "👆 mit dem Finger mitzeigen & mitlesen";
+        tile.appendChild(finger);
+
+        const btn = document.createElement("button");
+        btn.className = "word-done-btn";
+        btn.textContent = completed.has(s.id)
+          ? "⭐ Kann ich lesen!"
+          : "✋ Kann ich lesen";
+        btn.addEventListener("click", () => toggleSentence(s.id));
+        tile.appendChild(btn);
+
+        return tile;
+      }
+
+      function scrollTo2(id) {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      // ===== SATZ-BAUER =====
+      // Nur Nicht-Dialog-Sätze mit >= 3 Wörtern.
+      const BUILDER_SENTENCES = SENTENCES.filter(
+        (s) => !s.antwort && s.words.length >= 3,
+      );
+      let bDeck = [];
+      let bIdx = 0;
+      let bStars = 0;
+      let bNextNeeded = 0;
+
+      function startBuilder() {
+        bDeck = shuffle([...BUILDER_SENTENCES]);
+        bIdx = 0;
+        bStars = 0;
+        document.getElementById("bStars").textContent = "";
+        document.getElementById("bTotal").textContent = bDeck.length;
+        renderBuilder();
+      }
+
+      function renderBuilder() {
+        const s = bDeck[bIdx];
+        bNextNeeded = 0;
+        document.getElementById("bIndex").textContent = bIdx + 1;
+        document.getElementById("bPicture").textContent = s.emoji;
+        document.getElementById("bPicture").onclick = () =>
+          saySentence(s.words);
+
+        const slots = document.getElementById("bSlots");
+        slots.replaceChildren();
+        s.words.forEach(() => {
+          const slot = document.createElement("div");
+          slot.className = "b-slot";
+          slots.appendChild(slot);
+        });
+
+        const bank = document.getElementById("bBank");
+        bank.replaceChildren();
+        shuffle([...s.words.keys()]).forEach((origIdx) => {
+          const chip = document.createElement("div");
+          chip.className = "b-chip";
+          chip.textContent = s.words[origIdx];
+          chip.dataset.pos = origIdx;
+          chip.addEventListener("click", () => pickChip(chip, s));
+          bank.appendChild(chip);
+        });
+
+        document.getElementById("bHint").textContent =
+          "Tippe das erste Wort an.";
+      }
+
+      function pickChip(chip, s) {
+        // Nach TEXT prüfen (nicht Position) — doppelte Wörter (z. B. IST) egal.
+        if (chip.textContent === s.words[bNextNeeded]) {
+          const slots = document.querySelectorAll("#bSlots .b-slot");
+          const slot = slots[bNextNeeded];
+          slot.textContent = s.words[bNextNeeded];
+          slot.classList.add("filled");
+          chip.classList.add("used");
+          sayWord(s.words[bNextNeeded]);
+          bNextNeeded++;
+          if (bNextNeeded >= s.words.length) {
+            document.getElementById("bHint").textContent =
+              "🎉 Ganzer Satz: " + s.words.join(" ") + (s.end || "");
+            setTimeout(() => saySentence(s.words), 500);
+          } else {
+            document.getElementById("bHint").textContent =
+              "Super! Jetzt das nächste Wort.";
+          }
+        } else {
+          chip.classList.add("wrong");
+          setTimeout(() => chip.classList.remove("wrong"), 450);
+          document.getElementById("bHint").textContent =
+            "Fast! Erst das Wort „" + s.words[bNextNeeded] + "“.";
+          sayWord(s.words[bNextNeeded]);
+        }
+      }
+
+      function builderHear() {
+        const s = bDeck[bIdx];
+        if (s) saySentence(s.words);
+      }
+
+      function builderNext() {
+        const s = bDeck[bIdx];
+        if (s && bNextNeeded >= s.words.length) {
+          bStars = Math.min(bDeck.length, bStars + 1);
+          document.getElementById("bStars").textContent = "⭐".repeat(bStars);
+        }
+        bIdx++;
+        if (bIdx >= bDeck.length) {
+          document.getElementById("bSlots").replaceChildren();
+          document.getElementById("bBank").replaceChildren();
+          document.getElementById("bPicture").textContent = "🏆";
+          document.getElementById("bPicture").onclick = null;
+          document.getElementById("bHint").textContent =
+            "Super gebaut — alle Sätze geschafft! Nochmal? Tippe 🧱 in der Leiste.";
+          document.getElementById("bIndex").textContent = bDeck.length;
+          return;
+        }
+        renderBuilder();
+      }
+
+      // ===== LÜCKEN-QUIZ =====
+      const QUIZ_ROUND = 10;
+      let qDeck = [];
+      let qIdx = 0;
+      let qStars = 0;
+      let qLocked = false;
+
+      // Aus den Bauer-Sätzen (>=3 Wörter) Fragen mit je einer Lücke bauen.
+      function buildQuizDeck() {
+        const pool = shuffle([...BUILDER_SENTENCES]);
+        const deck = [];
+        pool.forEach((s) => {
+          // Ein Wort mit Länge >= 3 als Lücke (nicht das erste Wort).
+          const candIdx = s.words
+            .map((w, i) => ({ w, i }))
+            .filter((o) => o.i > 0 && o.w.length >= 3)
+            .map((o) => o.i);
+          const gapIdx = candIdx.length
+            ? candIdx[Math.floor(Math.random() * candIdx.length)]
+            : s.words.length - 1;
+          const answer = s.words[gapIdx];
+          // 2 Distraktoren: andere Wörter, nicht im Satz.
+          const distr = shuffle(
+            ALL_WORDS.filter(
+              (w) => w !== answer && !s.words.includes(w),
+            ),
+          ).slice(0, 2);
+          deck.push({
+            words: s.words,
+            end: s.end,
+            gapIdx,
+            answer,
+            options: shuffle([answer, ...distr]),
+          });
+        });
+        return deck.slice(0, QUIZ_ROUND);
+      }
+
+      function startQuiz() {
+        qDeck = buildQuizDeck();
+        qIdx = 0;
+        qStars = 0;
+        document.getElementById("qStars").textContent = "";
+        document.getElementById("qTotal").textContent = qDeck.length;
+        renderQuiz();
+      }
+
+      function renderQuiz() {
+        qLocked = false;
+        const q = qDeck[qIdx];
+        document.getElementById("qIndex").textContent = qIdx + 1;
+        document.getElementById("qHint").textContent =
+          "Tippe das Wort an, das in die Lücke passt.";
+
+        // Satz mit Lücke rendern
+        const sent = document.getElementById("qSentence");
+        sent.replaceChildren();
+        q.words.forEach((w, i) => {
+          const span = document.createElement("span");
+          if (i === q.gapIdx) {
+            span.className = "q-gap";
+            span.id = "qGap";
+            span.textContent = "____";
+          } else {
+            span.textContent = w;
+          }
+          sent.appendChild(span);
+          if (i === q.words.length - 1 && q.end) {
+            const p = document.createElement("span");
+            p.textContent = q.end;
+            sent.appendChild(p);
+          }
+        });
+
+        // Optionen
+        const box = document.getElementById("qOptions");
+        box.replaceChildren();
+        q.options.forEach((opt) => {
+          const btn = document.createElement("button");
+          btn.className = "quiz-btn";
+          btn.textContent = opt;
+          btn.addEventListener("click", () => pickOption(btn, opt, q));
+          box.appendChild(btn);
+        });
+      }
+
+      function pickOption(btn, opt, q) {
+        if (qLocked) return;
+        if (opt === q.answer) {
+          qLocked = true;
+          btn.classList.add("correct");
+          document
+            .querySelectorAll("#qOptions .quiz-btn")
+            .forEach((b) => b.classList.add("locked"));
+          const gap = document.getElementById("qGap");
+          if (gap) {
+            gap.textContent = q.answer;
+            gap.classList.add("filled");
+          }
+          document.getElementById("qHint").textContent = "🎉 Richtig!";
+          qStars = Math.min(qDeck.length, qStars + 1);
+          document.getElementById("qStars").textContent = "⭐".repeat(qStars);
+          saySentence(q.words);
+          setTimeout(quizNext, 1600);
+        } else {
+          btn.classList.add("wrong");
+          setTimeout(() => btn.classList.remove("wrong"), 450);
+          document.getElementById("qHint").textContent =
+            "Das heißt „" + opt + "“. Lies nochmal!";
+          sayWord(opt);
+        }
+      }
+
+      function quizNext() {
+        qIdx++;
+        if (qIdx >= qDeck.length) {
+          document.getElementById("qSentence").textContent = "🏆 🎉";
+          document.getElementById("qOptions").replaceChildren();
+          document.getElementById("qHint").textContent =
+            "Super gelesen — alle Lücken gefüllt! Nochmal? Tippe 🧩 in der Leiste.";
+          document.getElementById("qIndex").textContent = qDeck.length;
+          return;
+        }
+        renderQuiz();
+      }
+      // Quiz neu starten, wenn man nach dem Ende wieder hinspringt.
+      document.getElementById("qSentence").addEventListener("click", () => {
+        if (qIdx >= qDeck.length) startQuiz();
+      });
+
+      // ===== START =====
+      render();
+      startBuilder();
+      startQuiz();
+    </script>
+  </body>
+</html>

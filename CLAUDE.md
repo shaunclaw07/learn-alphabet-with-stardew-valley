@@ -20,7 +20,7 @@ Zweifel gegen den Lehrplan prüfen.
 | 1 | Buchstaben als **Laute** (21 Stück) | `phase1/lese-schule.html` | ✅ fertig |
 | 2 | **Silben** verbinden & erste Wörter | `phase2/phase2-schule.html` | ✅ fertig |
 | 3 | Stardew-**Wortschatz** | `phase3/phase3-schule.html` | ✅ fertig |
-| 4 | Erste **Sätze** & Dialoge | `phase4/…` | 🔒 offen |
+| 4 | Erste **Sätze** & Dialoge | `phase4/phase4-schule.html` | ✅ fertig |
 
 `index.html` (Root) ist die **Phasenauswahl** — Startbildschirm mit 4 Karten,
 zeigt Fortschritt pro Phase, sperrt noch nicht gebaute Phasen als „Bald

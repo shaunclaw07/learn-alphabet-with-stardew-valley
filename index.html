@@ -8,6 +8,15 @@
       href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800&display=swap"
       rel="stylesheet"
     />
+    <!-- ===== PWA ===== -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#5da03c" />
+    <link rel="icon" href="/icons/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/icons/icon-180.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Lese-Schule" />
     <style>
       /* ===== RESET & BASE ===== */
       *,
@@ -337,6 +346,30 @@
           gap: 32px;
         }
       }
+      /* ===== PWA-INSTALL-BUTTON ===== */
+      #pwa-install {
+        display: block;
+        margin: var(--sp-4) auto 0;
+        min-height: var(--tap);
+        padding: var(--sp-2) var(--sp-4);
+        font-family: "Press Start 2P", cursive;
+        font-size: 0.7rem;
+        color: #fffaf0;
+        background: linear-gradient(#7ec850, #5da03c);
+        border: 3px solid #3d6b22;
+        border-radius: 12px;
+        cursor: pointer;
+        touch-action: manipulation;
+        box-shadow: 0 3px 0 #3d6b22;
+      }
+      #pwa-install:active {
+        transform: scale(0.96);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #pwa-install:active {
+          transform: none;
+        }
+      }
     </style>
   </head>
   <body>
@@ -352,6 +385,12 @@
       <h1>Lesen lernen mit<br />Stardew Valley</h1>
       <div class="subtitle">Wähle deine Phase 🌟</div>
     </header>
+
+    <!-- ===== PWA-INSTALL ===== -->
+    <button id="pwa-install" type="button" hidden
+      aria-label="Diese Lernseite als App zum Startbildschirm hinzufügen">
+      📲 Als App hinzufügen
+    </button>
 
     <!-- ===== INTRO ===== -->
     <div class="intro">
@@ -493,6 +532,36 @@
         card.appendChild(meta);
         grid.appendChild(card);
       });
+    </script>
+    <script>
+      // Service Worker nur unter http(s) registrieren — file:// bleibt unberührt.
+      if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker.register("/sw.js").catch(function () {});
+        });
+      }
+      // Install-Button: nur zeigen, wenn der Browser die Installation anbietet.
+      (function () {
+        var deferred = null;
+        var btn = document.getElementById("pwa-install");
+        if (!btn) return;
+        window.addEventListener("beforeinstallprompt", function (e) {
+          e.preventDefault();
+          deferred = e;
+          btn.hidden = false;
+        });
+        btn.addEventListener("click", function () {
+          if (!deferred) return;
+          deferred.prompt();
+          deferred.userChoice.finally(function () {
+            deferred = null;
+            btn.hidden = true;
+          });
+        });
+        window.addEventListener("appinstalled", function () {
+          btn.hidden = true;
+        });
+      })();
     </script>
   </body>
 </html>

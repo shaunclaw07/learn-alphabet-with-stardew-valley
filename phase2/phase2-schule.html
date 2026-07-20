@@ -8,6 +8,15 @@
       href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800&display=swap"
       rel="stylesheet"
     />
+    <!-- ===== PWA ===== -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#5da03c" />
+    <link rel="icon" href="/icons/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/icons/icon-180.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Lese-Schule" />
     <style>
       /* ===== RESET & BASE ===== */
       *,
@@ -1756,6 +1765,14 @@
       render();
       startBuilder();
       startFlash();
+    </script>
+    <script>
+      // Service Worker nur unter http(s) registrieren — file:// bleibt unberührt.
+      if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker.register("/sw.js").catch(function () {});
+        });
+      }
     </script>
   </body>
 </html>

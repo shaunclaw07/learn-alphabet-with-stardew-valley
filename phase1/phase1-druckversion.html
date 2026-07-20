@@ -1,0 +1,470 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<title>Lesen lernen mit Stardew Valley &mdash; Phase 1 (Druckversion)</title>
+<style>
+  @page { size: A4; margin: 14mm 14mm 12mm; }
+  * { box-sizing: border-box; }
+  html,body { margin:0; padding:0; }
+  body { font-family: "Segoe UI", Arial, sans-serif; color:#2e2418; line-height:1.5; }
+  h1,h2,h3 { margin:0 0 .3em; }
+
+  .cover { page-break-after: always; text-align:center; padding-top:18mm; }
+  .cover .icons { font-size:34pt; letter-spacing:4px; }
+  .cover h1 { font-size:26pt; color:#3d6b22; margin-top:8mm; }
+  .cover .sub { font-size:14pt; color:#8b6914; font-weight:700; }
+  .cover .lead { max-width:150mm; margin:9mm auto; font-size:11pt; text-align:left;
+    background:#f4fae8; border:1.5pt solid #7ec850; border-radius:8pt; padding:6mm 8mm; }
+  .cover .lead b { color:#3d6b22; }
+  table.plan { width:100%; border-collapse:collapse; margin:6mm auto 0; font-size:10pt; }
+  table.plan th, table.plan td { border:1pt solid #c9b078; padding:2.2mm 2mm; text-align:center; }
+  table.plan th { background:#7ec850; color:#fff; }
+  table.plan td.wkcol { background:#fff3d6; font-weight:800; }
+  .order { font-size:13pt; font-weight:800; letter-spacing:1px; color:#3d6b22; margin-top:6mm; }
+
+  .lp { page-break-after: always; padding-top:2mm; }
+  .lp-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:4mm; gap:4mm; }
+  .lektion { background:#ff6b35; color:#fff; font-weight:800; font-size:10pt;
+    padding:1.5mm 4mm; border-radius:5pt; }
+  .wk { background:#5da03c; color:#fff; font-weight:700; font-size:9.5pt;
+    padding:1.5mm 4mm; border-radius:5pt; }
+  .lp-top { display:flex; gap:8mm; align-items:center; margin-bottom:5mm; }
+  .bigletter { flex:0 0 auto; width:46mm; height:46mm; border:2.5pt solid #c49a2a;
+    border-radius:8pt; background:#fff8e7; display:flex; align-items:center;
+    justify-content:center; font-size:44pt; font-weight:800; color:#2e2418; position:relative; }
+  .bl-small { font-size:20pt; color:#b8956a; position:absolute; right:5mm; bottom:3mm; }
+  .lp-meta { flex:1; }
+  .laut { font-size:13pt; color:#8b6914; font-weight:700; font-style:italic; }
+  .merk { font-size:20pt; font-weight:800; margin:2mm 0; }
+  .merk .emoji { font-size:20pt; }
+  .silben .syl { display:inline-block; background:#ffd700; border:1pt solid #c49a2a;
+    border-radius:12pt; padding:1mm 3.5mm; font-weight:800; font-size:12pt; margin:1mm 1.5mm 0 0; }
+  .bezug { background:#e8f5e0; border-left:3pt solid #7ec850; padding:3mm 4mm;
+    border-radius:0 6pt 6pt 0; font-size:11pt; margin-bottom:4mm; }
+  .bezug strong { color:#3d6b22; }
+  .eltern { border:1.2pt dashed #8b6914; border-radius:7pt; padding:4mm 5mm; background:#fffdf6; }
+  .eltern h3 { font-size:11pt; color:#c1531d; text-transform:uppercase; letter-spacing:.5pt; margin-bottom:2mm; }
+  .eltern .step { margin:2mm 0; font-size:10.5pt; }
+  .eltern .step-label { font-weight:800; color:#3d6b22; display:inline-block; min-width:26mm; }
+  .eltern .say { background:#fff3d6; border-left:3pt solid #ffaa00; padding:2mm 3mm;
+    border-radius:0 5pt 5pt 0; margin-top:3mm; font-size:10.5pt; }
+  .eltern .say::before { content:"\1F4AC  "; }
+  .cutline { margin-top:4mm; font-size:9.5pt; color:#8b6914; }
+
+  .kk-title, .cert-title { page-break-before: always; text-align:center;
+    font-size:18pt; color:#3d6b22; margin:0 0 5mm; }
+  .kk-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:4mm; }
+  .kk { border:1pt dashed #8b6914; border-radius:6pt; padding:4mm 2mm; text-align:center;
+    height:44mm; display:flex; flex-direction:column; justify-content:center; }
+  .kk-letter { font-size:30pt; font-weight:800; }
+  .kk-emoji { font-size:22pt; }
+  .kk-word { font-size:13pt; font-weight:700; }
+  .kk-laut { font-size:11pt; color:#8b6914; font-style:italic; }
+
+  .cert { border:4pt double #c49a2a; border-radius:12pt; padding:14mm 12mm; text-align:center;
+    background:#fffef7; }
+  .cert h2 { font-size:20pt; color:#c49a2a; }
+  .cert .name { font-size:22pt; font-weight:800; border-bottom:2pt dashed #c49a2a;
+    display:inline-block; min-width:80mm; padding:0 8mm 3mm; margin:6mm 0; }
+  .cert .badges { margin:5mm 0; }
+  .cert .badge { display:inline-block; width:9mm; height:9mm; line-height:9mm; margin:1mm;
+    background:#ffd700; border:1pt solid #c49a2a; border-radius:3pt; font-weight:800; font-size:11pt; }
+  .cert .words { font-weight:700; margin-top:4mm; }
+  .cert .stick { font-size:20pt; margin-top:4mm; }
+</style></head><body>
+
+<section class="cover">
+  <div class="icons">&#128020;&#127806;&#128004;&#127803;&#128022;&#129365;</div>
+  <h1>Lesen lernen mit Stardew Valley</h1>
+  <div class="sub">Phase 1 &middot; Die 21 Buchstaben &middot; f&uuml;r Kinder ab 5</div>
+  <div class="lead">
+    <p><b>So funktioniert's (10&ndash;15 Min pro Tag):</b></p>
+    <p>1. <b>Wiederholen</b> &mdash; die letzten Karten kurz zeigen.<br>
+       2. <b>Neuer Buchstabe</b> &mdash; immer als <b>Laut</b> (&bdquo;mmmm&ldquo;), nie als Buchstaben-Namen (&bdquo;Em&ldquo;).<br>
+       3. <b>Spiel-Bezug</b> &mdash; mit einem Stardew-Wort verbinden, nachspuren, loben.</p>
+    <p><b>Wichtig:</b> Kein Druck. Lieber 5 Minuten fr&ouml;hlich als 15 Minuten Qu&auml;lerei.
+       Gro&szlig;buchstabe und Laut zuerst &mdash; schwierige Buchstaben (Ch, Sch, &auml;/&ouml;/&uuml;, &szlig;) kommen sp&auml;ter.</p>
+  </div>
+  <div class="order">Reihenfolge: M A L O S &middot; T E N I R &middot; U F H K W &middot; B G P D Z J</div>
+  <table class="plan">
+    <tr><th>Woche</th><th>Mo</th><th>Di</th><th>Mi</th><th>Do</th><th>Fr</th><th>Sa</th><th>So</th></tr>
+    <tr><td class="wkcol">1</td><td>M</td><td>A</td><td>L</td><td>O</td><td>S</td><td>W&ouml;rter (OMA)</td><td>frei</td></tr>
+    <tr><td class="wkcol">2</td><td>T</td><td>E</td><td>N</td><td>I</td><td>R</td><td>Silben-Spiel</td><td>frei</td></tr>
+    <tr><td class="wkcol">3</td><td>U</td><td>F</td><td>H</td><td>K</td><td>W</td><td>Hof-W&ouml;rter</td><td>frei</td></tr>
+    <tr><td class="wkcol">4</td><td>B</td><td>G</td><td>P</td><td>D</td><td>Z&rarr;J</td><td>Fest &#127881;</td><td>frei</td></tr>
+  </table>
+</section>
+
+
+  <section class="lp">
+    <div class="lp-head">
+      <span class="lektion">Lektion 1</span>
+      <span class="wk">Woche 1 · Erste Wörter — M A L O S</span>
+    </div>
+    <div class="lp-top">
+      <div class="bigletter">M<span class="bl-small">m</span></div>
+      <div class="lp-meta">
+        <div class="laut">Laut: &bdquo;mmmm&ldquo;</div>
+        <div class="merk"><span class="emoji">🐄</span> Milch</div>
+        <div class="silben"><span class="syl">MA</span><span class="syl">ME</span><span class="syl">MI</span><span class="syl">MO</span><span class="syl">MU</span></div>
+      </div>
+    </div>
+    <div class="bezug">Deine Kühe geben <strong>Milch</strong> — hol sie mit dem Melkkübel ab! Auch <strong>Marnie</strong> fängt mit M an. <strong>M wie Milch!</strong></div>
+    <div class="eltern"><h3>👨‍🏫 So bringst du das M bei</h3><div class="step"><span class="step-label">① Los geht's</span>M ist der allererste Buchstabe — kein Aufwärmen nötig, direkt starten!</div><div class="step"><span class="step-label">② Laut zeigen</span>"Lippen zusammenpressen und summen: <strong>mmmm</strong>. Spürst du das Kitzeln auf den Lippen?"</div><div class="step"><span class="step-label">③ M ist ein Zieh-Laut</span>Das M kann man ganz lange ziehen: mmmmmm. Genau solche Laute lassen sich später prima mit Vokalen verbinden.</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>"Deine Kühe geben Milch. M wie Milch! Und Marnie verkauft die Tiere!"</div><div class="say">Schon mit dem nächsten Buchstaben (A) lest ihr die erste Silbe: "Mmmm-aaaa → <strong>MA</strong>!"</div></div>
+    <div class="cutline">&#9986; Tipp: Buchstabe mit dem Finger nachfahren &mdash; erst gro&szlig; in der Luft, dann auf Papier.</div>
+  </section>
+  <section class="lp">
+    <div class="lp-head">
+      <span class="lektion">Lektion 2</span>
+      
+    </div>
+    <div class="lp-top">
+      <div class="bigletter">A<span class="bl-small">a</span></div>
+      <div class="lp-meta">
+        <div class="laut">Laut: &bdquo;aaaa&ldquo;</div>
+        <div class="merk"><span class="emoji">🏃‍♂️</span> Alex</div>
+        <div class="silben"><span class="syl">MA</span><span class="syl">LA</span><span class="syl">SA</span><span class="syl">RA</span><span class="syl">TA</span></div>
+      </div>
+    </div>
+    <div class="bezug">Alex wohnt in <strong>Pelikan Stadt</strong> und macht gern Sport. <strong>A wie Alex!</strong></div>
+    <div class="eltern"><h3>👨‍🏫 So bringst du das A bei</h3><div class="step"><span class="step-label">① Laut zeigen</span>„Das ist ein A. Wir sagen <strong>aaaa</strong> — wie beim Arzt, wenn er in den Hals guckt: aaaa!"</div><div class="step"><span class="step-label">② Nachspuren</span>Mit dem Finger in der Luft, auf dem Tisch oder auf Papier: „Erst ein Strich nach oben, dann runter, dann in der Mitte."</div><div class="step"><span class="step-label">③ A-Jagd</span>Zeitung/Prospekt nehmen und alle A einkreisen. Auch auf Verpackungen suchen!</div><div class="step"><span class="step-label">④ Stardew-Spiel</span>In Stardew Valley Alex zeigen. Sage: "A wie Alex — er wohnt in Pelikan Stadt!"</div><div class="say">Du sagst Wörter. Wenn er ein A hört, streckt er den Arm hoch: <strong>Alex</strong> ✋, Ente (kein A), <strong>Axt</strong> ✋, Hof (kein A), <strong>Mama</strong> ✋</div></div>
+    <div class="cutline">&#9986; Tipp: Buchstabe mit dem Finger nachfahren &mdash; erst gro&szlig; in der Luft, dann auf Papier.</div>
+  </section>
+  <section class="lp">
+    <div class="lp-head">
+      <span class="lektion">Lektion 3</span>
+      
+    </div>
+    <div class="lp-top">
+      <div class="bigletter">L<span class="bl-small">l</span></div>
+      <div class="lp-meta">
+        <div class="laut">Laut: &bdquo;llll&ldquo;</div>
+        <div class="merk"><span class="emoji">🏪</span> Laden</div>
+        <div class="silben"><span class="syl">LA</span><span class="syl">LE</span><span class="syl">LI</span><span class="syl">LO</span><span class="syl">LU</span></div>
+      </div>
+    </div>
+    <div class="bezug">In <strong>Pierres Gemischtwarenladen</strong> kaufst du Samen. <strong>Linus</strong> im Zelt hat auch ein L! <strong>L wie Laden!</strong></div>
+    <div class="eltern"><h3>👨‍🏫 So bringst du das L bei</h3><div class="step"><span class="step-label">① Aufwärmen</span>M und A kurz wiederholen: lest gemeinsam MA und AM.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Zunge an die oberen Zähne: <strong>llll</strong>. Wie wenn du ein Lied singst: Lalala!"</div><div class="step"><span class="step-label">③ Silben-Mix</span> Jetzt M und L mit Vokalen mischen: "Was ist M-A? MA! Und L-A? LA! Und M-A + M-A? <strong>MAMA!</strong>"</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>"Pierres Gemischtwarenladen — dort kaufst du Samen. <strong>L wie Laden!</strong> Und Linus im Zelt!"</div><div class="say">Erste Wörter mit M+L: <strong>MA-MA</strong>, <strong>LA-MA</strong>, <strong>O-MA</strong> — lies sie gemeinsam!</div></div>
+    <div class="cutline">&#9986; Tipp: Buchstabe mit dem Finger nachfahren &mdash; erst gro&szlig; in der Luft, dann auf Papier.</div>
+  </section>
+  <section class="lp">
+    <div class="lp-head">
+      <span class="lektion">Lektion 4</span>
+      
+    </div>
+    <div class="lp-top">
+      <div class="bigletter">O<span class="bl-small">o</span></div>
+      <div class="lp-meta">
+        <div class="laut">Laut: &bdquo;oooo&ldquo;</div>
+        <div class="merk"><span class="emoji">🍎</span> Obst</div>
+        <div class="silben"><span class="syl">MO</span><span class="syl">LO</span><span class="syl">SO</span><span class="syl">RO</span><span class="syl">TO</span></div>
+      </div>
+    </div>
+    <div class="bezug">Auf deiner Farm wachsen <strong>Obstbäume</strong> — Äpfel, Kirschen, Orangen! <strong>O wie Obst!</strong></div>
+    <div class="eltern"><h3>👨‍🏫 So bringst du das O bei</h3><div class="step"><span class="step-label">① Aufwärmen</span>M, A und L kurz durchgehen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das O sagen wir <strong>oooo</strong> — mach den Mund ganz rund, wie ein Luftballon!"</div><div class="step"><span class="step-label">③ O-Entdeckung</span>O mit Kreide draußen malen. O-förmige Dinge im Raum suchen: Uhr, Teller, Ball, Fenster...</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>Auf der Farm Obstbäume zeigen: "Äpfel und Kirschen sind Obst! O wie Obst!"</div><div class="say">Zeig A und O gemischt: „aaaa" … „oooo" — hört er den Unterschied?</div></div>
+    <div class="cutline">&#9986; Tipp: Buchstabe mit dem Finger nachfahren &mdash; erst gro&szlig; in der Luft, dann auf Papier.</div>
+  </section>
+  <section class="lp">
+    <div class="lp-head">
+      <span class="lektion">Lektion 5</span>
+      
+    </div>
+    <div class="lp-top">
+      <div class="bigletter">S<span class="bl-small">s</span></div>
+      <div class="lp-meta">
+        <div class="laut">Laut: &bdquo;ssss&ldquo;</div>
+        <div class="merk"><span class="emoji">🌱</span> Samen</div>
+        <div class="silben"><span class="syl">SA</span><span class="syl">SE</span><span class="syl">SI</span><span class="syl">SO</span><span class="syl">SU</span></div>
+      </div>
+    </div>
+    <div class="bezug">Ohne <strong>Samen</strong> wächst nichts! Du kaufst sie bei Pierre. Auch die <strong>Sense</strong> fängt mit S an. <strong>S wie Samen!</strong></div>
+    <div class="eltern"><h3>👨‍🏫 So bringst du das S bei</h3><div class="step"><span class="step-label">① Aufwärmen</span>M, L, A, O durchgehen. Kurz MA, LA, MO, LO lesen lassen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das S zischt wie eine Schlange: <strong>sssss</strong>! Die Luft geht zwischen den Zähnen durch."</div><div class="step"><span class="step-label">③ Silben</span> S mit allen Vokalen: SA, SE, SI, SO, SU. "SA wie Samen! SE wie Sense! SI wie Silo!"</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>"Das wichtigste Wort: <strong>Samen!</strong> Ohne Samen wächst nichts. Und die <strong>Sense</strong> für Heu!"</div><div class="say">Jetzt SILBEN ZUSAMMENZIEHEN: "Ssss-aaaa-mmm-e-n → <strong>Samen!</strong>" — Finger drunter, langsam zusammenziehen!</div></div>
+    <div class="cutline">&#9986; Tipp: Buchstabe mit dem Finger nachfahren &mdash; erst gro&szlig; in der Luft, dann auf Papier.</div>
+  </section>
+  <section class="lp">
+    <div class="lp-head">
+      <span class="lektion">Lektion 6</span>
+      <span class="wk">Woche 2 · Mehr Laute — T E N I R</span>
+    </div>
+    <div class="lp-top">
+      <div class="bigletter">T<span class="bl-small">t</span></div>
+      <div class="lp-meta">
+        <div class="laut">Laut: &bdquo;t-t-t&ldquo;</div>
+        <div class="merk"><span class="emoji">🍅</span> Tomate</div>
+        <div class="silben"><span class="syl">TA</span><span class="syl">TE</span><span class="syl">TI</span><span class="syl">TO</span><span class="syl">TU</span></div>
+      </div>
+    </div>
+    <div class="bezug">Im Sommer wachsen <strong>Tomaten</strong> auf deiner Farm. Und <strong>Tee</strong>-Blätter! <strong>T wie Tomate!</strong></div>
+    <div class="eltern"><h3>👨‍🏫 So bringst du das T bei</h3><div class="step"><span class="step-label">① Wiederholung</span>S-Karte zeigen. Silben mit S wiederholen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das T macht <strong>t</strong> — ganz kurz! Zunge tippt oben an und springt zurück. T! T! T! Wie ein Trommelschlag."</div><div class="step"><span class="step-label">③ Silben</span>T mit Vokalen: TA, TE, TI, TO, TU. "TA wie Tag! TE wie Tee! TO wie Tomate!"</div><div class="step"><span class="step-label">④ Kombiniere S+T</span> "Ssss-aaaa-mmm-e-nnnn → Samen! T-o-m-a-t-e → Tomate!"</div><div class="say">SA und TA nebeneinander: "Was ist der Unterschied? S zischt lang, T tippt kurz! Sssss-A vs T-A. Spürst du's?"</div></div>
+    <div class="cutline">&#9986; Tipp: Buchstabe mit dem Finger nachfahren &mdash; erst gro&szlig; in der Luft, dann auf Papier.</div>
+  </section>
+  <section class="lp">
+    <div class="lp-head">
+      <span class="lektion">Lektion 7</span>
+      
+    </div>
+    <div class="lp-top">
+      <div class="bigletter">E<span class="bl-small">e</span></div>
+      <div class="lp-meta">
+        <div class="laut">Laut: &bdquo;eeee&ldquo;</div>
+        <div class="merk"><span class="emoji">🦆</span> Ente</div>
+        <div class="silben"><span class="syl">ME</span><span class="syl">LE</span><span class="syl">SE</span><span class="syl">TE</span><span class="syl">NE</span></div>
+      </div>
+    </div>
+    <div class="bezug">Auf Marnies Ranch watscheln <strong>Enten</strong> herum — die legen auch Eier! <strong>E wie Ente!</strong></div>
+    <div class="eltern"><h3>👨‍🏫 So bringst du das E bei</h3><div class="step"><span class="step-label">① Aufwärmen</span>Die letzten 2–3 Karten kurz als Laut wiederholen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das E sagen wir <strong>eeee</strong> — wie ein Esel: iaaah! Mach den Mund breit, wie beim Lächeln."</div><div class="step"><span class="step-label">③ Fühlen &amp; formen</span>Aus Knete ein E formen oder in Sand/Grieß mit dem Finger malen.</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>"Auf Marnies Ranch gibt es <strong>Enten</strong>. E wie Ente!" &nbsp;<em>Wichtig für dich: „Ei" fängt NICHT mit E an — das hört man wie „ai".</em></div><div class="say">Wo hörst du das E? <strong>E</strong>nte (Anfang!), <strong>E</strong>mily (Anfang!), B<strong>e</strong>tt (Mitte!), Melon<strong>e</strong> (Ende!), Huhn (kein E!)</div></div>
+    <div class="cutline">&#9986; Tipp: Buchstabe mit dem Finger nachfahren &mdash; erst gro&szlig; in der Luft, dann auf Papier.</div>
+  </section>
+  <section class="lp">
+    <div class="lp-head">
+      <span class="lektion">Lektion 8</span>
+      
+    </div>
+    <div class="lp-top">
+      <div class="bigletter">N<span class="bl-small">n</span></div>
+      <div class="lp-meta">
+        <div class="laut">Laut: &bdquo;nnnn&ldquo;</div>
+        <div class="merk"><span class="emoji">🌙</span> Nacht</div>
+        <div class="silben"><span class="syl">NA</span><span class="syl">NE</span><span class="syl">NI</span><span class="syl">NO</span><span class="syl">NU</span></div>
+      </div>
+    </div>
+    <div class="bezug">In der <strong>Nacht</strong> siehst du Sterne und Glühwürmchen. <strong>N wie Nacht!</strong></div>
+    <div class="eltern"><h3>👨‍🏫 So bringst du das N bei</h3><div class="step"><span class="step-label">① Aufwärmen</span>M, L, S, T und die Vokale durchgehen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das N ist lustig: <strong>nnnn</strong>. Halt dir die Nase zu! Merkst du? Es kommt nichts raus! Das N wohnt in der Nase."</div><div class="step"><span class="step-label">③ Silben</span>NA, NE, NI, NO, NU. "NA wie Nase! NE wie Nest!"</div><div class="step"><span class="step-label">④ Erste Wörter lesen</span> Aus den bisherigen Buchstaben: N-E-S-T → Nest! N-A-S-E → Nase! S-O-N-N-E → Sonne!</div><div class="say">Wenn er M und N verwechselt: "Halt die Nase zu — wenn Luft durch will, ist es N. Wenn nicht, M."</div></div>
+    <div class="cutline">&#9986; Tipp: Buchstabe mit dem Finger nachfahren &mdash; erst gro&szlig; in der Luft, dann auf Papier.</div>
+  </section>
+  <section class="lp">
+    <div class="lp-head">
+      <span class="lektion">Lektion 9</span>
+      
+    </div>
+    <div class="lp-top">
+      <div class="bigletter">I<span class="bl-small">i</span></div>
+      <div class="lp-meta">
+        <div class="laut">Laut: &bdquo;iiii&ldquo;</div>
+        <div class="merk"><span class="emoji">⭐</span> Iridium</div>
+        <div class="silben"><span class="syl">MI</span><span class="syl">LI</span><span class="syl">SI</span><span class="syl">RI</span><span class="syl">TI</span></div>
+      </div>
+    </div>
+    <div class="bezug"><strong>Iridium</strong> ist die allerbeste Qualität im Spiel! Lila Sterne sind super wertvoll. <strong>I wie Iridium!</strong></div>
+    <div class="eltern"><h3>👨‍🏫 So bringst du das I bei</h3><div class="step"><span class="step-label">① Wiederholung</span>Zeig A- und E-Karte: "Welcher ist A? Welcher E?"</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das I sagen wir <strong>iiii</strong> — wie wenn du dich freust: Juchhuuu! Oder wie Iiiiih!"</div><div class="step"><span class="step-label">③ I legen</span>Aus Bausteinen/Legosteinen ein I legen — es ist nur ein gerader Strich, der einfachste Buchstabe!</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>"Iridium ist lila und super wertvoll — die beste Qualität im ganzen Spiel!"</div><div class="say">Übe mit der I-Karte + Vokalen: M-I → MI, L-I → LI, S-I → SI</div></div>
+    <div class="cutline">&#9986; Tipp: Buchstabe mit dem Finger nachfahren &mdash; erst gro&szlig; in der Luft, dann auf Papier.</div>
+  </section>
+  <section class="lp">
+    <div class="lp-head">
+      <span class="lektion">Lektion 10</span>
+      
+    </div>
+    <div class="lp-top">
+      <div class="bigletter">R<span class="bl-small">r</span></div>
+      <div class="lp-meta">
+        <div class="laut">Laut: &bdquo;rrrr&ldquo;</div>
+        <div class="merk"><span class="emoji">🔨</span> Robin</div>
+        <div class="silben"><span class="syl">RA</span><span class="syl">RE</span><span class="syl">RI</span><span class="syl">RO</span><span class="syl">RU</span></div>
+      </div>
+    </div>
+    <div class="bezug"><strong>Robin</strong> ist die Schreinerin — sie baut dir den Hühnerstall! <strong>R wie Robin!</strong></div>
+    <div class="eltern"><h3>👨‍🏫 So bringst du das R bei</h3><div class="step"><span class="step-label">① Wiederholung</span>S und T durchgehen. SAMEN schon lesen lassen!</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das R rollt: <strong>rrrr</strong>. Wie ein Motorrad: Brrrumm! Die Zunge flattert oben." Falls das Rollen schwerfällt: kein Problem, akzeptiere auch ein weiches R.</div><div class="step"><span class="step-label">③ Silben</span>RA, RE, RI, RO, RU. "RO wie Robin! RA wie Rasen! RI wie Riese!"</div><div class="step"><span class="step-label">④ Erste Namen lesen</span> "R-O → Ro! R-A → Ra! Und Ma-ru kennst du: M-A → Ma, R-U → Ru → <strong>Maru!</strong>"</div><div class="say">"Robin baut dir den Hühnerstall im <strong>Schreinerladen</strong>. R wie Robin! Und im Herbst wachsen Riesen-Kürbisse!"</div></div>
+    <div class="cutline">&#9986; Tipp: Buchstabe mit dem Finger nachfahren &mdash; erst gro&szlig; in der Luft, dann auf Papier.</div>
+  </section>
+  <section class="lp">
+    <div class="lp-head">
+      <span class="lektion">Lektion 11</span>
+      <span class="wk">Woche 3 · Bauernhof-Wörter — U F H K W</span>
+    </div>
+    <div class="lp-top">
+      <div class="bigletter">U<span class="bl-small">u</span></div>
+      <div class="lp-meta">
+        <div class="laut">Laut: &bdquo;uuuu&ldquo;</div>
+        <div class="merk"><span class="emoji">🕐</span> Uhr</div>
+        <div class="silben"><span class="syl">MU</span><span class="syl">LU</span><span class="syl">SU</span><span class="syl">RU</span><span class="syl">TU</span></div>
+      </div>
+    </div>
+    <div class="bezug">Die <strong>Uhr</strong> zeigt dir im Spiel, wie spät es ist. Um 2 Uhr nachts musst du ins Bett! <strong>U wie Uhr!</strong></div>
+    <div class="eltern"><h3>👨‍🏫 So bringst du das U bei</h3><div class="step"><span class="step-label">① Wiederholung</span>A, E, I, O durchgehen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das U sagen wir <strong>uuuu</strong> — wie eine Kuh: Muuuuh, aber ohne M. Nur uuuu!"</div><div class="step"><span class="step-label">③ Vokal-Memory</span>5 Kartenpaare (A, E, I, O, U) basteln. Mischen, verdeckt hinlegen. Paare finden und Laut sagen!</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>"Im Spiel siehst du immer eine Uhr — wenn es ganz spät ist, musst du ins Bett!"</div><div class="say">Merkspruch: "<strong>A-E-I-O-U</strong> — alle Vokale kennst du!" Jetzt kommen die Konsonanten!</div></div>
+    <div class="cutline">&#9986; Tipp: Buchstabe mit dem Finger nachfahren &mdash; erst gro&szlig; in der Luft, dann auf Papier.</div>
+  </section>
+  <section class="lp">
+    <div class="lp-head">
+      <span class="lektion">Lektion 12</span>
+      
+    </div>
+    <div class="lp-top">
+      <div class="bigletter">F<span class="bl-small">f</span></div>
+      <div class="lp-meta">
+        <div class="laut">Laut: &bdquo;ffff&ldquo;</div>
+        <div class="merk"><span class="emoji">🌸</span> Frühling</div>
+        <div class="silben"><span class="syl">FA</span><span class="syl">FE</span><span class="syl">FI</span><span class="syl">FO</span><span class="syl">FU</span></div>
+      </div>
+    </div>
+    <div class="bezug">Das Spiel beginnt im <strong>Frühling</strong>! Pflanze Pastinaken und Blumenkohl. <strong>F wie Frühling!</strong></div>
+    <div class="eltern"><h3>👨‍🏫 So bringst du das F bei</h3><div class="step"><span class="step-label">① Wiederholung</span>Alle 6 Konsonanten + Vokale durchgehen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das F pustet: <strong>ffff</strong>. Oberzähne auf Unterlippe und Luft rausblasen. Wie eine Katze, die faucht — aber leise!"</div><div class="step"><span class="step-label">③ Silben</span>FA, FE, FI, FO, FU. "FA wie Farm! FI wie Fisch!"</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>"Das Spiel startet im <strong>Frühling</strong>! Alles wird grün. Du pflanzt Pastinaken! Und <strong>Fisch</strong> angeln!"</div><div class="say">Vorschau auf morgen: "Morgen lernen wir H — dann kannst du H-O-F → <strong>Hof</strong> lesen!"</div></div>
+    <div class="cutline">&#9986; Tipp: Buchstabe mit dem Finger nachfahren &mdash; erst gro&szlig; in der Luft, dann auf Papier.</div>
+  </section>
+  <section class="lp">
+    <div class="lp-head">
+      <span class="lektion">Lektion 13</span>
+      
+    </div>
+    <div class="lp-top">
+      <div class="bigletter">H<span class="bl-small">h</span></div>
+      <div class="lp-meta">
+        <div class="laut">Laut: &bdquo;hhhh&ldquo;</div>
+        <div class="merk"><span class="emoji">🐔</span> Hof &amp; Huhn</div>
+        <div class="silben"><span class="syl">HA</span><span class="syl">HE</span><span class="syl">HI</span><span class="syl">HO</span><span class="syl">HU</span></div>
+      </div>
+    </div>
+    <div class="bezug">Dein <strong>Hof</strong> und deine <strong>Hühner</strong> — gleich zwei wichtige Wörter mit H! <strong>H wie Hof!</strong></div>
+    <div class="eltern"><h3>👨‍🏫 So bringst du das H bei</h3><div class="step"><span class="step-label">① Wiederholung</span>F und alle vorherigen durchgehen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das H haucht: <strong>hhhh</strong>. Wie wenn du eine Fensterscheibe anhauchst. Ganz weich und warm."</div><div class="step"><span class="step-label">③ Silben</span>HA, HE, HI, HO, HU. "HA wie Hallo! HE wie Heu! HO wie Hof! HU wie Huhn!"</div><div class="step"><span class="step-label">④ ★ ERSTES WORT!</span>H-O-F → <strong>Hof!</strong> H-U-H-N → <strong>Huhn!</strong> Das sind die ersten echten Stardew-Wörter!</div><div class="say">Feierlicher Moment: "Du kannst jetzt <strong>Hof</strong> und <strong>Huhn</strong> lesen! Das sind Wörter aus deinem Spiel!" 🎉</div></div>
+    <div class="cutline">&#9986; Tipp: Buchstabe mit dem Finger nachfahren &mdash; erst gro&szlig; in der Luft, dann auf Papier.</div>
+  </section>
+  <section class="lp">
+    <div class="lp-head">
+      <span class="lektion">Lektion 14</span>
+      
+    </div>
+    <div class="lp-top">
+      <div class="bigletter">K<span class="bl-small">k</span></div>
+      <div class="lp-meta">
+        <div class="laut">Laut: &bdquo;k-k-k&ldquo;</div>
+        <div class="merk"><span class="emoji">🐄</span> Kuh</div>
+        <div class="silben"><span class="syl">KA</span><span class="syl">KE</span><span class="syl">KI</span><span class="syl">KO</span><span class="syl">KU</span></div>
+      </div>
+    </div>
+    <div class="bezug">Die <strong>Kuh</strong> gibt Milch — und <strong>K</strong>ürbisse wachsen im Herbst! Gleich zwei tolle Wörter mit K. <strong>K wie Kuh!</strong></div>
+    <div class="eltern"><h3>👨‍🏫 So bringst du das K bei</h3><div class="step"><span class="step-label">① Aufwärmen</span>Die bisherigen Buchstaben in der Blitz-Runde durchgehen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das K macht <strong>k</strong> — ganz kurz und hart, wie ein Huster: k! k! k! Hinten im Rachen."</div><div class="step"><span class="step-label">③ Silben</span>KA, KE, KI, KO, KU. "KA wie Katze! KO wie Korn! KU wie Kuh!"</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>"Die <strong>Kuh</strong> gibt Milch! Und der <strong>Kürbis</strong> wächst im Herbst."</div><div class="say">Lies gemeinsam: K-U-H → <strong>Kuh!</strong> K-Ü-R-B-I-S → <strong>Kürbis!</strong> (Ü lernt er später.)</div></div>
+    <div class="cutline">&#9986; Tipp: Buchstabe mit dem Finger nachfahren &mdash; erst gro&szlig; in der Luft, dann auf Papier.</div>
+  </section>
+  <section class="lp">
+    <div class="lp-head">
+      <span class="lektion">Lektion 15</span>
+      
+    </div>
+    <div class="lp-top">
+      <div class="bigletter">W<span class="bl-small">w</span></div>
+      <div class="lp-meta">
+        <div class="laut">Laut: &bdquo;wwww&ldquo;</div>
+        <div class="merk"><span class="emoji">❄️</span> Winter</div>
+        <div class="silben"><span class="syl">WA</span><span class="syl">WE</span><span class="syl">WI</span><span class="syl">WO</span><span class="syl">WU</span></div>
+      </div>
+    </div>
+    <div class="bezug">Im <strong>Winter</strong> schneit es in Pelikan Stadt. <strong>Willy</strong> am Strand — auch der fängt mit W an! Und das <strong>Wasser</strong> zum Gießen. <strong>W wie Winter!</strong></div>
+    <div class="eltern"><h3>👨‍🏫 So bringst du das W bei</h3><div class="step"><span class="step-label">① Aufwärmen</span>Die bisherigen Buchstaben in der Blitz-Runde durchgehen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das W macht die Lippen rund: <strong>wwww</strong>. Spür mal den Hals — der brummt. Wie der Wind: www-ind!"</div><div class="step"><span class="step-label">③ Silben</span>WA, WE, WI, WO, WU. "WA wie Wald! WI wie Winter! WO wie Wolle!"</div><div class="step"><span class="step-label">④ Stardew-Bezug!</span> "Im Winter schneit es in Stardew Valley. Und Willy am Strand verkauft Angel-Zeug!"</div><div class="say">Lies mit allen bisherigen Buchstaben: <strong>WIN-TER</strong> und <strong>WAS-SER</strong>! Jetzt fehlen nur noch die letzten Buchstaben.</div></div>
+    <div class="cutline">&#9986; Tipp: Buchstabe mit dem Finger nachfahren &mdash; erst gro&szlig; in der Luft, dann auf Papier.</div>
+  </section>
+  <section class="lp">
+    <div class="lp-head">
+      <span class="lektion">Lektion 16</span>
+      <span class="wk">Woche 4 · Die letzten Buchstaben — B G P D Z J</span>
+    </div>
+    <div class="lp-top">
+      <div class="bigletter">B<span class="bl-small">b</span></div>
+      <div class="lp-meta">
+        <div class="laut">Laut: &bdquo;b-b-b&ldquo;</div>
+        <div class="merk"><span class="emoji">🛏️</span> Bett</div>
+        <div class="silben"><span class="syl">BA</span><span class="syl">BE</span><span class="syl">BI</span><span class="syl">BO</span><span class="syl">BU</span></div>
+      </div>
+    </div>
+    <div class="bezug">Im <strong>Bett</strong> schläfst du nachts! Und der <strong>Bauer</strong> (das bist du!) fängt auch mit B an. <strong>B wie Bett!</strong></div>
+    <div class="eltern"><h3>👨‍🏫 So bringst du das B bei</h3><div class="step"><span class="step-label">① Aufwärmen</span>Die bisherigen Buchstaben kurz durchgehen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das B brummt auf den Lippen: <strong>b-b-b</strong>. Wie beim P, aber mit Stimme! Spür den Hals vibrieren."</div><div class="step"><span class="step-label">③ Silben</span>BA, BE, BI, BO, BU. "BA wie Bauer! BE wie Bett! BI wie Bier!"</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>"Im <strong>Bett</strong> schläfst du. Und du bist der <strong>Bauer</strong> auf dem Hof!"</div><div class="say">Lies gemeinsam: B-E-T-T → <strong>Bett!</strong> B-AU-E-R → <strong>Bauer!</strong> (AU lernt er später.)</div></div>
+    <div class="cutline">&#9986; Tipp: Buchstabe mit dem Finger nachfahren &mdash; erst gro&szlig; in der Luft, dann auf Papier.</div>
+  </section>
+  <section class="lp">
+    <div class="lp-head">
+      <span class="lektion">Lektion 17</span>
+      
+    </div>
+    <div class="lp-top">
+      <div class="bigletter">G<span class="bl-small">g</span></div>
+      <div class="lp-meta">
+        <div class="laut">Laut: &bdquo;g-g-g&ldquo;</div>
+        <div class="merk"><span class="emoji">💰</span> Gold</div>
+        <div class="silben"><span class="syl">GA</span><span class="syl">GE</span><span class="syl">GI</span><span class="syl">GO</span><span class="syl">GU</span></div>
+      </div>
+    </div>
+    <div class="bezug"><strong>Gold</strong> ist das Geld in Stardew Valley! Und <strong>Gus</strong> ist der Wirt im Saloon. <strong>G wie Gold!</strong></div>
+    <div class="eltern"><h3>👨‍🏫 So bringst du das G bei</h3><div class="step"><span class="step-label">① Wiederholung</span>K und alle vorherigen durchgehen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das G brummt hinten: <strong>g-g-g</strong>. Spür den Hals — der vibriert. Wie beim K, aber mit Stimme!"</div><div class="step"><span class="step-label">③ Silben</span>GA, GE, GI, GO, GU. "GO wie Gold! GA wie Garten! GU wie Gus!"</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>"<strong>Gold</strong> ist das Geld im Spiel! Und <strong>Gus</strong> im Saloon verkauft dir Pizza."</div><div class="say">K und G vergleichen: "K ist hart (k-k-k), G ist weich mit Stimme (g-g-g). Spür den Unterschied am Hals!"</div></div>
+    <div class="cutline">&#9986; Tipp: Buchstabe mit dem Finger nachfahren &mdash; erst gro&szlig; in der Luft, dann auf Papier.</div>
+  </section>
+  <section class="lp">
+    <div class="lp-head">
+      <span class="lektion">Lektion 18</span>
+      
+    </div>
+    <div class="lp-top">
+      <div class="bigletter">P<span class="bl-small">p</span></div>
+      <div class="lp-meta">
+        <div class="laut">Laut: &bdquo;p-p-p&ldquo;</div>
+        <div class="merk"><span class="emoji">🏪</span> Pam</div>
+        <div class="silben"><span class="syl">PA</span><span class="syl">PE</span><span class="syl">PI</span><span class="syl">PO</span><span class="syl">PU</span></div>
+      </div>
+    </div>
+    <div class="bezug"><strong>Pam</strong> fährt den Bus! Und <strong>Pierre</strong> hat den Gemischtwarenladen. <strong>P wie Pam!</strong></div>
+    <div class="eltern"><h3>👨‍🏫 So bringst du das P bei</h3><div class="step"><span class="step-label">① Wiederholung</span>G und alle vorherigen durchgehen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das P ploppt: <strong>p-p-p</strong>. Lippen zusammen, Luft raus — wie eine kleine Explosion!"</div><div class="step"><span class="step-label">③ Silben</span>PA, PE, PI, PO, PU. "PA wie Pam! PI wie Pierre! PO wie Post!"</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>"<strong>Pam</strong> fährt den Bus zur Calico-Wüste. Und <strong>Pierre</strong> verkauft Samen!"</div><div class="say">P und B vergleichen: "P ist hart (p-p-p), B ist weich (b-b-b, mit Stimme). Spür den Unterschied am Hals!"</div></div>
+    <div class="cutline">&#9986; Tipp: Buchstabe mit dem Finger nachfahren &mdash; erst gro&szlig; in der Luft, dann auf Papier.</div>
+  </section>
+  <section class="lp">
+    <div class="lp-head">
+      <span class="lektion">Lektion 19</span>
+      
+    </div>
+    <div class="lp-top">
+      <div class="bigletter">D<span class="bl-small">d</span></div>
+      <div class="lp-meta">
+        <div class="laut">Laut: &bdquo;d-d-d&ldquo;</div>
+        <div class="merk"><span class="emoji">🏘️</span> Dorf</div>
+        <div class="silben"><span class="syl">DA</span><span class="syl">DE</span><span class="syl">DI</span><span class="syl">DO</span><span class="syl">DU</span></div>
+      </div>
+    </div>
+    <div class="bezug">Pelikan Stadt ist ein <strong>Dorf</strong>! <strong>Demetrius</strong> ist der Wissenschaftler im Labor. <strong>D wie Dorf!</strong></div>
+    <div class="eltern"><h3>👨‍🏫 So bringst du das D bei</h3><div class="step"><span class="step-label">① Wiederholung</span>B und alle vorherigen durchgehen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das D tippt an: <strong>d-d-d</strong>. Wie beim T, aber mit Stimme! Zunge oben an die Zähne, dann schnell runter."</div><div class="step"><span class="step-label">③ Silben</span>DA, DE, DI, DO, DU. "DA wie Dach! DE wie Demetrius! DO wie Dorf!"</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>"Pelikan Stadt ist ein <strong>Dorf</strong>! <strong>Demetrius</strong> hat ein Labor bei Robin."</div><div class="say">D und T vergleichen: "T ist hart (t-t-t), D ist weich (d-d-d). Spür den Hals: bei D vibriert er!"</div></div>
+    <div class="cutline">&#9986; Tipp: Buchstabe mit dem Finger nachfahren &mdash; erst gro&szlig; in der Luft, dann auf Papier.</div>
+  </section>
+  <section class="lp">
+    <div class="lp-head">
+      <span class="lektion">Lektion 20</span>
+      
+    </div>
+    <div class="lp-top">
+      <div class="bigletter">Z<span class="bl-small">z</span></div>
+      <div class="lp-meta">
+        <div class="laut">Laut: &bdquo;ts&ldquo;</div>
+        <div class="merk"><span class="emoji">⛺</span> Zelt</div>
+        <div class="silben"><span class="syl">ZA</span><span class="syl">ZE</span><span class="syl">ZI</span><span class="syl">ZO</span><span class="syl">ZU</span></div>
+      </div>
+    </div>
+    <div class="bezug"><strong>Linus</strong> wohnt in einem <strong>Zelt</strong> bei den Minen! Und der <strong>Zwerg</strong> lebt tief unter der Erde. <strong>Z wie Zelt!</strong></div>
+    <div class="eltern"><h3>👨‍🏫 So bringst du das Z bei</h3><div class="step"><span class="step-label">① Wiederholung</span>D und alle vorherigen durchgehen.</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das Z macht <strong>ts</strong> — wie zwei Buchstaben zusammen! Zunge an die Zähne: ts-ts-ts. Wie wenn du jemanden leise rufst!"</div><div class="step"><span class="step-label">③ Silben</span>ZA, ZE, ZI, ZO, ZU. "ZA wie Zahl! ZE wie Zelt! ZI wie Ziege!"</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>"<strong>Linus</strong> wohnt in einem <strong>Zelt</strong>! Und der <strong>Zwerg</strong> lebt in den Minen."</div><div class="say">"Das Z ist besonders: ts-ts-ts! Z-E-L-T → Zelt! Z-W-E-R-G → Zwerg!"</div></div>
+    <div class="cutline">&#9986; Tipp: Buchstabe mit dem Finger nachfahren &mdash; erst gro&szlig; in der Luft, dann auf Papier.</div>
+  </section>
+  <section class="lp">
+    <div class="lp-head">
+      <span class="lektion">Lektion 21</span>
+      
+    </div>
+    <div class="lp-top">
+      <div class="bigletter">J<span class="bl-small">j</span></div>
+      <div class="lp-meta">
+        <div class="laut">Laut: &bdquo;j-j-j&ldquo;</div>
+        <div class="merk"><span class="emoji">👧</span> Jas</div>
+        <div class="silben"><span class="syl">JA</span><span class="syl">JE</span><span class="syl">JI</span><span class="syl">JO</span><span class="syl">JU</span></div>
+      </div>
+    </div>
+    <div class="bezug"><strong>Jas</strong> ist das kleine Mädchen auf Marnies Ranch! Und der <strong>Joja-Markt</strong> heißt auch so. <strong>J wie Jas!</strong></div>
+    <div class="eltern"><h3>👨‍🏫 So bringst du das J bei</h3><div class="step"><span class="step-label">① Wiederholung</span>Z und alle vorherigen durchgehen — das ist unser letzter neuer Buchstabe!</div><div class="step"><span class="step-label">② Laut zeigen</span>"Das J klingt weich: <strong>j-j-j</strong> — wie das Y in Yoghurt. Wie wenn du ,ja!' rufst: jjjj-aaa!"</div><div class="step"><span class="step-label">③ Silben</span>JA, JE, JI, JO, JU. "JA wie Jas! JE wie Jemand! JO wie Joja!"</div><div class="step"><span class="step-label">④ Stardew-Bezug</span>"<strong>Jas</strong> wohnt bei Marnie! Und der <strong>Joja-Markt</strong> ist der Supermarkt."</div><div class="say">Lies gemeinsam: J-A → <strong>Ja!</strong> J-A-S → <strong>Jas!</strong> — "Das J ist der letzte neue Buchstabe. Jetzt hast du 21 Buchstaben gelernt!"</div></div>
+    <div class="cutline">&#9986; Tipp: Buchstabe mit dem Finger nachfahren &mdash; erst gro&szlig; in der Luft, dann auf Papier.</div>
+  </section>
+
+<h2 class="kk-title">&#9986; Karteikarten zum Ausschneiden</h2>
+<div class="kk-grid"><div class="kk"><div class="kk-letter">M m</div><div class="kk-emoji">🐄</div><div class="kk-word">Milch</div><div class="kk-laut">&bdquo;mmmm&ldquo;</div></div><div class="kk"><div class="kk-letter">A a</div><div class="kk-emoji">🏃‍♂️</div><div class="kk-word">Alex</div><div class="kk-laut">&bdquo;aaaa&ldquo;</div></div><div class="kk"><div class="kk-letter">L l</div><div class="kk-emoji">🏪</div><div class="kk-word">Laden</div><div class="kk-laut">&bdquo;llll&ldquo;</div></div><div class="kk"><div class="kk-letter">O o</div><div class="kk-emoji">🍎</div><div class="kk-word">Obst</div><div class="kk-laut">&bdquo;oooo&ldquo;</div></div><div class="kk"><div class="kk-letter">S s</div><div class="kk-emoji">🌱</div><div class="kk-word">Samen</div><div class="kk-laut">&bdquo;ssss&ldquo;</div></div><div class="kk"><div class="kk-letter">T t</div><div class="kk-emoji">🍅</div><div class="kk-word">Tomate</div><div class="kk-laut">&bdquo;t-t-t&ldquo;</div></div><div class="kk"><div class="kk-letter">E e</div><div class="kk-emoji">🦆</div><div class="kk-word">Ente</div><div class="kk-laut">&bdquo;eeee&ldquo;</div></div><div class="kk"><div class="kk-letter">N n</div><div class="kk-emoji">🌙</div><div class="kk-word">Nacht</div><div class="kk-laut">&bdquo;nnnn&ldquo;</div></div><div class="kk"><div class="kk-letter">I i</div><div class="kk-emoji">⭐</div><div class="kk-word">Iridium</div><div class="kk-laut">&bdquo;iiii&ldquo;</div></div><div class="kk"><div class="kk-letter">R r</div><div class="kk-emoji">🔨</div><div class="kk-word">Robin</div><div class="kk-laut">&bdquo;rrrr&ldquo;</div></div><div class="kk"><div class="kk-letter">U u</div><div class="kk-emoji">🕐</div><div class="kk-word">Uhr</div><div class="kk-laut">&bdquo;uuuu&ldquo;</div></div><div class="kk"><div class="kk-letter">F f</div><div class="kk-emoji">🌸</div><div class="kk-word">Frühling</div><div class="kk-laut">&bdquo;ffff&ldquo;</div></div><div class="kk"><div class="kk-letter">H h</div><div class="kk-emoji">🐔</div><div class="kk-word">Hof &amp; Huhn</div><div class="kk-laut">&bdquo;hhhh&ldquo;</div></div><div class="kk"><div class="kk-letter">K k</div><div class="kk-emoji">🐄</div><div class="kk-word">Kuh</div><div class="kk-laut">&bdquo;k-k-k&ldquo;</div></div><div class="kk"><div class="kk-letter">W w</div><div class="kk-emoji">❄️</div><div class="kk-word">Winter</div><div class="kk-laut">&bdquo;wwww&ldquo;</div></div><div class="kk"><div class="kk-letter">B b</div><div class="kk-emoji">🛏️</div><div class="kk-word">Bett</div><div class="kk-laut">&bdquo;b-b-b&ldquo;</div></div><div class="kk"><div class="kk-letter">G g</div><div class="kk-emoji">💰</div><div class="kk-word">Gold</div><div class="kk-laut">&bdquo;g-g-g&ldquo;</div></div><div class="kk"><div class="kk-letter">P p</div><div class="kk-emoji">🏪</div><div class="kk-word">Pam</div><div class="kk-laut">&bdquo;p-p-p&ldquo;</div></div><div class="kk"><div class="kk-letter">D d</div><div class="kk-emoji">🏘️</div><div class="kk-word">Dorf</div><div class="kk-laut">&bdquo;d-d-d&ldquo;</div></div><div class="kk"><div class="kk-letter">Z z</div><div class="kk-emoji">⛺</div><div class="kk-word">Zelt</div><div class="kk-laut">&bdquo;ts&ldquo;</div></div><div class="kk"><div class="kk-letter">J j</div><div class="kk-emoji">👧</div><div class="kk-word">Jas</div><div class="kk-laut">&bdquo;j-j-j&ldquo;</div></div></div>
+
+<h2 class="cert-title">&#127942; Zertifikat</h2>
+<div class="cert">
+  <h2>&#11088; BUCHSTABEN-MEISTER &#11088;</h2>
+  <p style="font-weight:700;color:#8b6914">Verliehen an</p>
+  <div class="name">&nbsp;</div>
+  <p style="color:#5da03c;font-weight:700">f&uuml;r das Erlernen aller 21 Buchstaben<br>
+     und die ersten Stardew-Valley-W&ouml;rter!</p>
+  <div class="badges"><span class="badge">M</span><span class="badge">A</span><span class="badge">L</span><span class="badge">O</span><span class="badge">S</span><span class="badge">T</span><span class="badge">E</span><span class="badge">N</span><span class="badge">I</span><span class="badge">R</span><span class="badge">U</span><span class="badge">F</span><span class="badge">H</span><span class="badge">K</span><span class="badge">W</span><span class="badge">B</span><span class="badge">G</span><span class="badge">P</span><span class="badge">D</span><span class="badge">Z</span><span class="badge">J</span></div>
+  <p class="words">&#11088; HOF &middot; KUH &middot; HUHN &middot; SAMEN &middot; GOLD &middot; BETT &#11088;</p>
+  <div class="stick">&#128020;&#128004;&#128017;&#128022;&#127793;&#127822;&#11088;</div>
+  <p style="color:#8b6914;font-size:9pt;margin-top:4mm">Datum: ____________  &middot;  Unterschrift: ____________</p>
+</div>
+</body></html>

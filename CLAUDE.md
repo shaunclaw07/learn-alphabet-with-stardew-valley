@@ -82,7 +82,13 @@ sowie den kanonischen PWA-`<head>`-Block und die Service-Worker-Registrierung
 **Audio (Vorlesen)**
 - Web Speech API (`speechSynthesis`), offline & kostenlos. Deutsche Stimme hat
   IMMER Vorrang; Voice-Picker + `isGermanVoice()`/`refreshVoices()`/`speak()`
-  aus Phase 1/2 **1:1 übernehmen**.
+  **plus** `showNoVoices()` und das Init-Polling aus Phase 1 **1:1 übernehmen**.
+- **Robustes Stimmen-Laden (Pflicht):** `voiceschanged` feuert auf Fire OS /
+  manchen Tablets unzuverlässig — Stimmen im Init per `setTimeout`-Loop
+  mehrfach nachladen (~12×/250 ms). Bleibt `getVoices()` dauerhaft leer,
+  `showNoVoices()` aufrufen (sichtbarer Klartext-Hinweis + `select` disablen)
+  statt still ein leeres Dropdown zu lassen. Häufigste Ursache eines leeren
+  Dropdowns: **Amazon-Kids-Modus** gibt die Web Speech API nicht frei.
 - Gespeicherte Stimme ist **phasenübergreifend**: `localStorage`-Key
   `sv_lesen_voice`.
 - Silben/Wörter zum Sprechen **kleinschreiben** (`speak(text.toLowerCase())`) —

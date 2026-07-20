@@ -80,6 +80,24 @@ des Geräts**.
 iOS nutzt ebenfalls die Systemstimmen. Unter `Einstellungen → Bedienungshilfen →
 Gesprochene Inhalte → Stimmen → Deutsch` eine deutsche Stimme laden.
 
+### 🔥 Amazon Fire Tablet
+
+Zwei Stolperfallen speziell auf Fire-Tablets:
+
+1. **Amazon-Kids-Modus blockiert das Vorlesen.** Der kindersichere Browser im
+   Kids-Modus gibt die Web Speech API **nicht** frei — das Stimmen-Dropdown
+   bleibt dann leer, egal welche Stimmen installiert sind. Die App im
+   **normalen (Erwachsenen-)Profil** im Silk-Browser öffnen. (Die App nur für
+   den Kids-Modus freizugeben reicht nicht.)
+2. **Deutsche TTS-Stimme.** Unter `Einstellungen → Bedienungshilfen →
+   Text-to-Speech-Ausgabe` die Engine und eine deutsche Sprache wählen bzw.
+   herunterladen. Fire OS hat ohne Play Store oft nur Englisch — hier ist die
+   deutsche Stimme leider zäh.
+
+> Findet die App gar keine Stimme, zeigt sie das jetzt im Klartext an
+> („🔇 Kein Vorlesen verfügbar …") statt eines leeren Dropdowns — dann ist
+> meist der Kids-Modus die Ursache.
+
 ---
 
 ## 📲 Als App installieren

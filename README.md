@@ -1,0 +1,117 @@
+# 🐔 Lesen lernen mit Stardew Valley
+
+Ein spielerischer, deutscher **Lese-Lern-Kurs für Kinder (ca. 5–6 Jahre)** —
+komplett in die Welt von **Stardew Valley** eingebettet. Jeder Buchstabe, jede
+Silbe und jedes Wort ist mit einer Figur oder einem Gegenstand aus dem Spiel
+verknüpft, damit das Lesenlernen Spaß macht und im Kopf bleibt.
+
+**🌐 Live:** http://learn-alphabet-with-stardew-valley.schaflabs.com/
+
+Die Seite ist **statisch** (reine HTML-Dateien, kein Build, keine Installation)
+und funktioniert auch offline per Doppelklick auf `index.html`. Vorgelesen wird
+über die **Sprachausgabe des Geräts** (Web Speech API) — offline und kostenlos.
+
+---
+
+## 📚 Die vier Phasen
+
+| Phase | Fokus | Status |
+|-------|-------|--------|
+| **1 – Die Buchstaben** | 21 Buchstaben als *Laute* kennenlernen, mit Stardew-Merkwörtern | ✅ fertig |
+| **2 – Silben & erste Wörter** | Silben zusammenziehen, erste Wörter lesen (Silben-Bauer, Blitz-Wörter) | ✅ fertig |
+| **3 – Wortschatz** | Der ganze Stardew-Wortschatz (Tiere, Werkzeuge, Pflanzen, Orte) | 🔒 geplant |
+| **4 – Erste Sätze** | Kurze Sätze & Spiel-Dialoge bis zum freien Lesen | 🔒 geplant |
+
+Auf der **Startseite** (`index.html`) wählt man die Phase aus und sieht den
+eigenen Fortschritt. Jede Phase ist eine eigene Seite mit Vorlese-Funktion
+(antippen zum Hören), Quiz/Spielen und einem Zertifikat am Ende. Der Fortschritt
+wird lokal im Browser gespeichert (`localStorage`).
+
+---
+
+## 🔊 Vorlese-Stimme einrichten (wichtig!)
+
+Die App liest Buchstaben, Silben und Wörter vor. Dafür wird eine **deutsche
+Stimme** benötigt — sonst klingen die Laute englisch. Die Stimmen kommen vom
+**Betriebssystem**, nicht von der App. Einmal eingerichtet, merkt sich die Seite
+die Wahl.
+
+> In der App oben im Feld **„🔊 Vorlese-Stimme"** die deutsche Stimme (🇩🇪,
+> `de-DE`) auswählen. Bei **„✅ Aktiv: … de-DE"** ist alles korrekt.
+
+### 💻 Desktop (Chrome / Edge unter Windows)
+
+- **Google Chrome** bringt in der Regel bereits eine **„Google Deutsch"**-Stimme
+  mit — einfach oben in der Stimmenauswahl auswählen.
+- Falls keine deutsche Stimme auftaucht (z. B. in Edge oder anderen Browsern),
+  eine deutsche Windows-Stimme installieren:
+  1. `Windows-Einstellungen → Zeit & Sprache → Sprache & Region`
+  2. Bei **Deutsch** auf `…` → **Sprachoptionen** → **Sprache/Stimme
+     herunterladen**
+  3. **Browser neu starten** und die deutsche Stimme in der App auswählen.
+- **macOS**: `Systemeinstellungen → Bedienungshilfen → Gesprochene Inhalte →
+  Systemstimme → Anpassen…` → eine deutsche Stimme laden, danach Browser neu
+  starten.
+
+### 📱 Android (Chrome)
+
+Android-Chrome nutzt die **System-Sprachausgabe (Text-to-Speech)**. Die deutsche
+Stimme wird also **im Android-TTS-Modul** installiert, nicht in Chrome:
+
+1. **Play Store**: „**Speech Services by Google**" (Sprachausgabe von Google)
+   installieren bzw. aktualisieren.
+2. **Sprachausgabe-Einstellungen** öffnen (Pfad je nach Gerät):
+   - `Einstellungen → System → Sprachen & Eingabe → Sprachausgabe`, oder
+   - `Einstellungen → Bedienungshilfen → Sprachausgabe (Text-in-Sprache)`
+   - (Notfalls in den Einstellungen nach **„Sprachausgabe"** suchen.)
+3. **Bevorzugte Engine** auf **„Speech Services by Google"** stellen
+   (Hersteller-Engines wie Samsung haben oft kein Deutsch).
+4. Auf das **Zahnrad** neben der Engine → **„Sprachdaten installieren"** →
+   **Deutsch** herunterladen (optional in höherer Qualität).
+5. **Chrome schließen und neu starten**, Seite neu laden, deutsche Stimme
+   auswählen.
+
+**Kommt keine deutsche Stimme?** Prüfen, dass wirklich die *Google*-Engine aktiv
+ist; Stimmen brauchen ggf. WLAN + freien Speicher; danach hilft ein **Neustart
+des Geräts**.
+
+### 🍎 iOS (Safari / Chrome)
+
+iOS nutzt ebenfalls die Systemstimmen. Unter `Einstellungen → Bedienungshilfen →
+Gesprochene Inhalte → Stimmen → Deutsch` eine deutsche Stimme laden.
+
+---
+
+## 🗂️ Projektstruktur
+
+```
+alphabet/
+├── index.html                     Startseite / Phasenauswahl
+├── phase1/
+│   ├── lese-schule.html           Phase 1 (interaktiv)
+│   ├── lektionen/                 Papier-Lektionen (Markdown)
+│   ├── materialien/               Karteikarten, Bingo, Übungsblätter
+│   └── phase1-druckversion.*      Druckbare A4-Fassung (HTML + PDF)
+├── phase2/
+│   └── phase2-schule.html         Phase 2 (interaktiv)
+├── lehrplan.html                  Kompletter Lehrplan (HTML)
+├── lesen-lernen-lehrplan.md       Kompletter Lehrplan (Master-Referenz)
+├── CLAUDE.md / AGENTS.md          Konventionen für die Weiterentwicklung
+└── .github/workflows/deploy.yml   Auto-Deploy zu GitHub Pages
+```
+
+---
+
+## 🛠️ Für Mitwirkende
+
+Alle didaktischen und technischen **Konventionen** stehen in
+[`CLAUDE.md`](./CLAUDE.md) (z. B.: eine self-contained HTML-Datei pro Phase,
+Stardew-Design-Tokens, geteilte Vorlese-Engine, nur decodierbare Wörter aus den
+gelernten Buchstaben). Jeder Push auf `master` wird automatisch zu GitHub Pages
+deployt.
+
+---
+
+*Erstellt mit ❤️ — basierend auf dem offiziellen deutschen
+[Stardew-Valley-Wiki](https://de.stardewvalleywiki.com/). Viel Spaß beim
+gemeinsamen Lesenlernen! 🌟🐓🥕*

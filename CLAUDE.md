@@ -26,7 +26,10 @@ Zweifel gegen den Lehrplan prüfen.
 zeigt Fortschritt pro Phase, sperrt noch nicht gebaute Phasen als „Bald
 verfügbar". Beim Anlegen einer neuen Phase: neue Karte in `index.html`
 freischalten (`href` setzen, `soon` entfernen, `progressKey`/`total`/`einheit`
-ergänzen).
+ergänzen). Zusätzlich für die **PWA**: die neue Seite in die
+`APP_SHELL`-Precache-Liste in `sw.js` eintragen und `CACHE_VERSION` erhöhen
+sowie den kanonischen PWA-`<head>`-Block und die Service-Worker-Registrierung
+(wie in Phase 1–4) in die neue Phasen-HTML übernehmen.
 
 ## Verbindliche Konventionen (für ALLE Phasen)
 

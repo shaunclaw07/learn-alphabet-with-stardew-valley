@@ -82,6 +82,26 @@ Gesprochene Inhalte → Stimmen → Deutsch` eine deutsche Stimme laden.
 
 ---
 
+## 📲 Als App installieren
+
+Die Seite ist eine **Progressive Web App**: einmal geöffnet, funktioniert sie
+komplett **offline** und lässt sich wie eine echte App auf den Startbildschirm
+legen.
+
+- **Android / Chrome:** Menü ⋮ → „App installieren" bzw. „Zum Startbildschirm
+  hinzufügen" — oder den grünen Button **„📲 Als App hinzufügen"** auf der
+  Startseite.
+- **iPhone / iPad (Safari):** Teilen-Symbol → „Zum Home-Bildschirm".
+
+Danach startet die Lese-Schule im Vollbild ohne Browser-Leiste. Ein 🐔-Icon
+liegt auf dem Startbildschirm.
+
+> Hinweis: Die App-Installation funktioniert nur über die Online-Adresse
+> (`https://…`), nicht beim Öffnen per Doppelklick (`file://`). Per Doppelklick
+> läuft die Seite aber weiterhin ganz normal.
+
+---
+
 ## 🖨️ Zum Ausdrucken
 
 Neben den interaktiven Apps hat **jede Phase eine druckbare A4-Fassung** als

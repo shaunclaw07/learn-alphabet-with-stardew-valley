@@ -1,0 +1,46 @@
+name: Deploy zu GitHub Pages
+
+# Deployt die statische Lese-Schule (index.html + phase1/ + phase2/) zu
+# GitHub Pages. Reine statische Dateien — kein Build nötig, das ganze Repo
+# wird als Pages-Artefakt hochgeladen.
+
+on:
+  # Bei jedem Push auf master automatisch deployen
+  push:
+    branches: [master]
+  # Manuell über den Actions-Tab auslösbar
+  workflow_dispatch:
+
+# Rechte, die der offizielle Pages-Deploy braucht
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Immer nur ein Deploy gleichzeitig; laufende nicht abbrechen
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Pages konfigurieren
+        uses: actions/configure-pages@v5
+
+      - name: Seite als Artefakt hochladen
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Das komplette Repo-Root ist die Website (Einstieg: index.html)
+          path: "."
+
+      - name: Zu GitHub Pages deployen
+        id: deployment
+        uses: actions/deploy-pages@v4

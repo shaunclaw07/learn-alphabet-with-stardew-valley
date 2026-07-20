@@ -205,4 +205,37 @@
   .demo-arrow {
     color: #4a7a30;
   }
+
+  /* ─── Dashboard (index.html) ─── */
+  .dash-card {
+    background: #252540;
+    border-color: #6b5a3e;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+  }
+  .dash-card h3 {
+    color: #6a9a50;
+  }
+  .dash-big {
+    color: #e0d6c2;
+  }
+  .dash-big span {
+    color: #6a9a50;
+  }
+  .dash-sub {
+    color: #b0a090;
+  }
+  .dash-bar-wrap {
+    background: #3a3050;
+    border-color: #6b5a3e;
+  }
+  .dash-phase {
+    background: #1e1e35;
+    border-color: #3a3050;
+  }
+  .dash-phase .dp-label {
+    color: #e0d6c2;
+  }
+  .dash-phase .dp-count {
+    color: #6a9a50;
+  }
 }

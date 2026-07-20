@@ -362,6 +362,87 @@
           transform: none;
         }
       }
+
+      /* ===== ELTERN-DASHBOARD ===== */
+      .dashboard {
+        max-width: 900px;
+        margin: 40px auto 0;
+        padding: 0 20px 20px;
+      }
+      .dash-card {
+        background: #fffaf0;
+        border: 3px solid #8b6914;
+        border-radius: 20px;
+        padding: 24px 22px;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+      }
+      .dash-card h3 {
+        font-family: "Press Start 2P", cursive;
+        font-size: 0.6rem;
+        color: #5da03c;
+        text-align: center;
+        margin-bottom: 18px;
+      }
+      .dash-summary {
+        text-align: center;
+        margin-bottom: 16px;
+      }
+      .dash-big {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: #4a3728;
+      }
+      .dash-big span {
+        color: #5da03c;
+      }
+      .dash-sub {
+        font-size: 0.9rem;
+        color: #8b6914;
+        font-weight: 600;
+      }
+      .dash-bar-wrap {
+        background: #d7c9a8;
+        height: 20px;
+        border-radius: 10px;
+        border: 2px solid #8b6914;
+        overflow: hidden;
+        margin-bottom: 20px;
+      }
+      .dash-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #ffd700, #ffaa00);
+        width: 0%;
+        transition: width 0.6s ease;
+        border-radius: 8px;
+      }
+      .dash-phases {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 10px;
+      }
+      .dash-phase {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        background: #f5eedc;
+        border-radius: 12px;
+        border: 2px solid #d7c9a8;
+        font-weight: 700;
+        font-size: 0.9rem;
+      }
+      .dash-phase .dp-icon {
+        font-size: 1.3rem;
+      }
+      .dash-phase .dp-label {
+        flex: 1;
+        color: #4a3728;
+      }
+      .dash-phase .dp-count {
+        color: #5da03c;
+        font-weight: 800;
+      }
+
       /* #INCLUDE shared/dark-mode.css */
     </style>
   </head>
@@ -398,6 +479,21 @@
 
     <!-- ===== PHASE GRID ===== -->
     <div class="phase-grid" id="phaseGrid"></div>
+
+    <!-- ===== ELTERN-DASHBOARD ===== -->
+    <div class="dashboard" id="dashboard">
+      <div class="dash-card">
+        <h3>📊 Gesamtfortschritt</h3>
+        <div class="dash-summary">
+          <div class="dash-big"><span id="dashDone">0</span> / <span id="dashTotal">0</span></div>
+          <div class="dash-sub">Aufgaben geschafft</div>
+        </div>
+        <div class="dash-bar-wrap">
+          <div class="dash-bar-fill" id="dashBar"></div>
+        </div>
+        <div class="dash-phases" id="dashPhases"></div>
+      </div>
+    </div>
 
     <!-- ===== FOOTER ===== -->
     <div class="foot">
@@ -525,6 +621,37 @@
         card.appendChild(meta);
         grid.appendChild(card);
       });
+
+      // ===== ELTERN-DASHBOARD =====
+      (function renderDashboard() {
+        const totalDone = phases.reduce((sum, p) => {
+          if (p.soon) return sum;
+          return sum + loadCount(p.progressKey);
+        }, 0);
+        const totalItems = phases.reduce((sum, p) => {
+          if (p.soon) return sum;
+          return sum + p.total;
+        }, 0);
+        const pct = totalItems ? Math.round((totalDone / totalItems) * 100) : 0;
+
+        document.getElementById("dashDone").textContent = totalDone;
+        document.getElementById("dashTotal").textContent = totalItems;
+        document.getElementById("dashBar").style.width = pct + "%";
+
+        const phasesDiv = document.getElementById("dashPhases");
+        if (!phasesDiv) return;
+        phases.forEach((p) => {
+          if (p.soon) return;
+          const done = loadCount(p.progressKey);
+          const div = document.createElement("div");
+          div.className = "dash-phase";
+          div.innerHTML =
+            '<span class="dp-icon">' + p.icon + '</span>' +
+            '<span class="dp-label">' + p.titel + '</span>' +
+            '<span class="dp-count">' + done + "/" + p.total + "</span>";
+          phasesDiv.appendChild(div);
+        });
+      })();
     </script>
     <script>
       // #INCLUDE shared/sw-register.js

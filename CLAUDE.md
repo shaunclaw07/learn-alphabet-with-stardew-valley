@@ -48,6 +48,33 @@ ergänzen).
   Panel (ⓘ-Button), Zertifikat am Ende, dezente `farm-decoration`-Emojis.
 - **Buchstaben immer in `Nunito` (font-weight 800) rendern**, NICHT im
   Pixel-Font — die korrekte Buchstabenform ist zum Lesenlernen essenziell.
+- Tokens für Touch/Abstände: `--tap: 44px`, Spacing-Skala `--sp-1 … --sp-8`
+  auf 4/8-Basis.
+
+**Mobile-First & Responsive (WICHTIG — Zielgerät ist Tablet/Smartphone)**
+- **Mobile-first bauen:** Basis-CSS = Smartphone, nach oben skalieren mit
+  `min-width`-Media-Queries (nicht Desktop-first mit `max-width`-Patch).
+  Einheitliche Breakpoints: `480px` (große Handys), `768px` (Tablet),
+  `1024px` (Desktop).
+- **Touch-Targets ≥ 44×44px**, mind. 8px Abstand — für Nav-Buttons, Silben-/
+  Wort-Chips, Info-/Audio-Buttons und Back-Link. Kleine Icons per unsichtbarer
+  `::before`-Fläche (44px) vergrößern; die sichtbare Optik darf kleiner bleiben.
+- **Press-Feedback statt Hover:** `:active { transform: scale(0.96); }` +
+  `touch-action: manipulation`. Hover-Effekte NUR in `@media (hover: hover)`
+  kapseln, sonst bleibt nach dem Tap ein „Sticky-Hover" hängen.
+- **Nav = horizontaler Scroll-Streifen** auf dem Handy (`overflow-x: auto`,
+  `scroll-snap`, `flex-wrap: nowrap`, Buttons ≥44px); ab `768px` wieder
+  umbrechen/zentrieren.
+- **`min-height: 100dvh`** statt `100vh`; Sticky-/Fixed-Elemente mit
+  `env(safe-area-inset-*)` gegen Notch/Gestenleiste absichern.
+- **`@media (prefers-reduced-motion: reduce)`** ergänzen: Dauer-Animationen
+  (⭐-Bounce, Shake, Transitions) abschalten.
+- **A11y:** sichtbarer `:focus-visible`-Ring; `aria-label` auf Icon-Buttons
+  (ⓘ, 🔊); Zoom NIE sperren (kein `user-scalable=no` / `maximum-scale`).
+- Da es kein geteiltes CSS gibt, wird dieser Responsive-Baustein (Tokens +
+  globale Touch-/Motion-Regeln) als **kanonischer Copy-Paste-Block** je Datei
+  gepflegt — wie Voice-Picker/`speak()`. Vollständiger Umbau-Plan:
+  `docs/superpowers/plans/2026-07-20-mobile-first-ueberarbeitung.md`.
 
 **Audio (Vorlesen)**
 - Web Speech API (`speechSynthesis`), offline & kostenlos. Deutsche Stimme hat
@@ -88,6 +115,9 @@ ergänzen).
 - Danach im Browser öffnen und Konsole prüfen. Live-Test mit „Claude in Chrome"
   nur, wenn die Extension verbunden ist — sonst dem Nutzer sagen, dass der
   visuelle Test aussteht (nichts als „getestet" behaupten, was nicht lief).
+- **Responsive prüfen:** bei `320 / 375 / 768 / 1024 px` + Landscape (kein
+  horizontaler Body-Scroll, Touch-Targets ≥44px) und mit aktiviertem
+  `prefers-reduced-motion`.
 
 ## Git
 

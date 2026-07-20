@@ -27,9 +27,46 @@
           radial-gradient(ellipse at 20% 20%, #e8d5a3 0%, transparent 50%),
           radial-gradient(ellipse at 80% 80%, #c8e6a5 0%, transparent 50%),
           radial-gradient(ellipse at 50% 50%, #f5eedc 0%, transparent 70%);
-        min-height: 100vh;
+        min-height: 100dvh;
         color: #4a3728;
         overflow-x: hidden;
+      }
+
+      /* ===== DESIGN TOKENS (mobile-first) ===== */
+      :root {
+        --tap: 44px;            /* Mindest-Touch-Target */
+        --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px;
+        --sp-4: 16px; --sp-6: 24px; --sp-8: 32px;
+      }
+
+      /* ===== TOUCH & MOTION (global) ===== */
+      button, a, select,
+      .nav-btn, .silben-chip, .b-chip, .b-slot, .ws-letter,
+      .letter-display, .quiz-btn, .b-btn, .info-toggle-btn, .back-link {
+        touch-action: manipulation;   /* entfernt 300ms-Tap-Delay */
+      }
+
+      /* Press-Feedback für Touch (funktioniert ohne Hover) */
+      .nav-btn:active, .silben-chip:active, .b-chip:active,
+      .quiz-btn:active, .b-btn:active, .letter-display:active,
+      .ws-letter:active, .back-link:active, .info-toggle-btn:active {
+        transform: scale(0.96);
+      }
+
+      /* Sichtbarer Fokusring für Tastatur/Screenreader */
+      a:focus-visible, button:focus-visible, select:focus-visible,
+      .nav-btn:focus-visible, .info-toggle-btn:focus-visible {
+        outline: 3px solid #3d6b22;
+        outline-offset: 2px;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+          scroll-behavior: auto !important;
+        }
       }
 
       /* ===== HEADER ===== */
@@ -105,7 +142,7 @@
         margin: 32px auto 0;
         padding: 0 20px 60px;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
         gap: 26px;
       }
 

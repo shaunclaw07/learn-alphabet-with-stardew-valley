@@ -19,7 +19,7 @@ und funktioniert auch offline per Doppelklick auf `index.html`. Vorgelesen wird
 |-------|-------|--------|
 | **1 – Die Buchstaben** | 21 Buchstaben als *Laute* kennenlernen, mit Stardew-Merkwörtern | ✅ fertig |
 | **2 – Silben & erste Wörter** | Silben zusammenziehen, erste Wörter lesen (Silben-Bauer, Blitz-Wörter) | ✅ fertig |
-| **3 – Wortschatz** | Der ganze Stardew-Wortschatz (Tiere, Werkzeuge, Pflanzen, Orte) | 🔒 geplant |
+| **3 – Wortschatz** | Der ganze Stardew-Wortschatz in 7 Themen (Tiere, Werkzeuge, Pflanzen, Orte …), Bild-Quiz & Blitz-Wörter | ✅ fertig |
 | **4 – Erste Sätze** | Kurze Sätze & Spiel-Dialoge bis zum freien Lesen | 🔒 geplant |
 
 Auf der **Startseite** (`index.html`) wählt man die Phase aus und sieht den
@@ -94,6 +94,8 @@ alphabet/
 │   └── phase1-druckversion.*      Druckbare A4-Fassung (HTML + PDF)
 ├── phase2/
 │   └── phase2-schule.html         Phase 2 (interaktiv)
+├── phase3/
+│   └── phase3-schule.html         Phase 3 (interaktiv)
 ├── lehrplan.html                  Kompletter Lehrplan (HTML)
 ├── lesen-lernen-lehrplan.md       Kompletter Lehrplan (Master-Referenz)
 ├── CLAUDE.md / AGENTS.md          Konventionen für die Weiterentwicklung

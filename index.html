@@ -34,34 +34,59 @@
 
       /* ===== DESIGN TOKENS (mobile-first) ===== */
       :root {
-        --tap: 44px;            /* Mindest-Touch-Target */
-        --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px;
-        --sp-4: 16px; --sp-6: 24px; --sp-8: 32px;
+        --tap: 44px; /* Mindest-Touch-Target */
+        --sp-1: 4px;
+        --sp-2: 8px;
+        --sp-3: 12px;
+        --sp-4: 16px;
+        --sp-6: 24px;
+        --sp-8: 32px;
       }
 
       /* ===== TOUCH & MOTION (global) ===== */
-      button, a, select,
-      .nav-btn, .silben-chip, .b-chip, .b-slot, .ws-letter,
-      .letter-display, .quiz-btn, .b-btn, .info-toggle-btn, .back-link {
-        touch-action: manipulation;   /* entfernt 300ms-Tap-Delay */
+      button,
+      a,
+      select,
+      .nav-btn,
+      .silben-chip,
+      .b-chip,
+      .b-slot,
+      .ws-letter,
+      .letter-display,
+      .quiz-btn,
+      .b-btn,
+      .info-toggle-btn,
+      .back-link {
+        touch-action: manipulation; /* entfernt 300ms-Tap-Delay */
       }
 
       /* Press-Feedback für Touch (funktioniert ohne Hover) */
-      .nav-btn:active, .silben-chip:active, .b-chip:active,
-      .quiz-btn:active, .b-btn:active, .letter-display:active,
-      .ws-letter:active, .back-link:active, .info-toggle-btn:active {
+      .nav-btn:active,
+      .silben-chip:active,
+      .b-chip:active,
+      .quiz-btn:active,
+      .b-btn:active,
+      .letter-display:active,
+      .ws-letter:active,
+      .back-link:active,
+      .info-toggle-btn:active {
         transform: scale(0.96);
       }
 
       /* Sichtbarer Fokusring für Tastatur/Screenreader */
-      a:focus-visible, button:focus-visible, select:focus-visible,
-      .nav-btn:focus-visible, .info-toggle-btn:focus-visible {
+      a:focus-visible,
+      button:focus-visible,
+      select:focus-visible,
+      .nav-btn:focus-visible,
+      .info-toggle-btn:focus-visible {
         outline: 3px solid #3d6b22;
         outline-offset: 2px;
       }
 
       @media (prefers-reduced-motion: reduce) {
-        *, *::before, *::after {
+        *,
+        *::before,
+        *::after {
           animation-duration: 0.001ms !important;
           animation-iteration-count: 1 !important;
           transition-duration: 0.001ms !important;
@@ -287,10 +312,22 @@
         opacity: 0.12;
         font-size: 4rem;
       }
-      .farm-1 { top: 12%; left: 3%; }
-      .farm-2 { top: 30%; right: 4%; }
-      .farm-3 { bottom: 12%; left: 5%; }
-      .farm-4 { bottom: 8%; right: 6%; }
+      .farm-1 {
+        top: 12%;
+        left: 3%;
+      }
+      .farm-2 {
+        top: 30%;
+        right: 4%;
+      }
+      .farm-3 {
+        bottom: 12%;
+        left: 5%;
+      }
+      .farm-4 {
+        bottom: 8%;
+        right: 6%;
+      }
 
       @media (max-width: 600px) {
         .header h1 {
@@ -429,7 +466,8 @@
 
           const label = document.createElement("div");
           label.className = "phase-progress-label";
-          label.textContent = done + " von " + p.total + " " + p.einheit + " ⭐";
+          label.textContent =
+            done + " von " + p.total + " " + p.einheit + " ⭐";
           meta.appendChild(label);
 
           const status = document.createElement("div");

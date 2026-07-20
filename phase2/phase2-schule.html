@@ -34,34 +34,59 @@
 
       /* ===== DESIGN TOKENS (mobile-first) ===== */
       :root {
-        --tap: 44px;            /* Mindest-Touch-Target */
-        --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px;
-        --sp-4: 16px; --sp-6: 24px; --sp-8: 32px;
+        --tap: 44px; /* Mindest-Touch-Target */
+        --sp-1: 4px;
+        --sp-2: 8px;
+        --sp-3: 12px;
+        --sp-4: 16px;
+        --sp-6: 24px;
+        --sp-8: 32px;
       }
 
       /* ===== TOUCH & MOTION (global) ===== */
-      button, a, select,
-      .nav-btn, .silben-chip, .b-chip, .b-slot, .ws-letter,
-      .letter-display, .quiz-btn, .b-btn, .info-toggle-btn, .back-link {
-        touch-action: manipulation;   /* entfernt 300ms-Tap-Delay */
+      button,
+      a,
+      select,
+      .nav-btn,
+      .silben-chip,
+      .b-chip,
+      .b-slot,
+      .ws-letter,
+      .letter-display,
+      .quiz-btn,
+      .b-btn,
+      .info-toggle-btn,
+      .back-link {
+        touch-action: manipulation; /* entfernt 300ms-Tap-Delay */
       }
 
       /* Press-Feedback für Touch (funktioniert ohne Hover) */
-      .nav-btn:active, .silben-chip:active, .b-chip:active,
-      .quiz-btn:active, .b-btn:active, .letter-display:active,
-      .ws-letter:active, .back-link:active, .info-toggle-btn:active {
+      .nav-btn:active,
+      .silben-chip:active,
+      .b-chip:active,
+      .quiz-btn:active,
+      .b-btn:active,
+      .letter-display:active,
+      .ws-letter:active,
+      .back-link:active,
+      .info-toggle-btn:active {
         transform: scale(0.96);
       }
 
       /* Sichtbarer Fokusring für Tastatur/Screenreader */
-      a:focus-visible, button:focus-visible, select:focus-visible,
-      .nav-btn:focus-visible, .info-toggle-btn:focus-visible {
+      a:focus-visible,
+      button:focus-visible,
+      select:focus-visible,
+      .nav-btn:focus-visible,
+      .info-toggle-btn:focus-visible {
         outline: 3px solid #3d6b22;
         outline-offset: 2px;
       }
 
       @media (prefers-reduced-motion: reduce) {
-        *, *::before, *::after {
+        *,
+        *::before,
+        *::after {
           animation-duration: 0.001ms !important;
           animation-iteration-count: 1 !important;
           transition-duration: 0.001ms !important;
@@ -110,11 +135,16 @@
         padding: 6px 14px;
         border-radius: 10px;
         border: 2px solid #8b6914;
-        transition: background .2s, transform .2s;
+        transition:
+          background 0.2s,
+          transform 0.2s;
         z-index: 6;
       }
       @media (hover: hover) {
-        .back-link:hover { background: #ffd700; transform: scale(1.05); }
+        .back-link:hover {
+          background: #ffd700;
+          transform: scale(1.05);
+        }
       }
       .header-icons {
         font-size: 2rem;
@@ -247,13 +277,18 @@
         padding: 10px;
         border-radius: 16px;
       }
-      .nav-row::-webkit-scrollbar { height: 6px; }
-      .nav-row::-webkit-scrollbar-thumb { background: #c49a2a; border-radius: 3px; }
+      .nav-row::-webkit-scrollbar {
+        height: 6px;
+      }
+      .nav-row::-webkit-scrollbar-thumb {
+        background: #c49a2a;
+        border-radius: 3px;
+      }
 
       .nav-btn {
         flex: 0 0 auto;
         min-width: var(--tap);
-        height: var(--tap);          /* 44px statt 42 */
+        height: var(--tap); /* 44px statt 42 */
         padding: 0 12px;
         scroll-snap-align: start;
         border-radius: 12px;
@@ -263,13 +298,19 @@
         font-weight: 800;
         font-size: 1.05rem;
         cursor: pointer;
-        transition: background .2s, color .2s, border-color .2s;
+        transition:
+          background 0.2s,
+          color 0.2s,
+          border-color 0.2s;
         color: #4a3728;
         display: flex;
         align-items: center;
         justify-content: center;
       }
-      .nav-btn.done { background: #ffd700; border-color: #c49a2a; }
+      .nav-btn.done {
+        background: #ffd700;
+        border-color: #c49a2a;
+      }
       .nav-btn.special {
         min-width: auto;
         padding: 0 14px;
@@ -281,18 +322,27 @@
 
       /* Ab Tablet: Umbruch + Zentrierung statt Scroll */
       @media (min-width: 768px) {
-        .nav-row { flex-wrap: wrap; overflow: visible; justify-content: center; }
+        .nav-row {
+          flex-wrap: wrap;
+          overflow: visible;
+          justify-content: center;
+        }
       }
       /* Hover nur auf Hover-Geräten (kein Sticky-Hover auf Touch) */
       @media (hover: hover) {
-        .nav-btn:hover, .nav-btn.active {
-          background: #7ec850; color: #fff; border-color: #3d6b22;
-          box-shadow: 0 4px 12px rgba(126,200,80,.4);
+        .nav-btn:hover,
+        .nav-btn.active {
+          background: #7ec850;
+          color: #fff;
+          border-color: #3d6b22;
+          box-shadow: 0 4px 12px rgba(126, 200, 80, 0.4);
         }
       }
       /* Aktiver Zustand IMMER sichtbar (auch Touch) */
       .nav-btn.active {
-        background: #7ec850; color: #fff; border-color: #3d6b22;
+        background: #7ec850;
+        color: #fff;
+        border-color: #3d6b22;
       }
 
       /* ===== EXPLAINER CARD ===== */
@@ -529,8 +579,10 @@
       .info-toggle-btn::before {
         content: "";
         position: absolute;
-        top: 50%; left: 50%;
-        width: var(--tap); height: var(--tap);
+        top: 50%;
+        left: 50%;
+        width: var(--tap);
+        height: var(--tap);
         transform: translate(-50%, -50%);
       }
       @media (hover: hover) {
@@ -680,9 +732,18 @@
         border-color: #d24a2a;
       }
       @keyframes shake {
-        0%, 100% { transform: translateX(0); }
-        20%, 60% { transform: translateX(-8px); }
-        40%, 80% { transform: translateX(8px); }
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        20%,
+        60% {
+          transform: translateX(-8px);
+        }
+        40%,
+        80% {
+          transform: translateX(8px);
+        }
       }
       .b-hint {
         font-size: 1rem;
@@ -932,14 +993,28 @@
         opacity: 0.12;
         font-size: 4rem;
       }
-      .farm-1 { top: 10%; left: 2%; }
-      .farm-2 { top: 25%; right: 3%; }
-      .farm-3 { bottom: 15%; left: 4%; }
-      .farm-4 { bottom: 8%; right: 5%; }
+      .farm-1 {
+        top: 10%;
+        left: 2%;
+      }
+      .farm-2 {
+        top: 25%;
+        right: 3%;
+      }
+      .farm-3 {
+        bottom: 15%;
+        left: 4%;
+      }
+      .farm-4 {
+        bottom: 8%;
+        right: 5%;
+      }
 
       /* ===== RESPONSIVE ===== */
       @media (max-width: 600px) {
-        .header { padding-top: 56px; }
+        .header {
+          padding-top: 56px;
+        }
         .header h1 {
           font-size: 0.6rem;
         }
@@ -988,10 +1063,12 @@
       <div id="voiceStatus" style="margin-top: 6px; font-size: 0.82rem"></div>
       <div class="voice-hint" id="voiceHint" style="display: none">
         ⚠️ <strong>Keine deutsche Stimme gefunden</strong> — die Wörter klingen
-        sonst englisch. So installierst du eine (einmalig): <strong>Windows →
-        Einstellungen → Zeit &amp; Sprache → Sprache → „Deutsch" → Optionen →
-        Sprache/Stimme herunterladen</strong>. Danach den Browser neu starten
-        und hier oben die deutsche Stimme auswählen.
+        sonst englisch. So installierst du eine (einmalig):
+        <strong
+          >Windows → Einstellungen → Zeit &amp; Sprache → Sprache → „Deutsch" →
+          Optionen → Sprache/Stimme herunterladen</strong
+        >. Danach den Browser neu starten und hier oben die deutsche Stimme
+        auswählen.
       </div>
     </div>
 
@@ -1306,9 +1383,7 @@
           btn.className = "nav-btn";
           btn.textContent = lk.nr;
           btn.title = lk.titel;
-          btn.addEventListener("click", () =>
-            scrollTo2("lektion-" + lk.nr),
-          );
+          btn.addEventListener("click", () => scrollTo2("lektion-" + lk.nr));
           navRow.appendChild(btn);
         });
         const bBtn = document.createElement("button");
@@ -1380,7 +1455,7 @@
           // Eltern-Info-Button
           const infoBtn = document.createElement("button");
           infoBtn.className = "info-toggle-btn";
-          infoBtn.setAttribute('aria-label', 'Eltern-Info anzeigen');
+          infoBtn.setAttribute("aria-label", "Eltern-Info anzeigen");
           infoBtn.textContent = "i";
           infoBtn.title = "Eltern-Info ein-/ausblenden";
           infoBtn.addEventListener("click", (e) => {
@@ -1412,7 +1487,8 @@
           if (lk.familie.length) {
             const fl = document.createElement("div");
             fl.className = "familie-label";
-            fl.textContent = "Diese Silben kannst du üben (antippen zum Hören):";
+            fl.textContent =
+              "Diese Silben kannst du üben (antippen zum Hören):";
             card.appendChild(fl);
             const row = document.createElement("div");
             row.className = "silben-row";
@@ -1516,7 +1592,9 @@
 
       // ===== SILBEN-BAUER =====
       // Nur mehrsilbige Wörter (2–3 Silben, nicht „kurz").
-      const BUILDER_WORDS = WORDS.filter((w) => !w.kurz && w.silben.length >= 2);
+      const BUILDER_WORDS = WORDS.filter(
+        (w) => !w.kurz && w.silben.length >= 2,
+      );
       let bDeck = [];
       let bIdx = 0;
       let bStars = 0;

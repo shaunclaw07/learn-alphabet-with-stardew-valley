@@ -104,7 +104,7 @@ function walk(dir, base = "") {
       entry.name === "node_modules" ||
       entry.name === "docs" ||
       entry.name === ".github" ||
-      (entry.name.endsWith(".js") && base === "") // root-level helper scripts only
+      (entry.name.endsWith(".js") && base === "" && entry.name !== "sw.js") // root-level helper scripts, but NOT sw.js
     )
       continue;
 

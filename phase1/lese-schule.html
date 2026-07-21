@@ -555,6 +555,44 @@
         letter-spacing: 2px;
         min-height: 1.6em;
       }
+      /* Ausklappbarer Eltern-Hinweis (Anlaut-Prinzip) */
+      .eltern-hinweis {
+        max-width: 760px;
+        margin: 0 auto var(--sp-4, 16px);
+        background: #fffaf0;
+        border: 2px solid #d7c9a8;
+        border-radius: 12px;
+        overflow: hidden;
+      }
+      .eltern-hinweis > summary {
+        list-style: none;
+        cursor: pointer;
+        padding: 12px 14px;
+        min-height: var(--tap, 44px);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 700;
+        color: #8b6914;
+        font-size: 0.9rem;
+        touch-action: manipulation;
+      }
+      .eltern-hinweis > summary::-webkit-details-marker {
+        display: none;
+      }
+      .eltern-hinweis > summary:active {
+        transform: scale(0.99);
+      }
+      .eltern-hinweis > summary:focus-visible {
+        outline: 3px solid #ff6b35;
+        outline-offset: 2px;
+      }
+      .eltern-hinweis .eh-body {
+        padding: 0 14px 14px;
+        color: #4a3728;
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
       /* #INCLUDE shared/dark-mode.css */
     </style>
   </head>
@@ -598,6 +636,21 @@
         auswählen.
       </div>
     </div>
+
+    <!-- ===== ELTERN-HINWEIS: Anlaut-Prinzip ===== -->
+    <details class="eltern-hinweis">
+      <summary>ℹ️ Warum wird beim Antippen das ganze Wort vorgelesen?</summary>
+      <div class="eh-body">
+        Das ist Absicht (<strong>Anlaut-Prinzip</strong>): Tippt dein Kind auf
+        einen Buchstaben, hört es das <strong>Merkwort</strong> (z.&nbsp;B. „M" →
+        „Milch") — den Laut im echten Wort, <strong>nie den Buchstabennamen</strong>
+        („Em"). Buchstabennamen erschweren das spätere Zusammenlesen, und deutsche
+        Stimmen können einen einzelnen Konsonanten ohnehin nicht sauber sprechen.
+        Den <strong>reinen Laut</strong> („mmm") übt ihr in der
+        <strong>🔨 Lese-Werkstatt</strong>: dort spielt ein Tipp auf eine einzelne
+        Buchstaben-Kachel nur den Laut.
+      </div>
+    </details>
 
     <!-- ===== NAVIGATION ===== -->
     <div class="nav-row" id="navRow"></div>

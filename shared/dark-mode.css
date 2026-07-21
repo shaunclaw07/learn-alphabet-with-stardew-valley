@@ -335,4 +335,16 @@
   .header-icons {
     color: #e0d6c2;
   }
+
+  /* Ausklappbarer Eltern-Hinweis (Anlaut-Prinzip) */
+  .eltern-hinweis {
+    background: #252540;
+    border-color: #6b5a3e;
+  }
+  .eltern-hinweis > summary {
+    color: #d8b45a;
+  }
+  .eltern-hinweis .eh-body {
+    color: #e0d6c2;
+  }
 }

@@ -34,6 +34,17 @@
 - **Nur 1 neuer Buchstabe pro Einheit**
 - **Jeden Buchstaben mit einer Stardew-Valley-Figur oder einem Gegenstand verbinden**
 
+> **So setzt die App das um (Anlaut-Prinzip):** Tippt das Kind in Phase 1 auf
+> einen Buchstaben, wird bewusst das **Merkwort** vorgelesen (z. B. „M" → „Milch",
+> „A" → „Alex") – also der Laut *im echten Wort*, **nie der Buchstabenname**
+> („Em", „Ah"). Das ist Absicht: Buchstabennamen sabotieren das Zusammenschleifen,
+> und deutsche Sprachausgaben können einen isolierten Konsonanten ohnehin nicht
+> sauber aussprechen – das Merkwort garantiert den korrekten Anfangslaut. Den
+> **reinen Laut** (z. B. „mmm") übt das Kind separat in der **Lese-Werkstatt**,
+> wo ein Tipp auf eine einzelne Buchstaben-Kachel nur den Laut spielt. So bleibt
+> die Aufteilung sauber: *Buchstabe kennenlernen → Anlaut-Wort*, *Zusammen­schleifen
+> üben → reiner Laut*.
+
 ### Lektion 1: A a
 
 - **Laut**: „aaaa" (offener Mund, wie beim Arzt)

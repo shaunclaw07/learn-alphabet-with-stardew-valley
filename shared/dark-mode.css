@@ -238,4 +238,75 @@
   .dash-phase .dp-count {
     color: #6a9a50;
   }
+
+  /* ─── Index-Seite (phase-card, intro, footer) ─── */
+  .intro {
+    color: #b0a090;
+  }
+  .intro .pick {
+    background: #2a2535;
+    border-color: #8b7030;
+    color: #e0d6c2;
+  }
+  .phase-card {
+    background: #252540;
+    border-color: #6b5a3e;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3), 0 0 0 8px #3a3050;
+    color: #e0d6c2;
+  }
+  a.phase-card:hover {
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.4), 0 0 0 8px #4a3a60;
+  }
+  .phase-card.locked {
+    opacity: 0.72;
+    filter: saturate(0.5);
+  }
+  .phase-number {
+    background: #b84a20;
+    border-color: #8a3010;
+  }
+  .phase-card.locked .phase-number {
+    background: #5a4a3a;
+    border-color: #4a3a2a;
+  }
+  .phase-card h2 {
+    color: #6a9a50;
+  }
+  .phase-card.locked h2 {
+    color: #6b5a3e;
+  }
+  .phase-card .desc {
+    color: #e0d6c2;
+  }
+  .phase-progress-bar {
+    background: #3a3050;
+    border-color: #6b5a3e;
+  }
+  .phase-progress-label {
+    color: #b0a090;
+  }
+  .phase-status.go {
+    background: #4a7a30;
+    color: #fff;
+    border-color: #2d4a1e;
+  }
+  a.phase-card:hover .phase-status.go {
+    background: #3a6628;
+  }
+  .phase-status.soon {
+    background: #2a2a3a;
+    color: #6b5a3e;
+    border-color: #5a4a3a;
+  }
+  .foot {
+    color: #8b7030;
+  }
+  .foot a {
+    color: #6a9a50;
+  }
+
+  /* Header-Overrides für index.html (keine Back-Link-spezifischen Padding-Overrides) */
+  .header-icons {
+    color: #e0d6c2;
+  }
 }

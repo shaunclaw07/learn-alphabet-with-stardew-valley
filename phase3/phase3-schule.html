@@ -807,6 +807,8 @@
       // #INCLUDE shared/voice-picker.js
 
       // #INCLUDE shared/celebrate.js
+
+      // #INCLUDE shared/srs.js
       function sayWord(w) {
         speak(String(w).toLowerCase(), 0.85);
       }
@@ -1106,7 +1108,10 @@
       let qLocked = false; // true, sobald richtig geraten (bis Weiter)
 
       function startQuiz() {
-        qDeck = shuffle([...WORDS]).slice(0, QUIZ_ROUND);
+        qDeck = svSrsSortDueFirst(shuffle([...WORDS]), (w) => "p3:" + w.id).slice(
+          0,
+          QUIZ_ROUND,
+        );
         qIdx = 0;
         qStars = 0;
         document.getElementById("qStars").textContent = "";
@@ -1154,12 +1159,12 @@
           document.getElementById("qHint").textContent = "🎉 Richtig gelesen!";
           qStars = Math.min(qDeck.length, qStars + 1);
           document.getElementById("qStars").textContent = "⭐".repeat(qStars);
-          svCorrect();
+          svCorrect("p3:" + target.id);
           sayWord(target.id);
           setTimeout(quizNext, 1300);
         } else {
           // falsch: das getippte Wort vorlesen ("das heißt ...")
-          svStreakReset();
+          svWrong("p3:" + target.id);
           btn.classList.add("wrong");
           setTimeout(() => btn.classList.remove("wrong"), 450);
           document.getElementById("qHint").textContent =

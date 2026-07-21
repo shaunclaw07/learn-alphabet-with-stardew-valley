@@ -91,3 +91,34 @@ test.describe("SRS-Engine – Fälligkeit & Sortierung", () => {
     expect(stats.due).toBe(1);
   });
 });
+
+test.describe("SRS – Kopplung an celebrate.js", () => {
+  test("svCorrect(id) legt einen SRS-Datensatz an", async ({ page }) => {
+    const rec = await page.evaluate(() => {
+      localStorage.removeItem("sv_lesen_srs");
+      (window as any).svCorrect("p1:M");
+      return JSON.parse(localStorage.getItem("sv_lesen_srs")!)["p1:M"];
+    });
+    expect(rec).toBeDefined();
+    expect(rec.box).toBe(2);
+  });
+
+  test("svWrong(id) setzt die Box zurück auf 1", async ({ page }) => {
+    const box = await page.evaluate(() => {
+      localStorage.removeItem("sv_lesen_srs");
+      (window as any).svCorrect("p1:M"); // Box 2
+      (window as any).svWrong("p1:M"); // zurück auf 1
+      return JSON.parse(localStorage.getItem("sv_lesen_srs")!)["p1:M"].box;
+    });
+    expect(box).toBe(1);
+  });
+
+  test("svCorrect() ohne id legt keinen SRS-Datensatz an", async ({ page }) => {
+    const srs = await page.evaluate(() => {
+      localStorage.removeItem("sv_lesen_srs");
+      (window as any).svCorrect();
+      return localStorage.getItem("sv_lesen_srs");
+    });
+    expect(srs === null || srs === "{}").toBe(true);
+  });
+});

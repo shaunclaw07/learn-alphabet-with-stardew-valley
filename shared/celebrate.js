@@ -254,9 +254,10 @@
 
   window.svRandomPraise = randomPraise;
 
-  window.svCorrect = function () {
+  window.svCorrect = function (itemId) {
     streak++;
     bumpDaily();
+    if (itemId && window.svSrsRecord) window.svSrsRecord(itemId, true);
     dingCorrect();
     confetti(14);
     let msg = randomPraise();
@@ -273,6 +274,12 @@
 
   window.svStreakReset = function () {
     streak = 0;
+  };
+
+  // Echter Item-Fehler (Kind wusste es nicht): Streak reset + SRS-Box zurück.
+  window.svWrong = function (itemId) {
+    streak = 0;
+    if (itemId && window.svSrsRecord) window.svSrsRecord(itemId, false);
   };
 
   // ─── Init ──────────────────────────────────────────────────────────

@@ -589,7 +589,7 @@
 
     <!-- ===== HEADER ===== -->
     <header class="header">
-      <a class="back-link" href="../index.html">← Übersicht</a>
+      <!-- #INCLUDE shared/chrome-back-link.html -->
       <div class="header-icons">🌾🐴🥔🏪🎣🐱</div>
       <h1>Lesen lernen mit<br />Stardew Valley</h1>
       <div class="subtitle">Phase 3 — Stardew-Wortschatz</div>
@@ -945,7 +945,10 @@
           const grid = document.createElement("div");
           grid.className = "words-grid";
           WORDS.filter((w) => w.kat === kt.key).forEach((w) => {
-            const tile = svReader.makeWordTile(w, { showBezug: true, hearLabel: "🔊 antippen & lesen" });
+            const tile = svReader.makeWordTile(w, {
+              showBezug: true,
+              hearLabel: "🔊 antippen & lesen",
+            });
             if (w.review) {
               tile.classList.add("review");
               const btn = tile.querySelector(".word-done-btn");
@@ -988,8 +991,6 @@
         }
         svProgress.updateBar();
       }
-
-
 
       // ===== BILD-QUIZ =====
       const QUIZ_ROUND = 10; // Fragen pro Runde

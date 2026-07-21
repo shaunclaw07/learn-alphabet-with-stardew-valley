@@ -44,6 +44,20 @@ function hasMarkers(content) {
   return MARKERS.some((re) => re.test(content));
 }
 
+// ─── Text- vs. Binärdateien ─────────────────────────────────────────
+// Nur echte Textdateien dürfen als UTF-8 gelesen/geschrieben werden.
+// Binärdateien (PNG, PDF, WOFF …) MÜSSEN roh kopiert werden — sonst
+// zerstört das UTF-8-Round-Trip jedes Nicht-UTF-8-Byte (z. B. die
+// PNG-Signatur 0x89 → ) und die Datei ist unbrauchbar.
+const TEXT_EXT = new Set([
+  ".html", ".htm", ".css", ".js", ".mjs", ".json", ".webmanifest",
+  ".md", ".txt", ".svg", ".xml", ".csv",
+]);
+
+function isTextFile(relPath) {
+  return TEXT_EXT.has(path.extname(relPath).toLowerCase());
+}
+
 function replaceMarkers(content, relPath) {
   let result = content;
   for (const re of MARKERS) {
@@ -73,18 +87,24 @@ function replaceMarkers(content, relPath) {
 
 function processFile(srcPath, relPath) {
   const destPath = path.join(DIST, relPath);
+  fs.mkdirSync(path.dirname(destPath), { recursive: true });
+
+  // Binärdatei → roh kopieren, niemals durch UTF-8 schicken.
+  if (!isTextFile(relPath)) {
+    fs.copyFileSync(srcPath, destPath);
+    return;
+  }
+
   const content = fs.readFileSync(srcPath, "utf-8");
 
   if (!hasMarkers(content)) {
     // Kein Marker → 1:1 kopieren
-    fs.mkdirSync(path.dirname(destPath), { recursive: true });
     fs.writeFileSync(destPath, content, "utf-8");
     return;
   }
 
   const processed = replaceMarkers(content, relPath);
 
-  fs.mkdirSync(path.dirname(destPath), { recursive: true });
   fs.writeFileSync(destPath, processed, "utf-8");
   console.log(`  ✅ ${relPath} (${(processed.length / 1024).toFixed(1)} KB)`);
 }
@@ -135,12 +155,11 @@ for (const rel of files) {
   const src = path.join(ROOT, rel);
   if (fs.statSync(src).isDirectory()) continue;
 
-  const content = fs.readFileSync(src, "utf-8");
-  if (hasMarkers(content)) {
+  if (isTextFile(rel) && hasMarkers(fs.readFileSync(src, "utf-8"))) {
     processFile(src, rel);
     processed++;
   } else {
-    processFile(src, rel); // kopiert 1:1
+    processFile(src, rel); // kopiert 1:1 (Text unverändert, Binär roh)
     copied++;
   }
 }

@@ -810,6 +810,8 @@
       // #INCLUDE shared/voice-picker.js
 
       // #INCLUDE shared/celebrate.js
+
+      // #INCLUDE shared/srs.js
       // Kleinschreibung, damit die Stimme Wörter liest statt buchstabiert.
       function sayWord(w) {
         speak(String(w).toLowerCase(), 0.8);
@@ -1185,7 +1187,7 @@
           if (bNextNeeded >= s.words.length) {
             document.getElementById("bHint").textContent =
               "🎉 Ganzer Satz: " + s.words.join(" ") + (s.end || "");
-            svCorrect();
+            svCorrect("p4:" + s.id);
             setTimeout(() => saySentence(s.words), 500);
           } else {
             document.getElementById("bHint").textContent =

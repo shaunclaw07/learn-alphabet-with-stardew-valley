@@ -861,6 +861,8 @@
       // #INCLUDE shared/voice-picker.js
 
       // #INCLUDE shared/celebrate.js
+
+      // #INCLUDE shared/srs.js
       function sayWord(w) {
         speak(String(w).toLowerCase(), 0.85);
       }
@@ -1225,7 +1227,7 @@
           if (bNextNeeded >= w.silben.length) {
             document.getElementById("bHint").textContent =
               "🎉 Zusammen: " + w.id + "!";
-            svCorrect();
+            svCorrect("p2:" + w.id);
             setTimeout(() => sayWord(w.id), 500);
           } else {
             document.getElementById("bHint").textContent =

@@ -29,6 +29,7 @@ const includes = {
   "shared/srs.js": loadShared("srs.js"),
   "shared/reader-util.js": loadShared("reader-util.js"),
   "shared/progress.js": loadShared("progress.js"),
+  "shared/speak-text.js": loadShared("speak-text.js"),
   "shared/farm.js": loadShared("farm.js"),
   "shared/trace.js": loadShared("trace.js"),
   "shared/pwa-head.html": loadShared("pwa-head.html"),

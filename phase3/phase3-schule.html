@@ -814,9 +814,7 @@
       // #INCLUDE shared/srs.js
       // #INCLUDE shared/reader-util.js
       // #INCLUDE shared/progress.js
-      function sayWord(w) {
-        speak(String(w).toLowerCase(), 0.85);
-      }
+      // #INCLUDE shared/speak-text.js
 
       // ===== FORTSCHRITT =====
       // Nur "neue" Wörter zählen zum Fortschritt (keine Wiederholungen).
@@ -827,52 +825,6 @@
         einheit: "Wörtern",
         onRender: () => render(),
       });
-
-      // Silben eines Wortes als getrennte Spans (mit Trenn-Punkt) rendern.
-      function renderSyllables(container, word) {
-        container.replaceChildren();
-        word.silben.forEach((syl, i) => {
-          if (i > 0) {
-            const dot = document.createElement("span");
-            dot.className = "dot";
-            dot.textContent = "·";
-            container.appendChild(dot);
-          }
-          const s = document.createElement("span");
-          s.className = "syl";
-          s.textContent = syl;
-          container.appendChild(s);
-        });
-      }
-
-      // Wort silbenweise vorsprechen + optisch mitleuchten, dann flüssig.
-      // Einsilbige (kurze) Wörter werden nur einmal als Ganzes gesprochen.
-      function speakWordBySyllables(word, sylSpans) {
-        if (word.silben.length <= 1) {
-          if (sylSpans && sylSpans[0]) {
-            sylSpans[0].classList.add("lit");
-            setTimeout(() => sylSpans[0].classList.remove("lit"), 700);
-          }
-          sayWord(word.id);
-          return;
-        }
-        let i = 0;
-        const step = () => {
-          if (sylSpans) sylSpans.forEach((s) => s.classList.remove("lit"));
-          if (i < word.silben.length) {
-            if (sylSpans && sylSpans[i]) sylSpans[i].classList.add("lit");
-            saySyllable(word.silben[i]);
-            i++;
-            setTimeout(step, 620);
-          } else {
-            setTimeout(() => {
-              sayWord(word.id);
-              if (sylSpans) sylSpans.forEach((s) => s.classList.remove("lit"));
-            }, 120);
-          }
-        };
-        step();
-      }
 
       // ===== RENDER =====
       function render() {
@@ -928,7 +880,7 @@
         dEmoji.textContent = dWord.emoji;
         dEmoji.title = "Antippen zum Hören";
         dEmoji.addEventListener("click", () =>
-          speakWordBySyllables(dWord, null),
+          svSay.bySyllables(dWord.silben, dWord.id, null),
         );
         demo.appendChild(dEmoji);
         const arr = document.createElement("span");
@@ -939,7 +891,7 @@
         dw.className = "demo-word";
         dw.textContent = "KATZE";
         dw.title = "Antippen zum Hören";
-        dw.addEventListener("click", () => speakWordBySyllables(dWord, null));
+        dw.addEventListener("click", () => svSay.bySyllables(dWord.silben, dWord.id, null));
         demo.appendChild(dw);
         ex.appendChild(demo);
         mainContent.appendChild(ex);
@@ -1032,11 +984,11 @@
         emoji.title = "Antippen zum Hören";
         const syll = document.createElement("div");
         syll.className = "word-syllables";
-        renderSyllables(syll, w);
+        svSay.renderSyllables(syll, w.silben);
         syll.title = "Antippen zum Hören";
 
         const sylSpans = () => [...syll.querySelectorAll(".syl")];
-        const hearIt = () => speakWordBySyllables(w, sylSpans());
+        const hearIt = () => svSay.bySyllables(w.silben, w.id, sylSpans());
         emoji.addEventListener("click", hearIt);
         syll.addEventListener("click", hearIt);
 
@@ -1130,7 +1082,7 @@
           qStars = Math.min(qDeck.length, qStars + 1);
           document.getElementById("qStars").textContent = "⭐".repeat(qStars);
           svCorrect("p3:" + target.id);
-          sayWord(target.id);
+          svSay.word(target.id);
           setTimeout(quizNext, 1300);
         } else {
           // falsch: das getippte Wort vorlesen ("das heißt ...")
@@ -1139,7 +1091,7 @@
           setTimeout(() => btn.classList.remove("wrong"), 450);
           document.getElementById("qHint").textContent =
             "Das heißt „" + opt.id + "“. Versuch es nochmal!";
-          sayWord(opt.id);
+          svSay.word(opt.id);
         }
       }
 
@@ -1189,7 +1141,7 @@
 
       function flashRead() {
         const w = fDeck[fIdx];
-        if (w) sayWord(w.id);
+        if (w) svSay.word(w.id);
       }
 
       function flashFlip() {
@@ -1198,7 +1150,7 @@
         card.classList.toggle("flipped", fFlipped);
         if (fFlipped) {
           const w = fDeck[fIdx];
-          if (w) sayWord(w.id);
+          if (w) svSay.word(w.id);
         }
       }
 

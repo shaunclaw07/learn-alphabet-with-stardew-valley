@@ -816,13 +816,7 @@
       // #INCLUDE shared/srs.js
       // #INCLUDE shared/reader-util.js
       // #INCLUDE shared/progress.js
-      // Kleinschreibung, damit die Stimme Wörter liest statt buchstabiert.
-      function sayWord(w) {
-        speak(String(w).toLowerCase(), 0.8);
-      }
-      function saySentence(words) {
-        speak(words.join(" ").toLowerCase(), 0.85);
-      }
+      // #INCLUDE shared/speak-text.js
 
       // ===== FORTSCHRITT =====
       svProgress.init({
@@ -857,13 +851,13 @@
           span.tabIndex = 0;
           span.addEventListener("click", () => {
             flashLit(span);
-            sayWord(w);
+            svSay.word(w, 0.8);
           });
           span.addEventListener("keydown", (e) => {
             if (e.key === "Enter" || e.key === " ") {
               e.preventDefault();
               flashLit(span);
-              sayWord(w);
+              svSay.word(w, 0.8);
             }
           });
           container.appendChild(span);
@@ -878,27 +872,6 @@
       function flashLit(span) {
         span.classList.add("lit");
         setTimeout(() => span.classList.remove("lit"), 500);
-      }
-
-      // Satz Wort für Wort vorlesen (mitleuchtend), dann flüssig.
-      function speakLineByWords(spans, words, done) {
-        let i = 0;
-        const step = () => {
-          spans.forEach((s) => s.classList.remove("lit"));
-          if (i < words.length) {
-            if (spans[i]) spans[i].classList.add("lit");
-            sayWord(words[i]);
-            i++;
-            setTimeout(step, 720);
-          } else {
-            setTimeout(() => {
-              saySentence(words);
-              spans.forEach((s) => s.classList.remove("lit"));
-              if (done) done();
-            }, 160);
-          }
-        };
-        step();
       }
 
       // ===== RENDER =====
@@ -1064,11 +1037,11 @@
           const spans1 = [...line1.querySelectorAll(".s-word")];
           if (isDialog) {
             const spans2 = [...line2.querySelectorAll(".s-word")];
-            speakLineByWords(spans1, s.words, () => {
-              setTimeout(() => speakLineByWords(spans2, s.antwort, null), 500);
+            svSay.line(spans1, s.words, () => {
+              setTimeout(() => svSay.line(spans2, s.antwort, null), 500);
             });
           } else {
-            speakLineByWords(spans1, s.words, null);
+            svSay.line(spans1, s.words, null);
           }
         });
         hearRow.appendChild(hearBtn);
@@ -1115,7 +1088,7 @@
         document.getElementById("bIndex").textContent = bIdx + 1;
         document.getElementById("bPicture").textContent = s.emoji;
         document.getElementById("bPicture").onclick = () =>
-          saySentence(s.words);
+          svSay.word(s.words.join(" "), 0.85);
 
         const slots = document.getElementById("bSlots");
         slots.replaceChildren();
@@ -1148,13 +1121,13 @@
           slot.textContent = s.words[bNextNeeded];
           slot.classList.add("filled");
           chip.classList.add("used");
-          sayWord(s.words[bNextNeeded]);
+          svSay.word(s.words[bNextNeeded], 0.8);
           bNextNeeded++;
           if (bNextNeeded >= s.words.length) {
             document.getElementById("bHint").textContent =
               "🎉 Ganzer Satz: " + s.words.join(" ") + (s.end || "");
             svCorrect("p4:" + s.id);
-            setTimeout(() => saySentence(s.words), 500);
+            setTimeout(() => svSay.word(s.words.join(" "), 0.85), 500);
           } else {
             document.getElementById("bHint").textContent =
               "Super! Jetzt das nächste Wort.";
@@ -1165,13 +1138,13 @@
           setTimeout(() => chip.classList.remove("wrong"), 450);
           document.getElementById("bHint").textContent =
             "Fast! Erst das Wort „" + s.words[bNextNeeded] + "“.";
-          sayWord(s.words[bNextNeeded]);
+          svSay.word(s.words[bNextNeeded], 0.8);
         }
       }
 
       function builderHear() {
         const s = bDeck[bIdx];
-        if (s) saySentence(s.words);
+        if (s) svSay.word(s.words.join(" "), 0.85);
       }
 
       function builderNext() {
@@ -1296,7 +1269,7 @@
           qStars = Math.min(qDeck.length, qStars + 1);
           document.getElementById("qStars").textContent = "⭐".repeat(qStars);
           svCorrect();
-          saySentence(q.words);
+          svSay.word(q.words.join(" "), 0.85);
           setTimeout(quizNext, 1600);
         } else {
           svStreakReset();
@@ -1304,7 +1277,7 @@
           setTimeout(() => btn.classList.remove("wrong"), 450);
           document.getElementById("qHint").textContent =
             "Das heißt „" + opt + "“. Lies nochmal!";
-          sayWord(opt);
+          svSay.word(opt, 0.8);
         }
       }
 

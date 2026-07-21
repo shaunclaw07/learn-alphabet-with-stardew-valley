@@ -1,6 +1,6 @@
 // Service Worker der Lese-Schule: Precache aller Seiten + Fonts für volles Offline-Erlebnis.
 // Bei NEUER PHASE: Seite zu APP_SHELL ergänzen UND CACHE_VERSION erhöhen.
-const CACHE_VERSION = "sv-lesen-v8";
+const CACHE_VERSION = "sv-lesen-v9";
 const PRECACHE = "precache-" + CACHE_VERSION;
 const RUNTIME = "runtime-" + CACHE_VERSION;
 

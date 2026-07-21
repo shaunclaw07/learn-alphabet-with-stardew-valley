@@ -1,6 +1,32 @@
 /* ===== DARK MODE – Phase-Elemente (Cards, Quiz, Workshop, Certificate) ===== */
 /* Wird NACH den phase-spezifischen Regeln inkludiert, damit die Overrides greifen. */
 @media (prefers-color-scheme: dark) {
+  /* ─── Body & Header (für ALLE Seiten, auch index.html) ─── */
+  body {
+    background: #1a1a2e;
+    background-image:
+      radial-gradient(ellipse at 20% 20%, #2a2540 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, #1e3a2a 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, #1a1a2e 0%, transparent 70%);
+    color: #e0d6c2;
+  }
+  .header {
+    background: linear-gradient(180deg, #4a7a30 0%, #3a6628 100%);
+    border-bottom-color: #2d4a1e;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
+  .header::after {
+    background: repeating-linear-gradient(
+      90deg, #5a4420 0px, #5a4420 8px, #8b7030 8px, #8b7030 16px
+    );
+  }
+  .header h1 {
+    text-shadow: 2px 2px 0 #1a3010, 0 0 12px rgba(255, 255, 255, 0.15);
+  }
+  .header .subtitle {
+    color: #c8e0b0;
+  }
+
   /* ─── Cards (alle Phasen) ─── */
   .card,
   .certificate {

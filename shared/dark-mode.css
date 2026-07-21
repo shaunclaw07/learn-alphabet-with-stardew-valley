@@ -265,6 +265,26 @@
     color: #6a9a50;
   }
 
+  /* ─── Eltern-Lernjournal (Welle 3) ─── */
+  .dash-journal {
+    border-top-color: #3a3050;
+  }
+  .dj-mastered {
+    color: #e0d6c2;
+  }
+  .dj-mastered strong {
+    color: #6a9a50;
+  }
+  .dj-empty {
+    color: #b0a090;
+  }
+  .dj-practice {
+    background: linear-gradient(180deg, #4a7a30 0%, #3a6628 100%);
+    color: #f0e8d0;
+    border-color: #2d4a1e;
+    box-shadow: 0 3px 0 #2d4a1e;
+  }
+
   /* ─── Index-Seite (phase-card, intro, footer) ─── */
   .intro {
     color: #b0a090;

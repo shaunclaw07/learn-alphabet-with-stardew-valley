@@ -455,6 +455,71 @@
         font-size: 1.15rem;
       }
 
+      /* ===== Eltern-Lernjournal (Welle 3) ===== */
+      .dash-journal {
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 2px dashed #e2d6b8;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+      }
+      .dj-mastered {
+        font-weight: 700;
+        color: #4a3728;
+        font-size: 0.95rem;
+        text-align: center;
+      }
+      .dj-mastered strong {
+        color: #5da03c;
+        font-size: 1.15rem;
+      }
+      .dj-empty {
+        font-weight: 700;
+        color: #8b6914;
+        font-size: 0.9rem;
+        text-align: center;
+        line-height: 1.5;
+        max-width: 34ch;
+      }
+      .dj-practice {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: var(--tap);
+        padding: 10px 22px;
+        background: linear-gradient(180deg, #7ec850 0%, #5da03c 100%);
+        color: #fffaf0;
+        border: 3px solid #3d6b22;
+        border-radius: 12px;
+        font-weight: 800;
+        font-size: 0.95rem;
+        text-decoration: none;
+        box-shadow: 0 3px 0 #3d6b22;
+        touch-action: manipulation;
+      }
+      .dj-practice[hidden] {
+        display: none;
+      }
+      .dj-practice:active {
+        transform: scale(0.96);
+      }
+      .dj-practice:focus-visible {
+        outline: 3px solid #ff6b35;
+        outline-offset: 2px;
+      }
+      @media (hover: hover) {
+        .dj-practice:hover {
+          background: linear-gradient(180deg, #8ad65c 0%, #6ab83e 100%);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .dj-practice:active {
+          transform: none;
+        }
+      }
+
       /* ===== Reset-Button (Eltern) ===== */
       .dash-reset {
         display: block;
@@ -616,6 +681,19 @@
         <div class="dash-phases" id="dashPhases"></div>
         <div class="dash-streak" id="dashStreak" hidden></div>
         <div class="dash-streak" id="dashSrs" hidden></div>
+
+        <!-- ===== ELTERN-LERNJOURNAL (Welle 3) ===== -->
+        <div class="dash-journal" id="dashJournal">
+          <div class="dj-mastered" id="dashMastered" hidden></div>
+          <div class="dj-empty" id="dashJournalEmpty" hidden>
+            🌱 Noch keine Übungen aufgezeichnet — starte eine Phase, dann merkt
+            sich die App, was schon sitzt.
+          </div>
+          <a class="dj-practice" id="dashPractice" hidden>
+            🎯 Heute üben
+          </a>
+        </div>
+
         <button type="button" class="dash-reset" id="dashReset">
           ↺ Fortschritt zurücksetzen
         </button>
@@ -843,6 +921,65 @@
               (s.due === 1 ? " Übung wartet" : " Übungen warten") +
               " auf Wiederholung";
             srsEl.hidden = false;
+          }
+        } catch (e) {}
+
+        // Eltern-Lernjournal (Welle 3): Meisterung + „Heute üben"-Empfehlung.
+        // Liest nur SRS-Daten (svSrsStats/svSrsDue) — keine neue Persistenz.
+        try {
+          const stats =
+            typeof svSrsStats === "function"
+              ? svSrsStats()
+              : { total: 0, mastered: 0, due: 0 };
+          const masteredEl = document.getElementById("dashMastered");
+          const emptyEl = document.getElementById("dashJournalEmpty");
+          const practiceEl = document.getElementById("dashPractice");
+
+          // Meisterungs-Karte vs. Leerzustand
+          if (stats.total > 0) {
+            if (masteredEl) {
+              masteredEl.innerHTML =
+                "🏅 <strong>" +
+                stats.mastered +
+                "</strong> / " +
+                stats.total +
+                (stats.total === 1
+                  ? " Übung gemeistert"
+                  : " Übungen gemeistert");
+              masteredEl.hidden = false;
+            }
+            if (emptyEl) emptyEl.hidden = true;
+          } else {
+            if (masteredEl) masteredEl.hidden = true;
+            if (emptyEl) emptyEl.hidden = false;
+          }
+
+          // „Heute üben": Phase mit den meisten fälligen Items verlinken
+          if (practiceEl) {
+            let topPhase = null;
+            if (typeof svSrsDue === "function") {
+              const counts = {};
+              svSrsDue().forEach((id) => {
+                const m = /^p(\d+):/.exec(id);
+                if (m) counts[m[1]] = (counts[m[1]] || 0) + 1;
+              });
+              let bestN = 0;
+              for (const nr in counts) {
+                if (counts[nr] > bestN) {
+                  bestN = counts[nr];
+                  topPhase = nr;
+                }
+              }
+            }
+            if (topPhase) {
+              const ph =
+                phases.find((p) => !p.soon && String(p.nr) === topPhase) ||
+                phases[0];
+              practiceEl.href = ph.href;
+              practiceEl.hidden = false;
+            } else {
+              practiceEl.hidden = true;
+            }
           }
         } catch (e) {}
 

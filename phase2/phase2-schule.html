@@ -759,8 +759,12 @@
           <div class="f-emoji" id="fEmoji">🏡</div>
         </div>
         <div class="f-buttons">
-          <button class="f-btn read" onclick="svFlash.read()">🔊 Vorlesen</button>
-          <button class="f-btn flip" onclick="svFlash.flip()">🔄 Umdrehen</button>
+          <button class="f-btn read" onclick="svFlash.read()">
+            🔊 Vorlesen
+          </button>
+          <button class="f-btn flip" onclick="svFlash.flip()">
+            🔄 Umdrehen
+          </button>
           <button class="f-btn next" onclick="svFlash.next()">▶ Weiter</button>
         </div>
         <div class="f-progress">
@@ -867,6 +871,7 @@
       // #INCLUDE shared/progress.js
       // #INCLUDE shared/speak-text.js
       // #INCLUDE shared/exercises.js
+      // #INCLUDE shared/reader.js
 
       // ===== FORTSCHRITT =====
       svProgress.init({
@@ -945,7 +950,9 @@
         dw.className = "demo-word";
         dw.textContent = "OMA 👵";
         dw.title = "Antippen zum Hören";
-        dw.addEventListener("click", () => svSay.bySyllables(dOma.silben, dOma.id, null));
+        dw.addEventListener("click", () =>
+          svSay.bySyllables(dOma.silben, dOma.id, null),
+        );
         demo.appendChild(dw);
         ex.appendChild(demo);
         mainContent.appendChild(ex);
@@ -1011,7 +1018,7 @@
           const grid = document.createElement("div");
           grid.className = "words-grid";
           WORDS.filter((w) => w.lektion === lk.nr).forEach((w) => {
-            grid.appendChild(makeWordTile(w));
+            grid.appendChild(svReader.makeWordTile(w, { showBezug: true }));
           });
           card.appendChild(grid);
 
@@ -1045,49 +1052,7 @@
         svProgress.updateBar();
       }
 
-      function makeWordTile(w) {
-        const tile = document.createElement("div");
-        tile.className = "word-tile" + (svProgress.has(w.id) ? " done" : "");
-        tile.id = "word-" + w.id;
 
-        const emoji = document.createElement("div");
-        emoji.className = "word-emoji";
-        emoji.textContent = w.emoji;
-        emoji.title = "Antippen zum Hören";
-        const syll = document.createElement("div");
-        syll.className = "word-syllables";
-        svSay.renderSyllables(syll, w.silben);
-        syll.title = "Antippen zum Hören";
-
-        const sylSpans = () => [...syll.querySelectorAll(".syl")];
-        const hearIt = () => svSay.bySyllables(w.silben, w.id, sylSpans());
-        emoji.addEventListener("click", hearIt);
-        syll.addEventListener("click", hearIt);
-
-        tile.appendChild(emoji);
-        tile.appendChild(syll);
-
-        const hear = document.createElement("div");
-        hear.className = "word-hear";
-        hear.textContent = "🔊 antippen & zusammenlesen";
-        tile.appendChild(hear);
-
-        const bezug = document.createElement("div");
-        bezug.className = "word-bezug";
-        const frag = new DOMParser().parseFromString(w.bezug, "text/html");
-        while (frag.body.firstChild) bezug.appendChild(frag.body.firstChild);
-        tile.appendChild(bezug);
-
-        const btn = document.createElement("button");
-        btn.className = "word-done-btn";
-        btn.textContent = svProgress.has(w.id)
-          ? "⭐ Kann ich!"
-          : "✋ Kann ich lesen";
-        btn.addEventListener("click", () => svProgress.toggle(w.id));
-        tile.appendChild(btn);
-
-        return tile;
-      }
 
       // ===== SILBEN-BAUER =====
       // Nur mehrsilbige Wörter (2–3 Silben, nicht „kurz").
@@ -1200,15 +1165,21 @@
         renderBuilder();
       }
 
-
-
       // ===== START =====
       render();
       startBuilder();
       svFlash.mount({
-        items: WORDS, wordKey: "id", emojiKey: "emoji",
-        elIds: { stars: "fStars", total: "fTotal", index: "fIndex",
-                 card: "fCard", word: "fWord", emoji: "fEmoji" },
+        items: WORDS,
+        wordKey: "id",
+        emojiKey: "emoji",
+        elIds: {
+          stars: "fStars",
+          total: "fTotal",
+          index: "fIndex",
+          card: "fCard",
+          word: "fWord",
+          emoji: "fEmoji",
+        },
       });
     </script>
     <script>

@@ -74,7 +74,7 @@ Diese Regeln gelten implizit in jeder Aufgabe. Vollständig in `CLAUDE.md`.
 | # | Feature | Wert | Aufwand | Hängt ab von | Status |
 |---|---------|------|---------|--------------|--------|
 | 1 | Adaptive Wiederholung (Spaced Repetition) | ⭐⭐⭐ | M | — | ✅ |
-| 2 | Sammel-Farm (Belohnungs-Progression) | ⭐⭐⭐ | M | 1 (Signale) | ⬜ |
+| 2 | Sammel-Farm (Belohnungs-Progression) | ⭐⭐⭐ | M | 1 (Signale) | ✅ |
 | 3 | Eltern-Lernjournal | ⭐⭐ | S–M | 1 (Daten) | ⬜ |
 | 4 | Buchstaben-Tracing (Schreiben) | ⭐⭐ | M | — | ⬜ |
 | 5 | Barrierefreiheit & Tempo | ⭐⭐ | S | — | ⬜ |
@@ -157,7 +157,7 @@ gerade geübten Items (z. B. `svCorrect("p1:" + l.id)`).
 
 ---
 
-## Welle 2 — Sammel-Farm (Belohnungs-Progression) ⬜
+## Welle 2 — Sammel-Farm (Belohnungs-Progression) ✅
 
 **Ziel:** Fortschritt schaltet Stardew-Tiere/Pflanzen frei, die eine sichtbare
 kleine Farm auf `index.html` wachsen lassen.
@@ -185,8 +185,13 @@ Farm-Kachelfläche). Nur Emoji/CSS, keine Bild-Assets. Beim Freischalten
 - Reset-Button (index) leert auch `sv_lesen_farm`.
 - Respektiert `prefers-reduced-motion` (keine Dauer-Animation); Dark-Override.
 
-**High-Level-Aufgaben:** Freischalt-Logik + Test · `farm.js` bauen/registrieren
-· Render in `index.html` · Reset erweitern · Tests · Doku.
+**High-Level-Aufgaben:** ✅ erledigt — ausführlicher Plan:
+`docs/plan-welle-2-farm.md`.
+- [x] `shared/farm.js` (Katalog + `svFarmSync/svFarmUnlocked/svFarmRender`) + Test.
+- [x] In `build.js` registriert; `// #INCLUDE`-Marker in `index.html` gesetzt.
+- [x] Farm-Sektion + CSS + Dark-Override; Sync/Render/Feier-Logik in `index.html`.
+- [x] Reset räumt `sv_lesen_farm`.
+- [x] `tests/spec/farm.spec.ts` (5 Tests); volle Suite grün (145); Doku nachgezogen.
 
 ---
 
@@ -364,6 +369,7 @@ Integritäts-Tests · Doku/Ausnahme in `CLAUDE.md`.
 |-------|-------|--------|-------|
 | 2026-07-21 | — | — | Masterplan angelegt. |
 | 2026-07-21 | 1 | `feature/srs-welle-1` | Spaced Repetition umgesetzt (7 Tasks, +11 Tests → 140 grün). |
+| 2026-07-21 | 2 | `feature/farm-welle-2` | Sammel-Farm umgesetzt (3 Tasks, +5 Tests → 145 grün). Freischalt-Regel `floor(totalDone/4)` statt „5 gemeisterte SRS-Items". |
 
 ## Learnings (nach jeder Welle ergänzen)
 
@@ -376,3 +382,14 @@ Integritäts-Tests · Doku/Ausnahme in `CLAUDE.md`.
   (kein sauberes Item-Fehler-Signal). Ein eigener Sammel-Screen wäre eine
   spätere Verfeinerung.
 - Reset-Button auf `index.html` räumt jetzt auch `sv_lesen_srs`.
+- **Welle 2:** Neuer Key `sv_lesen_farm` (`{unlocked:[keys]}`); neuer Baustein
+  `shared/farm.js` (nur `index.html`). **Bewusste Design-Abweichung** ggü. der
+  Spec „5 gemeisterte SRS-Items": Freischalt-Regel ist
+  `target = min(Katalog, floor(totalDone/4))` — `totalDone` = Summe der
+  erledigten Aufgaben über alle Phasen (die Zahl, die das Eltern-Dashboard schon
+  berechnet). Grund: schnelleres, sichtbares Feedback fürs Kind + kein zwingender
+  SRS-Nutzung nötig. Katalog = 20 feste Emoji-Objekte (Stardew-Tiere/-Pflanzen).
+- Anzeige zeigt immer das ganze Gitter (gesperrt = `❔`, gedimmt); Feier bei neu
+  Freigeschaltetem via `svFinish(...)`, **einmal pro Sitzung**
+  (`sessionStorage`-Flag `sv_farm_shown`). Reset-Button räumt jetzt auch
+  `sv_lesen_farm`.

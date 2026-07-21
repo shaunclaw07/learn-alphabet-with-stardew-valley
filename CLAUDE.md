@@ -58,6 +58,8 @@ bleibt self-contained. Jede Phasen-Seite **und** `index.html` bindet den
   dark)`; jede neue Seite MUSS diesen Include am Ende des `<style>` haben.
 - `shared/voice-picker.js` — Vorlese-Engine (`speak()`, Voice-Picker, `showNoVoices()`).
 - `shared/celebrate.js` — Belohnungs-Feedback (Konfetti/Ton/Lob/Streaks).
+- `shared/farm.js` — **Sammel-Farm** (nur `index.html`): Katalog +
+  Freischalt-Logik + Render der Farm-Kacheln (`svFarmSync`/`svFarmRender`).
 - `shared/pwa-head.html` + `shared/sw-register.js` — PWA-`<head>` + SW-Registrierung.
 
 **Struktur**
@@ -148,10 +150,12 @@ bleibt self-contained. Jede Phasen-Seite **und** `index.html` bindet den
   `sv_lesen_muted` (Belohnungs-Ton an/aus), `sv_lesen_daily` (Tages-Streak
   `{last,count}`, von `celebrate.js` beim ersten Richtig pro Tag gepflegt),
   `sv_lesen_srs` (Spaced-Repetition-Daten `ItemId → {box,due,seen,correct}`,
-  von `shared/srs.js` gepflegt; Item-ID-Schema `p<phase>:<ID>`).
-- `index.html` zeigt Tages-Streak + **Gesamt-Zertifikat** (alle Phasen 100 %)
-  und hat einen **Reset-Button**, der alle `*_progress`-Keys + `sv_lesen_daily`
-  löscht.
+  von `shared/srs.js` gepflegt; Item-ID-Schema `p<phase>:<ID>`),
+  `sv_lesen_farm` (Sammel-Farm `{unlocked:[keys]}`, von `shared/farm.js`
+  gepflegt; schaltet je 4 erledigte Aufgaben ein Farm-Objekt frei).
+- `index.html` zeigt Tages-Streak + **Sammel-Farm** + **Gesamt-Zertifikat**
+  (alle Phasen 100 %) und hat einen **Reset-Button**, der alle `*_progress`-Keys
+  + `sv_lesen_daily` + `sv_lesen_srs` + `sv_lesen_farm` löscht.
 
 **Didaktik / Decodability (WICHTIG)**
 - Nur Buchstaben verwenden, die in Phase 1 gelehrt wurden:

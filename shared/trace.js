@@ -8,7 +8,7 @@
   window.__svTraceReady = true;
 
   const GRID = 24; // Rasterauflösung für die Abdeckung
-  const THRESHOLD = 0.55; // nötiger Anteil bedeckter Buchstaben-Zellen
+  const THRESHOLD = 0.95; // nötiger Anteil bedeckter Buchstaben-Zellen (fast vollständig nachfahren)
   const BRUSH = 1; // zusätzlicher Zell-Radius je Malpunkt
 
   let cv = null;

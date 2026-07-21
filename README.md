@@ -214,8 +214,12 @@ Jeder Push auf `master` löst die CI aus: erst die **Playwright-Tests**, dann de
 Build, dann der **automatische Deploy zu GitHub Pages** (nur wenn die Tests grün
 sind).
 
-Die geplanten Zusatz-Features stehen als lebende Roadmap in
-[`docs/masterplan.md`](./docs/masterplan.md) (Wellen 1–5 umgesetzt, 6–7 offen).
+Die Zusatz-Funktionen der „Wellen 1–5" (kluge Wiederholung, Sammel-Farm,
+Eltern-Lernjournal, Schreib-Werkstatt, Tempo & große Schrift) sind umgesetzt und
+oben unter **„Extra-Funktionen"** beschrieben. Der aktuelle Entwicklungsplan ist
+ein verhaltens-erhaltendes **Refactoring** (gemeinsame Lese-Engine nach
+`shared/`) und liegt in
+[`docs/plan-refactoring-shared-engine.md`](./docs/plan-refactoring-shared-engine.md).
 
 > **⚠️ Wichtig bei jeder Inhaltsänderung:** Der PWA-Service-Worker cached
 > **cache-first**. Wer eine gecachte Seite ändert (Phasen-HTML, `index.html`,

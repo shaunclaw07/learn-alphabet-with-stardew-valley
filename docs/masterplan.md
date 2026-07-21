@@ -75,7 +75,7 @@ Diese Regeln gelten implizit in jeder Aufgabe. Vollständig in `CLAUDE.md`.
 |---|---------|------|---------|--------------|--------|
 | 1 | Adaptive Wiederholung (Spaced Repetition) | ⭐⭐⭐ | M | — | ✅ |
 | 2 | Sammel-Farm (Belohnungs-Progression) | ⭐⭐⭐ | M | 1 (Signale) | ✅ |
-| 3 | Eltern-Lernjournal | ⭐⭐ | S–M | 1 (Daten) | ⬜ |
+| 3 | Eltern-Lernjournal | ⭐⭐ | S–M | 1 (Daten) | ✅ |
 | 4 | Buchstaben-Tracing (Schreiben) | ⭐⭐ | M | — | ⬜ |
 | 5 | Barrierefreiheit & Tempo | ⭐⭐ | S | — | ⬜ |
 | 6 | Kinder-Profile (mehrere Kinder) | ⭐ | S | — | ⬜ |
@@ -195,7 +195,7 @@ Farm-Kachelfläche). Nur Emoji/CSS, keine Bild-Assets. Beim Freischalten
 
 ---
 
-## Welle 3 — Eltern-Lernjournal ⬜
+## Welle 3 — Eltern-Lernjournal ✅
 
 **Ziel:** Aus SRS-Daten (Welle 1) ein Eltern-Dashboard: Meisterungs-Karte,
 Trend, konkrete „Heute üben"-Empfehlung.
@@ -215,8 +215,17 @@ liest `svSrsStats()` und `svSrsDue()`. Keine neue Persistenz.
 - „Heute üben"-Button verlinkt in den Wiederholungs-Modus (Welle 1).
 - Bei leerem Zustand sinnvoller Hinweis statt Zahlen-Wirrwarr.
 
-**High-Level-Aufgaben:** Dashboard-Erweiterung · Empfehlungs-Logik · Dark-Override
-· Tests · Doku.
+**High-Level-Aufgaben:** ✅ erledigt — ausführlicher Plan:
+`docs/plan-welle-3-journal.md`.
+- [x] Journal-Block im `.dash-card`: `#dashJournal` mit `#dashMastered`,
+  `#dashJournalEmpty`, `#dashPractice` (+ CSS).
+- [x] Meisterung „gemeistert / gesamt" aus `svSrsStats()`; Leerzustand bei
+  `total===0`.
+- [x] „Heute üben" verlinkt auf die Phase mit den meisten fälligen Items
+  (`svSrsDue()` nach `pN:`-Präfix gezählt); verborgen bei 0 fälligen.
+- [x] Dark-Overrides in `shared/dark-mode.css`; `#dashSrs` (Welle 1)
+  unangetastet; keine neuen `localStorage`-Keys.
+- [x] `tests/spec/journal.spec.ts` (4 Tests); volle Suite grün (149).
 
 ---
 
@@ -370,6 +379,7 @@ Integritäts-Tests · Doku/Ausnahme in `CLAUDE.md`.
 | 2026-07-21 | — | — | Masterplan angelegt. |
 | 2026-07-21 | 1 | `feature/srs-welle-1` | Spaced Repetition umgesetzt (7 Tasks, +11 Tests → 140 grün). |
 | 2026-07-21 | 2 | `feature/farm-welle-2` | Sammel-Farm umgesetzt (3 Tasks, +5 Tests → 145 grün). Freischalt-Regel `floor(totalDone/4)` statt „5 gemeisterte SRS-Items". |
+| 2026-07-21 | 3 | `feature/journal-welle-3` | Eltern-Lernjournal umgesetzt (+4 Tests → 149 grün). Meisterung aus `svSrsStats()`, „Heute üben" verlinkt fälligste Phase; keine neuen Keys. |
 
 ## Learnings (nach jeder Welle ergänzen)
 
@@ -393,3 +403,15 @@ Integritäts-Tests · Doku/Ausnahme in `CLAUDE.md`.
   Freigeschaltetem via `svFinish(...)`, **einmal pro Sitzung**
   (`sessionStorage`-Flag `sv_farm_shown`). Reset-Button räumt jetzt auch
   `sv_lesen_farm`.
+- **Welle 3:** **Keine** neuen `localStorage`-Keys, **kein** neuer Shared-Baustein
+  — reine Erweiterung des Eltern-Dashboards in `index.html`, das `svSrsStats()`
+  und `svSrsDue()` (Welle 1) liest. Neue DOM-IDs: `#dashJournal`,
+  `#dashMastered`, `#dashJournalEmpty`, `#dashPractice`. `#dashSrs` (Welle 1)
+  bleibt unangetastet.
+- „Heute üben" wählt die Phase mit den meisten fälligen Items über das
+  Item-ID-Präfix `p<phase>:` aus `svSrsDue()` — robust auch für spätere Item-IDs
+  (z. B. `p1:trace:*`), da nur die Phasennummer zählt.
+- **CSS-Gotcha:** Ein per `hidden`-Attribut versteckter Button wird durch eine
+  eigene `display:`-Regel (`.dj-practice{display:inline-flex}`) wieder sichtbar —
+  die UA-Regel `[hidden]{display:none}` verliert. Fix: explizites
+  `.dj-practice[hidden]{display:none}`. Merke für künftige toggelbare Buttons.

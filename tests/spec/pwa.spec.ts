@@ -15,6 +15,12 @@ test.describe("PWA – Manifest", () => {
     expect(manifest.display).toMatch(/standalone|fullscreen/);
     expect(manifest.icons).toBeInstanceOf(Array);
     expect(manifest.icons!.length).toBeGreaterThanOrEqual(3);
+    // id-Feld (Chrome-Kompatibilität, 2026-07 ergänzt)
+    expect(manifest.id).toBeDefined();
+    // 192er- und 512er-Icon sind für die Installierbarkeit Pflicht
+    const sizes = (manifest.icons as { sizes: string }[]).map((i) => i.sizes);
+    expect(sizes).toContain("192x192");
+    expect(sizes).toContain("512x512");
   });
 
   test("Manifest wird vom Browser geladen", async ({ page }) => {

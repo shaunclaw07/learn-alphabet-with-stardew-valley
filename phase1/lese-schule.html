@@ -1086,6 +1086,7 @@
 
       // #INCLUDE shared/srs.js
       // #INCLUDE shared/reader-util.js
+      // #INCLUDE shared/progress.js
 
       // #INCLUDE shared/trace.js
 
@@ -1119,45 +1120,21 @@
         Boolean,
       );
 
-      const STORAGE_KEY = "sv_lesen_phase1_progress";
-      function loadProgress() {
-        try {
-          return new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"));
-        } catch (e) {
-          return new Set();
-        }
-      }
-      let completed = loadProgress();
-
-      function save() {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify([...completed]));
-      }
-      function toggle(id) {
-        if (completed.has(id)) completed.delete(id);
-        else completed.add(id);
-        save();
-        render();
-      }
+      svProgress.init({
+        key: "sv_lesen_phase1_progress",
+        total: orderedLetters.length,
+        einheit: "Buchstaben",
+        onRender: () => render(),
+      });
 
       function render() {
         const navRow = document.getElementById("navRow");
         const mainContent = document.getElementById("mainContent");
-        const certSection = document.getElementById("certSection");
-        const progressFill = document.getElementById("progressFill");
-        const progressLabel = document.getElementById("progressLabel");
-
-        // Progress
-        const done = completed.size;
-        const total = orderedLetters.length;
-        const pct = Math.round((done / total) * 100);
-        progressFill.style.width = pct + "%";
-        progressLabel.textContent = done + " von " + total + " Buchstaben ⭐";
-
         // Nav
         navRow.replaceChildren();
         orderedLetters.forEach((l) => {
           const btn = document.createElement("button");
-          btn.className = "nav-btn" + (completed.has(l.id) ? " done" : "");
+          btn.className = "nav-btn" + (svProgress.has(l.id) ? " done" : "");
           btn.textContent = l.id;
           btn.title = l.merkwort;
           btn.addEventListener("click", () =>
@@ -1312,7 +1289,7 @@
           const btnWrap = document.createElement("div");
           btnWrap.style.cssText = "margin-top:16px;text-align:center;";
           const btn = document.createElement("button");
-          const isDone = completed.has(l.id);
+          const isDone = svProgress.has(l.id);
           btn.textContent = isDone
             ? "⭐ Geschafft! ⭐"
             : "✋ Klick wenn du diesen Buchstaben kannst!";
@@ -1322,7 +1299,7 @@
             ";color:" +
             (isDone ? "#4a3728" : "#3d6b22") +
             ";transition:all .2s;";
-          btn.addEventListener("click", () => toggle(l.id));
+          btn.addEventListener("click", () => svProgress.toggle(l.id));
           btnWrap.appendChild(btn);
           card.appendChild(btnWrap);
 
@@ -1341,7 +1318,7 @@
         }
 
         // Certificate visibility
-        certSection.style.display = done >= total ? "block" : "none";
+        svProgress.updateBar();
       }
 
       // ===== QUIZ LOGIC =====
@@ -1557,7 +1534,7 @@
 
       function startTrace() {
         // nur bereits gelernte Buchstaben üben
-        traceDeck = letters.filter((l) => completed.has(l.id));
+        traceDeck = letters.filter((l) => svProgress.has(l.id));
         if (traceDeck.length === 0) traceDeck = [...letters];
         traceIdx = 0;
         document.getElementById("traceWrap").style.display = "block";
@@ -1627,7 +1604,7 @@
       render = function () {
         origRender();
         // Lese-Werkstatt: ab 5 Buchstaben (Ende Woche 1) verfügbar
-        if (completed.size >= 5 && !document.getElementById("wsNavBtn")) {
+        if (svProgress.size() >= 5 && !document.getElementById("wsNavBtn")) {
           const navRow = document.getElementById("navRow");
           const wbtn = document.createElement("button");
           wbtn.id = "wsNavBtn";
@@ -1638,7 +1615,7 @@
           navRow.appendChild(wbtn);
         }
         // Schreib-Werkstatt: ab 5 Buchstaben (wie Lese-Werkstatt) verfügbar
-        if (completed.size >= 5 && !document.getElementById("traceNavBtn")) {
+        if (svProgress.size() >= 5 && !document.getElementById("traceNavBtn")) {
           const navRow = document.getElementById("navRow");
           const tbtn = document.createElement("button");
           tbtn.id = "traceNavBtn";
@@ -1649,7 +1626,7 @@
           navRow.appendChild(tbtn);
         }
         // Buchstaben-Quiz: ab 3 Buchstaben verfügbar
-        if (completed.size >= 3 && !document.getElementById("quizNavBtn")) {
+        if (svProgress.size() >= 3 && !document.getElementById("quizNavBtn")) {
           const navRow = document.getElementById("navRow");
           const qbtn = document.createElement("button");
           qbtn.id = "quizNavBtn";

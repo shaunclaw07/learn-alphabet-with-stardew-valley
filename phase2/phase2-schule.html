@@ -864,29 +864,18 @@
 
       // #INCLUDE shared/srs.js
       // #INCLUDE shared/reader-util.js
+      // #INCLUDE shared/progress.js
       function sayWord(w) {
         speak(String(w).toLowerCase(), 0.85);
       }
 
       // ===== FORTSCHRITT =====
-      const STORAGE_KEY = "sv_lesen_phase2_progress";
-      function loadProgress() {
-        try {
-          return new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"));
-        } catch (e) {
-          return new Set();
-        }
-      }
-      let completed = loadProgress();
-      function save() {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify([...completed]));
-      }
-      function toggleWord(id) {
-        if (completed.has(id)) completed.delete(id);
-        else completed.add(id);
-        save();
-        render();
-      }
+      svProgress.init({
+        key: "sv_lesen_phase2_progress",
+        total: WORDS.length,
+        einheit: "Wörtern",
+        onRender: () => render(),
+      });
 
       // Silben eines Wortes als getrennte Spans (mit Trenn-Punkt) rendern.
       function renderSyllables(container, word) {
@@ -929,16 +918,6 @@
       function render() {
         const navRow = document.getElementById("navRow");
         const mainContent = document.getElementById("mainContent");
-        const certSection = document.getElementById("certSection");
-        const progressFill = document.getElementById("progressFill");
-        const progressLabel = document.getElementById("progressLabel");
-
-        const done = completed.size;
-        const total = WORDS.length;
-        const pct = Math.round((done / total) * 100);
-        progressFill.style.width = pct + "%";
-        progressLabel.textContent = done + " von " + total + " Wörtern ⭐";
-
         // Navigation
         navRow.replaceChildren();
         LEKTIONEN.forEach((lk) => {
@@ -1101,12 +1080,12 @@
             certWords.appendChild(b);
           });
         }
-        certSection.style.display = done >= total ? "block" : "none";
+        svProgress.updateBar();
       }
 
       function makeWordTile(w) {
         const tile = document.createElement("div");
-        tile.className = "word-tile" + (completed.has(w.id) ? " done" : "");
+        tile.className = "word-tile" + (svProgress.has(w.id) ? " done" : "");
         tile.id = "word-" + w.id;
 
         const emoji = document.createElement("div");
@@ -1139,10 +1118,10 @@
 
         const btn = document.createElement("button");
         btn.className = "word-done-btn";
-        btn.textContent = completed.has(w.id)
+        btn.textContent = svProgress.has(w.id)
           ? "⭐ Kann ich!"
           : "✋ Kann ich lesen";
-        btn.addEventListener("click", () => toggleWord(w.id));
+        btn.addEventListener("click", () => svProgress.toggle(w.id));
         tile.appendChild(btn);
 
         return tile;

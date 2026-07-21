@@ -146,7 +146,9 @@ bleibt self-contained. Jede Phasen-Seite **und** `index.html` bindet den
   dort eintragen.
 - Weitere **phasenübergreifende** Keys: `sv_lesen_voice` (Stimme),
   `sv_lesen_muted` (Belohnungs-Ton an/aus), `sv_lesen_daily` (Tages-Streak
-  `{last,count}`, von `celebrate.js` beim ersten Richtig pro Tag gepflegt).
+  `{last,count}`, von `celebrate.js` beim ersten Richtig pro Tag gepflegt),
+  `sv_lesen_srs` (Spaced-Repetition-Daten `ItemId → {box,due,seen,correct}`,
+  von `shared/srs.js` gepflegt; Item-ID-Schema `p<phase>:<ID>`).
 - `index.html` zeigt Tages-Streak + **Gesamt-Zertifikat** (alle Phasen 100 %)
   und hat einen **Reset-Button**, der alle `*_progress`-Keys + `sv_lesen_daily`
   löscht.

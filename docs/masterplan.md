@@ -73,7 +73,7 @@ Diese Regeln gelten implizit in jeder Aufgabe. Vollständig in `CLAUDE.md`.
 
 | # | Feature | Wert | Aufwand | Hängt ab von | Status |
 |---|---------|------|---------|--------------|--------|
-| 1 | Adaptive Wiederholung (Spaced Repetition) | ⭐⭐⭐ | M | — | ⬜ |
+| 1 | Adaptive Wiederholung (Spaced Repetition) | ⭐⭐⭐ | M | — | ✅ |
 | 2 | Sammel-Farm (Belohnungs-Progression) | ⭐⭐⭐ | M | 1 (Signale) | ⬜ |
 | 3 | Eltern-Lernjournal | ⭐⭐ | S–M | 1 (Daten) | ⬜ |
 | 4 | Buchstaben-Tracing (Schreiben) | ⭐⭐ | M | — | ⬜ |
@@ -88,7 +88,7 @@ Empfohlene Reihenfolge = Tabellen-Reihenfolge. Welle 1 ist das Fundament
 
 ---
 
-## Welle 1 — Adaptive Wiederholung (Spaced Repetition) ⬜
+## Welle 1 — Adaptive Wiederholung (Spaced Repetition) ✅
 
 **Ziel:** Statt flacher „erledigt"-Liste merkt die App pro Item (Buchstabe/
 Wort/Satz), wie sicher das Kind ist, und spielt fällige Wackelkandidaten
@@ -146,14 +146,14 @@ gerade geübten Items (z. B. `svCorrect("p1:" + l.id)`).
   bei 0 fälligen erscheint ein „alles wiederholt"-Zustand.
 - Bestehende Progress-/Reward-Tests bleiben grün; `sv_lesen_srs` überlebt Reload.
 
-**High-Level-Aufgaben (vor Start zu TDD-Schritten ausklappen):**
-- [ ] `shared/srs.js` mit Box-Logik + `svSrsRecord/svSrsDue/svSrsStats` + Test.
-- [ ] In `build.js` registrieren; Marker in den Seiten setzen.
-- [ ] `celebrate.js`: `svCorrect(itemId?)` / neues `svWrong(itemId?)` an SRS koppeln.
-- [ ] Phasen 1–4: Item-IDs an die Reward-Hooks übergeben.
-- [ ] `index.html`: „🔁 Wiederholen"-Einstieg + Fälligkeits-Anzeige.
-- [ ] `tests/spec/srs.spec.ts` schreiben; volle Suite grün; Doku (`CLAUDE.md`
-      localStorage-Keys) nachziehen.
+**High-Level-Aufgaben:** ✅ erledigt — ausführlicher Plan:
+`docs/plan-welle-1-spaced-repetition.md`.
+- [x] `shared/srs.js` mit Box-Logik + `svSrsRecord/svSrsDue/svSrsStats/svSrsSortDueFirst` + Test.
+- [x] In `build.js` registrieren; Marker in den Seiten setzen.
+- [x] `celebrate.js`: `svCorrect(itemId?)` + neues `svWrong(itemId?)` an SRS koppeln.
+- [x] Phase 1 & 3 voll (IDs + `svWrong` + Deck-Sort); Phase 2 & 4 nur „richtig".
+- [x] `index.html`: Fälligkeits-Anzeige (`#dashSrs`); Reset räumt `sv_lesen_srs`.
+- [x] `tests/spec/srs.spec.ts` (11 Tests); volle Suite grün (140); `CLAUDE.md` nachgezogen.
 
 ---
 
@@ -363,7 +363,16 @@ Integritäts-Tests · Doku/Ausnahme in `CLAUDE.md`.
 | Datum | Welle | Commit | Notiz |
 |-------|-------|--------|-------|
 | 2026-07-21 | — | — | Masterplan angelegt. |
+| 2026-07-21 | 1 | `feature/srs-welle-1` | Spaced Repetition umgesetzt (7 Tasks, +11 Tests → 140 grün). |
 
 ## Learnings (nach jeder Welle ergänzen)
 
-- _(noch keine)_
+- **Welle 1:** Neuer Key `sv_lesen_srs`; neuer Baustein `shared/srs.js`. Neue
+  globale API `svWrong(itemId?)` ergänzt `svStreakReset` (Streak-only bleibt für
+  Builder-Stolperer). `svSrsSortDueFirst` reordert Quiz-Decks fällige-zuerst.
+- **Bewusste Scope-Grenze:** kein cross-phasiger „Wiederholen"-Screen — die
+  Wiederholung läuft über Deck-Sortierung *in* den Quizzen (Phase 1 & 3) + eine
+  Fälligkeits-Anzeige auf `index.html`. Builder (Phase 2/4) melden nur „richtig"
+  (kein sauberes Item-Fehler-Signal). Ein eigener Sammel-Screen wäre eine
+  spätere Verfeinerung.
+- Reset-Button auf `index.html` räumt jetzt auch `sv_lesen_srs`.

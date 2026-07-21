@@ -4,6 +4,7 @@
   "description": "Spielerischer Lese-Lern-Kurs für Kinder, eingebettet in Stardew Valley.",
   "lang": "de",
   "dir": "ltr",
+  "id": "/index.html",
   "start_url": "/index.html",
   "scope": "/",
   "display": "standalone",

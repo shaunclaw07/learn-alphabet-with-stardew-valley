@@ -5,7 +5,7 @@ komplett in die Welt von **Stardew Valley** eingebettet. Jeder Buchstabe, jede
 Silbe und jedes Wort ist mit einer Figur oder einem Gegenstand aus dem Spiel
 verknüpft, damit das Lesenlernen Spaß macht und im Kopf bleibt.
 
-**🌐 Live:** http://learn-alphabet-with-stardew-valley.schaflabs.com/
+**🌐 Live:** <http://learn-alphabet-with-stardew-valley.schaflabs.com/>
 
 Die **fertigen** Seiten sind statisch (reine HTML-Dateien) und funktionieren
 auch offline per Doppelklick auf `index.html`. Vorgelesen wird über die
@@ -189,6 +189,7 @@ alphabet/
 │   └── phase4-druckversion.html   Phase 4 (druckbar, A4)
 ├── lehrplan.html                  Kompletter Lehrplan (HTML)
 ├── lesen-lernen-lehrplan.md       Kompletter Lehrplan (Master-Referenz)
+├── shared/                        Geteilte Bausteine (Reader-Engine, Sprach-Helfer, …)
 ├── CLAUDE.md / AGENTS.md          Konventionen für die Weiterentwicklung
 └── .github/workflows/deploy.yml   Auto-Deploy zu GitHub Pages
 ```
@@ -216,9 +217,8 @@ sind).
 
 Die Zusatz-Funktionen der „Wellen 1–5" (kluge Wiederholung, Sammel-Farm,
 Eltern-Lernjournal, Schreib-Werkstatt, Tempo & große Schrift) sind umgesetzt und
-oben unter **„Extra-Funktionen"** beschrieben. Der aktuelle Entwicklungsplan ist
-ein verhaltens-erhaltendes **Refactoring** (gemeinsame Lese-Engine nach
-`shared/`) und liegt in
+oben unter **„Extra-Funktionen"** beschrieben. Das verhaltens-erhaltende **Refactoring „Gemeinsame Lese-Engine"**
+(Wellen 1–7) ist abgeschlossen (Juli 2026). Die Pläne liegen in
 [`docs/plan-refactoring-shared-engine.md`](./docs/plan-refactoring-shared-engine.md).
 
 > **⚠️ Wichtig bei jeder Inhaltsänderung:** Der PWA-Service-Worker cached

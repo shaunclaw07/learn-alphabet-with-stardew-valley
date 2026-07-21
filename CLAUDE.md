@@ -26,7 +26,11 @@ Zweifel gegen den Lehrplan prüfen.
 **Feature-Roadmap (nach den Phasen):** `docs/masterplan.md` ist der lebende Plan
 für Zusatz-Features („Wellen"). Fertig: Welle 1 **Spaced Repetition**, 2
 **Sammel-Farm**, 3 **Eltern-Lernjournal**, 4 **Buchstaben-Tracing**, 5 **Tempo &
-Lesbarkeit**. Offen: 6 Mini-Geschichten, 7 vorproduzierte Audios. Ablauf pro
+Lesbarkeit**. Offen: 6 Mini-Geschichten, 7 vorproduzierte Audios.
+**Refactoring „Gemeinsame Lese-Engine" (Wellen 1–7):** ✅ abgeschlossen
+(Juli 2026). Die Phasen teilen jetzt sechs neue `shared/`-Engine-Module
+(reader-util, progress, speak-text, exercises, reader, chrome-back-link) —
+siehe Abschnitt „Geteilte Bausteine". Ablauf pro
 Welle: Plan ausklappen (`docs/plan-welle-N-*.md`) → **Plan committen/pushen** →
 Agent im isolierten Worktree umsetzen lassen → Diff + eigener Testlauf
 reviewen → Fast-Forward nach `master`. (Plan **vor** dem Agenten-Start pushen,
@@ -39,14 +43,15 @@ freischalten (`href` setzen, `soon` entfernen, `progressKey`/`total`/`einheit`
 ergänzen). Zusätzlich für die **PWA**: die neue Seite in die
 `APP_SHELL`-Precache-Liste in `sw.js` eintragen und `CACHE_VERSION` erhöhen.
 Die neue Phasen-HTML übernimmt den **kanonischen Satz `shared/`-Includes**
-(base.css, dark-mode.css, voice-picker.js, celebrate.js, srs.js, pwa-head.html,
+(reader-util.js, progress.js, speak-text.js, exercises.js, reader.js,
+base.css, dark-mode.css, voice-picker.js, celebrate.js, srs.js, pwa-head.html,
 sw-register.js — siehe „Geteilte Bausteine"), ruft in den Übungen
 `svCorrect(id?)`/`svWrong(id?)`/`svFinish()` auf und wird ggf. in die
 Seiten-Listen der Playwright-Tests (`tests/spec/*.spec.ts`) aufgenommen.
 
 ## Verbindliche Konventionen (für ALLE Phasen)
 
-**Build-System (NEU seit 2026-07)**
+**Build-System**
 
 - Source-Dateien nutzen `<!-- #INCLUDE shared/datei -->`, `/* #INCLUDE shared/datei */`
   und `// #INCLUDE shared/datei.js` Marker für geteilte Blöcke.
@@ -267,7 +272,7 @@ bleibt self-contained. Jede Phasen-Seite **und** `index.html` bindet den
   zurückkehrende/installierte Nutzer weiterhin die **alte gecachte** Version — das
   neue Feature ist unsichtbar. Das ist in dieser Session passiert (Wellen 1–5
   waren für gecachte Nutzer erst nach dem Bump auf `v5` sichtbar). Also: **jede**
-  Änderung an gecachten Seiten = `CACHE_VERSION` erhöhen. (Stand: `sv-lesen-v6`.)
+  Änderung an gecachten Seiten = `CACHE_VERSION` erhöhen. (Stand: `sv-lesen-v11`.)
 - `sw.js` wird von GitHub Pages mit fixer `Cache-Control` ausgeliefert (nicht
   änderbar); der SW-`install` cached **ausfallsicher pro Ressource** (kein
   atomares `addAll`), damit eine einzelne fehlende Datei die Installierbarkeit
@@ -284,6 +289,7 @@ bleibt self-contained. Jede Phasen-Seite **und** `index.html` bindet den
 
 Neben den Apps gibt es Markdown-Lektionen und druckbare Materialien
 (`phase1/lektionen/`, `phase1/materialien/`, `phase1/phase1-druckversion.html`
+
 - `.pdf`). **Jede Phase hat eine druckbare A4-HTML-Fassung**
 (`phaseN/phaseN-druckversion.html`, gleicher Aufbau: Deckblatt → Seiten je
 Lektion/Thema → Ausschneide-Karten/Streifen → Zertifikat). Nur Phase 1 hat

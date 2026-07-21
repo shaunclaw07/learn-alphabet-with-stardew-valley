@@ -78,10 +78,8 @@ Diese Regeln gelten implizit in jeder Aufgabe. Vollständig in `CLAUDE.md`.
 | 3 | Eltern-Lernjournal | ⭐⭐ | S–M | 1 (Daten) | ✅ |
 | 4 | Buchstaben-Tracing (Schreiben) | ⭐⭐ | M | — | ✅ |
 | 5 | Barrierefreiheit & Tempo | ⭐⭐ | S | — | ✅ |
-| 6 | Kinder-Profile (mehrere Kinder) | ⭐ | S | — | ⬜ |
-| 7 | Phase 5 — decodierbare Mini-Geschichten | ⭐⭐ | L | — | ⬜ |
-| 8 | Kind liest vor (Spracherkennung) | ⭐⭐⭐? | L / Risiko | Prototyp zuerst | ⬜ |
-| 9 | Vorproduzierte Kern-Audios | ⭐⭐ | M / Tradeoff | — | ⬜ |
+| 6 | Phase 5 — decodierbare Mini-Geschichten | ⭐⭐ | L | — | ⬜ |
+| 7 | Vorproduzierte Kern-Audios | ⭐⭐ | M / Tradeoff | — | ⬜ |
 
 Empfohlene Reihenfolge = Tabellen-Reihenfolge. Welle 1 ist das Fundament
 (liefert die Sicherheits-/Fälligkeits-Signale, die Welle 2 und 3 nutzen).
@@ -303,32 +301,7 @@ Schrift, Silben-Highlighting beim Zusammenschleifen.
 
 ---
 
-## Welle 6 — Kinder-Profile ⬜
-
-**Ziel:** Mehrere Kinder auf einem Gerät, jedes mit eigenem Fortschritt.
-
-**Ansatz:** Präfix-Namespacing aller Fortschritts-Keys pro aktivem Profil
-(`sv_lesen_<profil>_…`). Profil-Auswahl auf `index.html`. Aktives Profil in
-`sv_lesen_active_profile`. **Wichtig:** zentraler Key-Zugriff, damit nicht in
-jeder Datei Key-Namen hart stehen — ggf. kleiner `shared/store.js`-Helfer.
-
-**Betroffene Dateien:**
-- Create: `shared/store.js` (Key-Auflösung pro Profil)
-- Modify: alle Stellen mit direktem `localStorage`-Zugriff auf `sv_lesen_*`,
-  `index.html` (Profil-Umschalter).
-- Test: `tests/spec/profiles.spec.ts`
-
-**Akzeptanzkriterien:**
-- Profil A und B haben getrennten Fortschritt; Umschalten lädt korrekt.
-- Migration: bestehende `sv_lesen_*`-Daten werden Profil „Standard" zugeordnet.
-
-**High-Level-Aufgaben:** `store.js` + Migration · alle Zugriffe umstellen ·
-Profil-UI · Tests · Doku. *(Aufwand steigt, wenn erst nach vielen Keys gebaut —
-Reihenfolge bewusst prüfen.)*
-
----
-
-## Welle 7 — Phase 5: decodierbare Mini-Geschichten ⬜
+## Welle 6 — Phase 5: decodierbare Mini-Geschichten ⬜
 
 **Ziel:** Neue Phase mit kurzen, ausschließlich decodierbaren Stardew-
 Geschichten (nur gelernte Buchstaben) — Brücke zum echten „Bücher lesen".
@@ -353,27 +326,7 @@ PWA/Index/Lehrplan/Tests nachziehen · Druckversion · Doku.
 
 ---
 
-## Welle 8 — Kind liest vor (Spracherkennung) ⬜ / Risiko
-
-**Ziel:** Das Kind liest laut, die App gibt Rückmeldung (`SpeechRecognition`).
-
-**Wert:** Potenziell riesig (die fehlende Hälfte des Lesenlernens) — **aber
-technisch riskant**: deutsche Kinderstimmen-Erkennung ist unzuverlässig,
-offline kaum verfügbar, Browser-Support uneinheitlich.
-
-**Vorgehen (Pflicht):** **Erst Wegwerf-Prototyp** (Skill
-`mattpocock-skills:prototype`) auf dem Zielgerät. Nur wenn die Trefferquote mit
-Kinderstimme brauchbar ist, in eine echte Welle überführen. Sonst `⏸️`.
-
-**Akzeptanzkriterien (Prototyp):** dokumentierte Trefferquote mit echter
-Kinderstimme auf dem Zielgerät; klare Go/No-Go-Empfehlung im Änderungs-Log.
-
-**High-Level-Aufgaben:** Prototyp · Messung · Entscheidung dokumentieren ·
-(bei Go) Welle ausdetaillieren.
-
----
-
-## Welle 9 — Vorproduzierte Kern-Audios ⬜ / Tradeoff
+## Welle 7 — Vorproduzierte Kern-Audios ⬜ / Tradeoff
 
 **Ziel:** Für die Kern-Laute/Merkwörter echte Audiodateien statt TTS —
 löst das größte Support-Problem (fehlende deutsche Stimme, Amazon-Kids-Modus).
@@ -405,6 +358,8 @@ Integritäts-Tests · Doku/Ausnahme in `CLAUDE.md`.
 | 2026-07-21 | 3 | `feature/journal-welle-3` | Eltern-Lernjournal umgesetzt (+4 Tests → 149 grün). Meisterung aus `svSrsStats()`, „Heute üben" verlinkt fälligste Phase; keine neuen Keys. |
 | 2026-07-21 | 4 | `feature/tracing-welle-4` | Buchstaben-Tracing umgesetzt (+5 Tests → 154 grün). Font-Glyph-Abdeckung statt Pfad-Daten; neuer Baustein `shared/trace.js`; SRS-Kopplung `p1:trace:<id>`; kein neuer Key. Nebenbei Wochen-Trenner-Pill entnowrapt (Fix: horizontaler Scroll bei 320px). |
 | 2026-07-21 | 5 | `feature/tempo-welle-5` | Tempo & Lesbarkeit umgesetzt (+6 Tests → 160 grün). Tempo als Multiplikator in `speak()` (Key `sv_lesen_rate`); Lesbarkeits-Modus asset-frei (größere Schrift + Abstand via `data-svfont`, Key `sv_lesen_font`); Regler in `.voice-wrap` injiziert; Silben-Highlighting bewusst verschoben. |
+| 2026-07-21 | — | — | Welle 6 (Kinder-Profile) aus dem Plan gestrichen; folgende Wellen aufgerückt (7→6, 8→7, 9→8). |
+| 2026-07-21 | — | — | Welle 7 (Kind liest vor / Spracherkennung) aus dem Plan gestrichen; Welle 8 aufgerückt (8→7). |
 
 ## Learnings (nach jeder Welle ergänzen)
 

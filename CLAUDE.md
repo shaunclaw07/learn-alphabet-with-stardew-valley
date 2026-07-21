@@ -135,6 +135,11 @@ bleibt self-contained. Jede Phasen-Seite **und** `index.html` bindet den
   Dropdowns: **Amazon-Kids-Modus** gibt die Web Speech API nicht frei.
 - Gespeicherte Stimme ist **phasenübergreifend**: `localStorage`-Key
   `sv_lesen_voice`.
+- **Sprech-Tempo (Welle 5):** `speak()` skaliert das Basis-Tempo mit dem
+  Nutzer-Multiplikator aus `sv_lesen_rate` (`svRateFor(base)` =
+  `clamp(base * userRate, 0.3, 2)`, Default 1). Der Tempo-Slider im
+  Vorlese-Bereich (injiziert von `voice-picker.js` in `.voice-wrap`) schreibt
+  diesen Key; die relativen Phasen-Tempi bleiben erhalten.
 - Silben/Wörter zum Sprechen **kleinschreiben** (`speak(text.toLowerCase())`) —
   sonst buchstabiert die Stimme Großbuchstaben. Anlaut-Prinzip: das Kind hört
   den Laut im echten Wort, nicht den Buchstaben-Namen.
@@ -159,7 +164,12 @@ bleibt self-contained. Jede Phasen-Seite **und** `index.html` bindet den
   `sv_lesen_srs` (Spaced-Repetition-Daten `ItemId → {box,due,seen,correct}`,
   von `shared/srs.js` gepflegt; Item-ID-Schema `p<phase>:<ID>`),
   `sv_lesen_farm` (Sammel-Farm `{unlocked:[keys]}`, von `shared/farm.js`
-  gepflegt; schaltet je 4 erledigte Aufgaben ein Farm-Objekt frei).
+  gepflegt; schaltet je 4 erledigte Aufgaben ein Farm-Objekt frei),
+  `sv_lesen_rate` (Sprech-Tempo-Multiplikator, Zahl 0.6–1.3, Default 1) und
+  `sv_lesen_font` (`"normal"`/`"lesbar"` — Lesbarkeits-Modus: größere Schrift +
+  mehr Abstand, angewendet als `data-svfont` am `<html>`, ausgewertet in
+  `shared/base.css`). Beide von `shared/voice-picker.js` (Welle 5) gepflegt und
+  über den Tempo-Slider bzw. Schrift-Umschalter im Vorlese-Bereich bedienbar.
 - `index.html` zeigt Tages-Streak + **Sammel-Farm** + **Gesamt-Zertifikat**
   (alle Phasen 100 %) und hat einen **Reset-Button**, der alle `*_progress`-Keys
   + `sv_lesen_daily` + `sv_lesen_srs` + `sv_lesen_farm` löscht.

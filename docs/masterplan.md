@@ -77,7 +77,7 @@ Diese Regeln gelten implizit in jeder Aufgabe. Vollständig in `CLAUDE.md`.
 | 2 | Sammel-Farm (Belohnungs-Progression) | ⭐⭐⭐ | M | 1 (Signale) | ✅ |
 | 3 | Eltern-Lernjournal | ⭐⭐ | S–M | 1 (Daten) | ✅ |
 | 4 | Buchstaben-Tracing (Schreiben) | ⭐⭐ | M | — | ✅ |
-| 5 | Barrierefreiheit & Tempo | ⭐⭐ | S | — | ⬜ |
+| 5 | Barrierefreiheit & Tempo | ⭐⭐ | S | — | ✅ |
 | 6 | Kinder-Profile (mehrere Kinder) | ⭐ | S | — | ⬜ |
 | 7 | Phase 5 — decodierbare Mini-Geschichten | ⭐⭐ | L | — | ⬜ |
 | 8 | Kind liest vor (Spracherkennung) | ⭐⭐⭐? | L / Risiko | Prototyp zuerst | ⬜ |
@@ -265,7 +265,7 @@ Abdeckung** — gilt automatisch für alle 21 Buchstaben.
 
 ---
 
-## Welle 5 — Barrierefreiheit & Tempo ⬜
+## Welle 5 — Barrierefreiheit & Tempo ✅
 
 **Ziel:** Einstellbare Sprech-Geschwindigkeit, optionale lesefreundliche
 Schrift, Silben-Highlighting beim Zusammenschleifen.
@@ -285,8 +285,21 @@ Schrift, Silben-Highlighting beim Zusammenschleifen.
 - Gewählte Rate/Schrift überleben Reload und wirken auf allen Seiten.
 - Standardwerte unverändert, wenn nichts gesetzt ist (keine Regression).
 
-**High-Level-Aufgaben:** Rate-Regler + Persistenz · Schrift-Umschalter ·
-Highlighting-Option · Tests · Doku.
+**High-Level-Aufgaben:** ✅ erledigt — ausführlicher Plan:
+`docs/plan-welle-5-tempo-lesbarkeit.md`.
+- [x] Tempo als **Multiplikator** in `speak()` (`svRateFor` clampt
+  `base * userRate` auf 0.3–2); Key `sv_lesen_rate`; `window.svUserRate()`.
+- [x] Lesbarkeits-Modus **asset-frei** (größere Schrift + Abstand via
+  `data-svfont` am `<html>`, ausgewertet in `shared/base.css`); Key
+  `sv_lesen_font` (`normal`/`lesbar`).
+- [x] Bedienelemente (Tempo-Slider `#svRateSlider` + Schrift-Umschalter
+  `#svFontToggle`) von `voice-picker.js` in `.voice-wrap` injiziert — erscheinen
+  auf allen Phasen-Seiten, nicht auf `index.html` (keine `.voice-wrap`).
+- [x] Dark-Overrides für die neuen Flächen in `shared/dark-mode.css`.
+- [x] **Silben-Highlighting bewusst verschoben** (phasenspezifisch, nicht in
+  dieser Welle).
+- [x] `tests/spec/settings.spec.ts` (6 Tests); volle Suite grün (160); Doku
+  (`CLAUDE.md`) nachgezogen.
 
 ---
 
@@ -391,6 +404,7 @@ Integritäts-Tests · Doku/Ausnahme in `CLAUDE.md`.
 | 2026-07-21 | 2 | `feature/farm-welle-2` | Sammel-Farm umgesetzt (3 Tasks, +5 Tests → 145 grün). Freischalt-Regel `floor(totalDone/4)` statt „5 gemeisterte SRS-Items". |
 | 2026-07-21 | 3 | `feature/journal-welle-3` | Eltern-Lernjournal umgesetzt (+4 Tests → 149 grün). Meisterung aus `svSrsStats()`, „Heute üben" verlinkt fälligste Phase; keine neuen Keys. |
 | 2026-07-21 | 4 | `feature/tracing-welle-4` | Buchstaben-Tracing umgesetzt (+5 Tests → 154 grün). Font-Glyph-Abdeckung statt Pfad-Daten; neuer Baustein `shared/trace.js`; SRS-Kopplung `p1:trace:<id>`; kein neuer Key. Nebenbei Wochen-Trenner-Pill entnowrapt (Fix: horizontaler Scroll bei 320px). |
+| 2026-07-21 | 5 | `feature/tempo-welle-5` | Tempo & Lesbarkeit umgesetzt (+6 Tests → 160 grün). Tempo als Multiplikator in `speak()` (Key `sv_lesen_rate`); Lesbarkeits-Modus asset-frei (größere Schrift + Abstand via `data-svfont`, Key `sv_lesen_font`); Regler in `.voice-wrap` injiziert; Silben-Highlighting bewusst verschoben. |
 
 ## Learnings (nach jeder Welle ergänzen)
 
@@ -442,3 +456,23 @@ Integritäts-Tests · Doku/Ausnahme in `CLAUDE.md`.
   durch `body{overflow-x:hidden}` visuell kaschiert, weshalb der Responsive-Spec
   ihn übersah). Der strengere Trace-320px-Test (`documentElement.scrollWidth`)
   deckte ihn auf; Fix = `white-space: normal` + `min-width: 0` am Pill.
+- **Welle 5:** Zwei neue phasenübergreifende Keys `sv_lesen_rate` (Zahl) und
+  `sv_lesen_font` (`normal`/`lesbar`) — **kein** neuer Shared-Baustein, reine
+  Erweiterung von `shared/voice-picker.js` + `shared/base.css`.
+- **Gelockte Design-Entscheidung — Tempo = Multiplikator:** `speak(text, rate)`
+  skaliert den bisherigen Basiswert (`svRateFor(base) = clamp(base * userRate,
+  0.3, 2)`, `userRate` aus `sv_lesen_rate`, Default 1). So bleiben die relativen
+  Phasen-Tempi (Silbe 0.7, Standard 0.85 …) erhalten; nur die Voice-Engine-Zeile
+  `u.rate` wurde geändert, alle anderen Voice-Funktionen sind unangetastet.
+- **Gelockte Design-Entscheidung — „lesefreundlich" asset-frei:** statt eigener
+  Font-Datei (widerspräche „self-contained, keine Assets") ist der Lesbar-Modus
+  nur **größere Schrift + mehr Abstand** — `data-svfont="lesbar"` am `<html>`
+  (in `voice-picker.js` via `applyFont()` gesetzt), ausgewertet in `base.css`
+  (`font-size: 108%`, `letter-spacing`, `line-height`).
+- **Bedienelemente injiziert (DRY):** `voice-picker.js` hängt Slider + Umschalter
+  an die vorhandene `.voice-wrap` — dadurch automatisch auf allen Phasen-Seiten,
+  aber **nicht** auf `index.html` (hat keine `.voice-wrap`, dort wird nicht
+  gelesen). IDs `#svRateSlider`/`#svFontToggle`, Klassen `.sv-settings`/
+  `.sv-set-row`/`.sv-font-toggle`.
+- **Bewusste Scope-Grenze:** **kein** Silben-Highlighting in dieser Welle (wäre
+  phasenspezifisch pro Silben-/Wort-Rendering) — auf später verschoben.

@@ -116,7 +116,7 @@ git commit --allow-empty -m "🔧 Refactor-Start: Baseline shared-engine (Build+
 
 ---
 
-## Task 1: `shared/reader-util.js` — Kleinkram (`shuffle`, `scrollToId`, `makeTile`)
+## Task 1: `shared/reader-util.js` — Kleinkram (`shuffle`, `scrollToId`)
 
 **Files:**
 - Create: `shared/reader-util.js`
@@ -236,8 +236,8 @@ git commit -m "♻️ Refactor: shuffle & scrollToId nach shared/reader-util.js"
 - Modify: alle vier Phasen (Marker + lokale Progress-Funktionen ersetzen)
 
 **Interfaces:**
-- Consumes: `window.svShuffle` (nicht nötig hier), DOM-Elemente `#progressFill`,
-  `#progressLabel`, `#certSection` (in jeder Phase vorhanden).
+- Consumes: DOM-Elemente `#progressFill`, `#progressLabel`, `#certSection`
+  (in jeder Phase vorhanden). Keine JS-Modul-Abhängigkeiten.
 - Produces (global):
   - `window.svProgress.init(cfg)` — cfg: `{ key, total, einheit, onRender }`.
     Lädt den Set aus `localStorage[cfg.key]`, merkt sich cfg intern.
@@ -389,7 +389,9 @@ git commit -m "♻️ Refactor: Fortschritt/Bar/Zertifikat nach shared/progress.
     `.syl`-Spans mit `·`-Trennern (wie Phase 2 `:899-913`).
   - `window.svSay.bySyllables(silbenArr, wordText, sylSpans?, opts?) -> void` —
     silbenweise sprechen mit `.lit`-Highlight, dann flüssiges Wort; `opts.step`
-    Default 620 ms, `opts.tail` Default 120 ms.
+    Default 620 ms, `opts.tail` Default 120 ms, `opts.rate` Default 0.85.
+    Einsilbige Wörter (`silbenArr.length <= 1`) werden **nur einmal als Ganzes**
+    gesprochen (kurzer `.lit`-Blitz), nicht Silbe + Wort doppelt (aus Phase 3).
   - `window.svSay.line(spans, words, done?) -> void` — Phase-4-Variante:
     Wort-für-Wort mit `.lit`, dann ganzer Satz (`speak(words.join(" ")…, 0.85)`),
     Timing 720/160 ms.
@@ -398,7 +400,10 @@ git commit -m "♻️ Refactor: Fortschritt/Bar/Zertifikat nach shared/progress.
 > `speakWordBySyllables` mit Timing 620/120 und `sayWord`-Rate 0.85, Phase 4
 > `speakLineByWords` mit 720/160 und `sayWord`-Rate 0.8. Diese phasen-relativen
 > Tempi bleiben über die Parameter erhalten (Phase 4 ruft mit eigenem
-> `rate`/Timing auf). **Kein hörbarer Unterschied** gegenüber Baseline.
+> `rate`/Timing auf). Phase 3 behandelt zusätzlich **einsilbige Wörter** gesondert
+> (einmal als Ganzes statt Silbe + Wort) — dieser Kurzschluss wird in
+> `bySyllables` übernommen, sodass Ph2 (mehrsilbig) und Ph3 (auch einsilbig)
+> jeweils wie bisher klingen. **Kein hörbarer Unterschied** gegenüber Baseline.
 
 - [ ] **Step 1: Modul anlegen**
 ```js
@@ -429,6 +434,15 @@ git commit -m "♻️ Refactor: Fortschritt/Bar/Zertifikat nach shared/progress.
     const stepMs = o.step || 620;
     const tailMs = o.tail || 120;
     const rate = o.rate || 0.85;
+    // Einsilbige (kurze) Wörter: nur einmal als Ganzes sprechen (aus Ph3).
+    if (silben.length <= 1) {
+      if (sylSpans && sylSpans[0]) {
+        sylSpans[0].classList.add("lit");
+        setTimeout(() => sylSpans[0].classList.remove("lit"), 700);
+      }
+      word(wordText, rate);
+      return;
+    }
     let i = 0;
     const step = () => {
       if (sylSpans) sylSpans.forEach((s) => s.classList.remove("lit"));
@@ -535,7 +549,7 @@ git commit -m "♻️ Refactor: Sprach-Helfer nach shared/speak-text.js"
 - Consumes: `window.svShuffle`, `window.svSay.word`.
 - Produces (global):
   - `window.svFlash.mount(cfg) -> void` — cfg:
-    `{ items, elIds, wordKey, emojiKey }` mit
+    `{ items, elIds, wordKey, emojiKey, rate? }` (`rate` Default 0.85) mit
     `elIds = { stars, total, index, card, word, emoji }`. Baut ein eigenes Deck
     (`svShuffle([...items])`), rendert die aktuelle Karte, verdrahtet nichts an
     Buttons (die Buttons rufen weiterhin `svFlash.read/flip/next` global auf).
@@ -561,7 +575,7 @@ verhaltensneutral.
 /* shared/exercises.js — geteilte Übungs-Engines.
    Global: svFlash (Blitz-Karten). Quiz/Builder bleiben (noch) pro Phase. */
 (function () {
-  const F = { deck: [], idx: 0, stars: 0, flipped: false, ids: null };
+  const F = { deck: [], idx: 0, stars: 0, flipped: false, ids: null, rate: 0.85 };
   function els() { return F.ids; }
   function set(id, txt) {
     const e = document.getElementById(id);
@@ -579,6 +593,7 @@ verhaltensneutral.
   window.svFlash = {
     mount(cfg) {
       F.ids = cfg.elIds;
+      F.rate = cfg.rate || 0.85;
       F.deck = window.svShuffle(
         cfg.items.map((it) => ({ word: it[cfg.wordKey], emoji: it[cfg.emojiKey] }))
       );
@@ -590,7 +605,7 @@ verhaltensneutral.
     },
     read() {
       const w = F.deck[F.idx];
-      if (w) window.svSay.word(w.word, 0.85);
+      if (w) window.svSay.word(w.word, F.rate);
     },
     flip() {
       const card = document.getElementById(els().card);
@@ -598,7 +613,7 @@ verhaltensneutral.
       if (card) card.classList.toggle("flipped", F.flipped);
       if (F.flipped) {
         const w = F.deck[F.idx];
-        if (w) window.svSay.word(w.word, 0.85);
+        if (w) window.svSay.word(w.word, F.rate);
       }
     },
     next() {
@@ -621,8 +636,10 @@ verhaltensneutral.
 
 > **Achtung Sprech-Rate:** Phase 2 & 3 nutzen heute `sayWord` mit Rate 0.85
 > bzw. 0.8. Prüfe in Step 1 die realen Raten (`grep -n "function sayWord"` bzw.
-> nach Task 3 die `svSay.word(..., RATE)`-Aufrufe). Ist Phase 3 = 0.8, dann
-> `read`/`flip` einen `rate`-Parameter über `cfg` durchreichen statt hart 0.85.
+> nach Task 3 die `svSay.word(..., RATE)`-Aufrufe). `svFlash` reicht die Rate
+> bereits über `cfg.rate` (Default 0.85) an `read`/`flip` durch — weicht eine
+> Phase davon ab (z. B. Phase 3 = 0.8), im `mount(...)`-Aufruf `rate: 0.8`
+> mitgeben statt den Wert hart zu setzen.
 > **Verhaltensneutralität hat Vorrang** vor Vereinheitlichung der Rate.
 
 - [ ] **Step 3: `build.js` registrieren** + **Marker** nach `speak-text.js` in

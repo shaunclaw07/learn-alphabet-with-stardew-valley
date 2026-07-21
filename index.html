@@ -567,6 +567,7 @@
         </div>
         <div class="dash-phases" id="dashPhases"></div>
         <div class="dash-streak" id="dashStreak" hidden></div>
+        <div class="dash-streak" id="dashSrs" hidden></div>
         <button type="button" class="dash-reset" id="dashReset">
           ↺ Fortschritt zurücksetzen
         </button>
@@ -742,6 +743,9 @@
       // #INCLUDE shared/celebrate.js
     </script>
     <script>
+      // #INCLUDE shared/srs.js
+    </script>
+    <script>
       // ===== Tages-Streak, Reset & Gesamt-Zertifikat =====
       (function () {
         // Tages-Streak anzeigen (celebrate.js pflegt sv_lesen_daily)
@@ -769,6 +773,21 @@
           }
         } catch (e) {}
 
+        // Fällige Wiederholungen (SRS)
+        try {
+          const s =
+            typeof svSrsStats === "function" ? svSrsStats() : { due: 0 };
+          const srsEl = document.getElementById("dashSrs");
+          if (srsEl && s.due > 0) {
+            srsEl.innerHTML =
+              '<span class="flame">🔁</span> ' +
+              s.due +
+              (s.due === 1 ? " Übung wartet" : " Übungen warten") +
+              " auf Wiederholung";
+            srsEl.hidden = false;
+          }
+        } catch (e) {}
+
         // Fortschritt zurücksetzen (Eltern)
         const resetBtn = document.getElementById("dashReset");
         if (resetBtn) {
@@ -781,6 +800,7 @@
               if (p.progressKey) localStorage.removeItem(p.progressKey);
             });
             localStorage.removeItem("sv_lesen_daily");
+            localStorage.removeItem("sv_lesen_srs");
             location.reload();
           });
         }

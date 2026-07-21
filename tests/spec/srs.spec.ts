@@ -122,3 +122,29 @@ test.describe("SRS – Kopplung an celebrate.js", () => {
     expect(srs === null || srs === "{}").toBe(true);
   });
 });
+
+test.describe("SRS – Anzeige auf der Startseite", () => {
+  test("zeigt fällige Anzahl, wenn Items fällig sind", async ({ page }) => {
+    await page.goto("/index.html");
+    await page.evaluate(() => {
+      localStorage.setItem(
+        "sv_lesen_srs",
+        JSON.stringify({
+          "p1:A": { box: 1, due: "2000-01-01", seen: 1, correct: 0 },
+          "p1:B": { box: 2, due: "2000-01-01", seen: 2, correct: 1 },
+        }),
+      );
+    });
+    await page.reload();
+    const el = page.locator("#dashSrs");
+    await expect(el).toBeVisible();
+    await expect(el).toContainText("2");
+  });
+
+  test("bleibt versteckt, wenn nichts fällig ist", async ({ page }) => {
+    await page.goto("/index.html");
+    await page.evaluate(() => localStorage.removeItem("sv_lesen_srs"));
+    await page.reload();
+    await expect(page.locator("#dashSrs")).toBeHidden();
+  });
+});

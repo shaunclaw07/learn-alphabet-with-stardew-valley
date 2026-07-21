@@ -863,6 +863,7 @@
       // #INCLUDE shared/celebrate.js
 
       // #INCLUDE shared/srs.js
+      // #INCLUDE shared/reader-util.js
       function sayWord(w) {
         speak(String(w).toLowerCase(), 0.85);
       }
@@ -885,14 +886,6 @@
         else completed.add(id);
         save();
         render();
-      }
-
-      function shuffle(a) {
-        for (let i = a.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [a[i], a[j]] = [a[j], a[i]];
-        }
-        return a;
       }
 
       // Silben eines Wortes als getrennte Spans (mit Trenn-Punkt) rendern.
@@ -953,24 +946,24 @@
           btn.className = "nav-btn";
           btn.textContent = lk.nr;
           btn.title = lk.titel;
-          btn.addEventListener("click", () => scrollTo2("lektion-" + lk.nr));
+          btn.addEventListener("click", () => svScrollToId("lektion-" + lk.nr));
           navRow.appendChild(btn);
         });
         const bBtn = document.createElement("button");
         bBtn.className = "nav-btn special";
         bBtn.textContent = "🧱 Silben-Bauer";
-        bBtn.addEventListener("click", () => scrollTo2("builderWrap"));
+        bBtn.addEventListener("click", () => svScrollToId("builderWrap"));
         navRow.appendChild(bBtn);
         const fBtn = document.createElement("button");
         fBtn.className = "nav-btn special";
         fBtn.textContent = "⚡ Blitz";
-        fBtn.addEventListener("click", () => scrollTo2("flashWrap"));
+        fBtn.addEventListener("click", () => svScrollToId("flashWrap"));
         navRow.appendChild(fBtn);
         const cBtn = document.createElement("button");
         cBtn.className = "nav-btn special";
         cBtn.textContent = "🏆";
         cBtn.title = "Zertifikat";
-        cBtn.addEventListener("click", () => scrollTo2("certSection"));
+        cBtn.addEventListener("click", () => svScrollToId("certSection"));
         navRow.appendChild(cBtn);
 
         // Inhalt
@@ -1155,11 +1148,6 @@
         return tile;
       }
 
-      function scrollTo2(id) {
-        const el = document.getElementById(id);
-        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-
       // ===== SILBEN-BAUER =====
       // Nur mehrsilbige Wörter (2–3 Silben, nicht „kurz").
       const BUILDER_WORDS = WORDS.filter(
@@ -1171,7 +1159,7 @@
       let bNextNeeded = 0; // Index der nächsten benötigten Silbe
 
       function startBuilder() {
-        bDeck = shuffle([...BUILDER_WORDS]);
+        bDeck = svShuffle([...BUILDER_WORDS]);
         bIdx = 0;
         bStars = 0;
         document.getElementById("bStars").textContent = "";
@@ -1199,7 +1187,7 @@
         // Bank (Silben gemischt)
         const bank = document.getElementById("bBank");
         bank.replaceChildren();
-        shuffle([...w.silben.keys()]).forEach((origIdx) => {
+        svShuffle([...w.silben.keys()]).forEach((origIdx) => {
           const chip = document.createElement("div");
           chip.className = "b-chip";
           chip.textContent = w.silben[origIdx];
@@ -1278,7 +1266,7 @@
       let fFlipped = false;
 
       function startFlash() {
-        fDeck = shuffle([...WORDS]);
+        fDeck = svShuffle([...WORDS]);
         fIdx = 0;
         fStars = 0;
         document.getElementById("fStars").textContent = "";

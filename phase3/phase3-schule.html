@@ -630,11 +630,14 @@
       <div class="quiz">
         <h2>🖼️ Bild-Quiz</h2>
         <div class="q-subtitle">
-          Welches Wort passt zum Bild? Lies die Wörter und tippe das richtige an!
+          Welches Wort passt zum Bild? Lies die Wörter und tippe das richtige
+          an!
         </div>
         <div class="q-emoji" id="qEmoji">🐔</div>
         <div class="q-options" id="qOptions"></div>
-        <div class="q-hint" id="qHint">Tippe das Wort an, das zum Bild passt.</div>
+        <div class="q-hint" id="qHint">
+          Tippe das Wort an, das zum Bild passt.
+        </div>
         <div class="q-progress">
           <div class="b-stars" id="qStars"></div>
           Frage <span id="qIndex">1</span> / <span id="qTotal">10</span>
@@ -809,6 +812,7 @@
       // #INCLUDE shared/celebrate.js
 
       // #INCLUDE shared/srs.js
+      // #INCLUDE shared/reader-util.js
       function sayWord(w) {
         speak(String(w).toLowerCase(), 0.85);
       }
@@ -833,14 +837,6 @@
         else completed.add(id);
         save();
         render();
-      }
-
-      function shuffle(a) {
-        for (let i = a.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [a[i], a[j]] = [a[j], a[i]];
-        }
-        return a;
       }
 
       // Silben eines Wortes als getrennte Spans (mit Trenn-Punkt) rendern.
@@ -911,25 +907,25 @@
           btn.textContent = kt.icon;
           btn.title = kt.titel;
           btn.setAttribute("aria-label", kt.titel);
-          btn.addEventListener("click", () => scrollTo2("kat-" + kt.key));
+          btn.addEventListener("click", () => svScrollToId("kat-" + kt.key));
           navRow.appendChild(btn);
         });
         const qBtn = document.createElement("button");
         qBtn.className = "nav-btn special";
         qBtn.textContent = "🖼️ Quiz";
-        qBtn.addEventListener("click", () => scrollTo2("quizWrap"));
+        qBtn.addEventListener("click", () => svScrollToId("quizWrap"));
         navRow.appendChild(qBtn);
         const fBtn = document.createElement("button");
         fBtn.className = "nav-btn special";
         fBtn.textContent = "⚡ Blitz";
-        fBtn.addEventListener("click", () => scrollTo2("flashWrap"));
+        fBtn.addEventListener("click", () => svScrollToId("flashWrap"));
         navRow.appendChild(fBtn);
         const cBtn = document.createElement("button");
         cBtn.className = "nav-btn special";
         cBtn.textContent = "🏆";
         cBtn.title = "Zertifikat";
         cBtn.setAttribute("aria-label", "Zertifikat");
-        cBtn.addEventListener("click", () => scrollTo2("certSection"));
+        cBtn.addEventListener("click", () => svScrollToId("certSection"));
         navRow.appendChild(cBtn);
 
         // Inhalt
@@ -952,7 +948,9 @@
         dEmoji.className = "demo-emoji";
         dEmoji.textContent = dWord.emoji;
         dEmoji.title = "Antippen zum Hören";
-        dEmoji.addEventListener("click", () => speakWordBySyllables(dWord, null));
+        dEmoji.addEventListener("click", () =>
+          speakWordBySyllables(dWord, null),
+        );
         demo.appendChild(dEmoji);
         const arr = document.createElement("span");
         arr.className = "demo-arrow";
@@ -1095,11 +1093,6 @@
         return tile;
       }
 
-      function scrollTo2(id) {
-        const el = document.getElementById(id);
-        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-
       // ===== BILD-QUIZ =====
       const QUIZ_ROUND = 10; // Fragen pro Runde
       let qDeck = [];
@@ -1108,10 +1101,10 @@
       let qLocked = false; // true, sobald richtig geraten (bis Weiter)
 
       function startQuiz() {
-        qDeck = svSrsSortDueFirst(shuffle([...WORDS]), (w) => "p3:" + w.id).slice(
-          0,
-          QUIZ_ROUND,
-        );
+        qDeck = svSrsSortDueFirst(
+          svShuffle([...WORDS]),
+          (w) => "p3:" + w.id,
+        ).slice(0, QUIZ_ROUND);
         qIdx = 0;
         qStars = 0;
         document.getElementById("qStars").textContent = "";
@@ -1129,12 +1122,10 @@
 
         // Distraktoren wählen: bevorzugt anderer Anfangsbuchstabe.
         const others = WORDS.filter((x) => x.id !== w.id);
-        const diffStart = shuffle(
-          others.filter((x) => x.id[0] !== w.id[0]),
-        );
-        const pool = diffStart.length >= 2 ? diffStart : shuffle(others);
+        const diffStart = svShuffle(others.filter((x) => x.id[0] !== w.id[0]));
+        const pool = diffStart.length >= 2 ? diffStart : svShuffle(others);
         const distractors = pool.slice(0, 2);
-        const options = shuffle([w, ...distractors]);
+        const options = svShuffle([w, ...distractors]);
 
         const box = document.getElementById("qOptions");
         box.replaceChildren();
@@ -1153,9 +1144,9 @@
           // richtig
           qLocked = true;
           btn.classList.add("correct");
-          document.querySelectorAll("#qOptions .quiz-btn").forEach((b) =>
-            b.classList.add("locked"),
-          );
+          document
+            .querySelectorAll("#qOptions .quiz-btn")
+            .forEach((b) => b.classList.add("locked"));
           document.getElementById("qHint").textContent = "🎉 Richtig gelesen!";
           qStars = Math.min(qDeck.length, qStars + 1);
           document.getElementById("qStars").textContent = "⭐".repeat(qStars);
@@ -1199,7 +1190,7 @@
       let fFlipped = false;
 
       function startFlash() {
-        fDeck = shuffle([...WORDS]);
+        fDeck = svShuffle([...WORDS]);
         fIdx = 0;
         fStars = 0;
         document.getElementById("fStars").textContent = "";

@@ -719,7 +719,9 @@
         </div>
         <div class="q-sentence" id="qSentence"></div>
         <div class="q-options" id="qOptions"></div>
-        <div class="q-hint" id="qHint">Tippe das Wort an, das in die Lücke passt.</div>
+        <div class="q-hint" id="qHint">
+          Tippe das Wort an, das in die Lücke passt.
+        </div>
         <div class="q-progress">
           <div class="b-stars" id="qStars"></div>
           Frage <span id="qIndex">1</span> / <span id="qTotal">10</span>
@@ -812,6 +814,7 @@
       // #INCLUDE shared/celebrate.js
 
       // #INCLUDE shared/srs.js
+      // #INCLUDE shared/reader-util.js
       // Kleinschreibung, damit die Stimme Wörter liest statt buchstabiert.
       function sayWord(w) {
         speak(String(w).toLowerCase(), 0.8);
@@ -838,14 +841,6 @@
         else completed.add(id);
         save();
         render();
-      }
-
-      function shuffle(a) {
-        for (let i = a.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [a[i], a[j]] = [a[j], a[i]];
-        }
-        return a;
       }
 
       // Alle im Kurs vorkommenden Wörter (für Quiz-Distraktoren).
@@ -939,25 +934,25 @@
           btn.textContent = lk.icon;
           btn.title = lk.titel;
           btn.setAttribute("aria-label", lk.titel);
-          btn.addEventListener("click", () => scrollTo2("lek-" + lk.key));
+          btn.addEventListener("click", () => svScrollToId("lek-" + lk.key));
           navRow.appendChild(btn);
         });
         const bBtn = document.createElement("button");
         bBtn.className = "nav-btn special";
         bBtn.textContent = "🧱 Satz-Bauer";
-        bBtn.addEventListener("click", () => scrollTo2("builderWrap"));
+        bBtn.addEventListener("click", () => svScrollToId("builderWrap"));
         navRow.appendChild(bBtn);
         const qBtn = document.createElement("button");
         qBtn.className = "nav-btn special";
         qBtn.textContent = "🧩 Lücken";
-        qBtn.addEventListener("click", () => scrollTo2("quizWrap"));
+        qBtn.addEventListener("click", () => svScrollToId("quizWrap"));
         navRow.appendChild(qBtn);
         const cBtn = document.createElement("button");
         cBtn.className = "nav-btn special";
         cBtn.textContent = "🏆";
         cBtn.title = "Zertifikat";
         cBtn.setAttribute("aria-label", "Zertifikat");
-        cBtn.addEventListener("click", () => scrollTo2("certSection"));
+        cBtn.addEventListener("click", () => svScrollToId("certSection"));
         navRow.appendChild(cBtn);
 
         // Inhalt
@@ -1091,10 +1086,7 @@
           if (isDialog) {
             const spans2 = [...line2.querySelectorAll(".s-word")];
             speakLineByWords(spans1, s.words, () => {
-              setTimeout(
-                () => speakLineByWords(spans2, s.antwort, null),
-                500,
-              );
+              setTimeout(() => speakLineByWords(spans2, s.antwort, null), 500);
             });
           } else {
             speakLineByWords(spans1, s.words, null);
@@ -1119,11 +1111,6 @@
         return tile;
       }
 
-      function scrollTo2(id) {
-        const el = document.getElementById(id);
-        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-
       // ===== SATZ-BAUER =====
       // Nur Nicht-Dialog-Sätze mit >= 3 Wörtern.
       const BUILDER_SENTENCES = SENTENCES.filter(
@@ -1135,7 +1122,7 @@
       let bNextNeeded = 0;
 
       function startBuilder() {
-        bDeck = shuffle([...BUILDER_SENTENCES]);
+        bDeck = svShuffle([...BUILDER_SENTENCES]);
         bIdx = 0;
         bStars = 0;
         document.getElementById("bStars").textContent = "";
@@ -1161,7 +1148,7 @@
 
         const bank = document.getElementById("bBank");
         bank.replaceChildren();
-        shuffle([...s.words.keys()]).forEach((origIdx) => {
+        svShuffle([...s.words.keys()]).forEach((origIdx) => {
           const chip = document.createElement("div");
           chip.className = "b-chip";
           chip.textContent = s.words[origIdx];
@@ -1238,7 +1225,7 @@
 
       // Aus den Bauer-Sätzen (>=3 Wörter) Fragen mit je einer Lücke bauen.
       function buildQuizDeck() {
-        const pool = shuffle([...BUILDER_SENTENCES]);
+        const pool = svShuffle([...BUILDER_SENTENCES]);
         const deck = [];
         pool.forEach((s) => {
           // Ein Wort mit Länge >= 3 als Lücke (nicht das erste Wort).
@@ -1251,17 +1238,15 @@
             : s.words.length - 1;
           const answer = s.words[gapIdx];
           // 2 Distraktoren: andere Wörter, nicht im Satz.
-          const distr = shuffle(
-            ALL_WORDS.filter(
-              (w) => w !== answer && !s.words.includes(w),
-            ),
+          const distr = svShuffle(
+            ALL_WORDS.filter((w) => w !== answer && !s.words.includes(w)),
           ).slice(0, 2);
           deck.push({
             words: s.words,
             end: s.end,
             gapIdx,
             answer,
-            options: shuffle([answer, ...distr]),
+            options: svShuffle([answer, ...distr]),
           });
         });
         return deck.slice(0, QUIZ_ROUND);

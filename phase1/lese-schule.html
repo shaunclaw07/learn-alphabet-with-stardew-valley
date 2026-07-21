@@ -672,13 +672,14 @@
       <summary>ℹ️ Warum wird beim Antippen das ganze Wort vorgelesen?</summary>
       <div class="eh-body">
         Das ist Absicht (<strong>Anlaut-Prinzip</strong>): Tippt dein Kind auf
-        einen Buchstaben, hört es das <strong>Merkwort</strong> (z.&nbsp;B. „M" →
-        „Milch") — den Laut im echten Wort, <strong>nie den Buchstabennamen</strong>
-        („Em"). Buchstabennamen erschweren das spätere Zusammenlesen, und deutsche
-        Stimmen können einen einzelnen Konsonanten ohnehin nicht sauber sprechen.
-        Den <strong>reinen Laut</strong> („mmm") übt ihr in der
-        <strong>🔨 Lese-Werkstatt</strong>: dort spielt ein Tipp auf eine einzelne
-        Buchstaben-Kachel nur den Laut.
+        einen Buchstaben, hört es das <strong>Merkwort</strong> (z.&nbsp;B. „M"
+        → „Milch") — den Laut im echten Wort,
+        <strong>nie den Buchstabennamen</strong> („Em"). Buchstabennamen
+        erschweren das spätere Zusammenlesen, und deutsche Stimmen können einen
+        einzelnen Konsonanten ohnehin nicht sauber sprechen. Den
+        <strong>reinen Laut</strong> („mmm") übt ihr in der
+        <strong>🔨 Lese-Werkstatt</strong>: dort spielt ein Tipp auf eine
+        einzelne Buchstaben-Kachel nur den Laut.
       </div>
     </details>
 
@@ -717,19 +718,23 @@
     <div class="main-wrap" id="traceWrap" style="display: none">
       <div class="workshop">
         <h2>✏️ Schreib-Werkstatt</h2>
-        <div class="ws-subtitle">
-          Fahr den Buchstaben mit dem Finger nach!
-        </div>
+        <div class="ws-subtitle">Fahr den Buchstaben mit dem Finger nach!</div>
         <div class="trace-letter" id="traceLetter"></div>
         <canvas
           id="traceCanvas"
           class="trace-canvas"
           aria-label="Buchstaben nachspuren"
         ></canvas>
-        <div class="ws-hint" id="traceHint">Tippe und ziehe über den Buchstaben.</div>
+        <div class="ws-hint" id="traceHint">
+          Tippe und ziehe über den Buchstaben.
+        </div>
         <div class="trace-controls">
-          <button class="ws-btn" id="traceClearBtn" type="button">↺ Nochmal</button>
-          <button class="ws-btn nextw" id="traceNextBtn" type="button">▶ Weiter</button>
+          <button class="ws-btn" id="traceClearBtn" type="button">
+            ↺ Nochmal
+          </button>
+          <button class="ws-btn nextw" id="traceNextBtn" type="button">
+            ▶ Weiter
+          </button>
         </div>
       </div>
     </div>
@@ -1080,6 +1085,7 @@
       // #INCLUDE shared/celebrate.js
 
       // #INCLUDE shared/srs.js
+      // #INCLUDE shared/reader-util.js
 
       // #INCLUDE shared/trace.js
 
@@ -1154,13 +1160,15 @@
           btn.className = "nav-btn" + (completed.has(l.id) ? " done" : "");
           btn.textContent = l.id;
           btn.title = l.merkwort;
-          btn.addEventListener("click", () => scrollToLetter(l.id));
+          btn.addEventListener("click", () =>
+            svScrollToId("letter-" + l.id, "center"),
+          );
           navRow.appendChild(btn);
         });
         const certBtn = document.createElement("button");
         certBtn.className = "nav-btn special";
         certBtn.textContent = "🏆";
-        certBtn.addEventListener("click", scrollToCert);
+        certBtn.addEventListener("click", () => svScrollToId("certSection"));
         navRow.appendChild(certBtn);
 
         // Cards
@@ -1336,32 +1344,17 @@
         certSection.style.display = done >= total ? "block" : "none";
       }
 
-      function scrollToLetter(id) {
-        const el = document.getElementById("letter-" + id);
-        if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
-      function scrollToCert() {
-        document
-          .getElementById("certSection")
-          .scrollIntoView({ behavior: "smooth" });
-      }
-
       // ===== QUIZ LOGIC =====
       let quizDeck = [];
       let quizIndex = 0;
       let quizCorrectCount = 0;
       let quizAgainPile = [];
 
-      function shuffle(a) {
-        for (let i = a.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [a[i], a[j]] = [a[j], a[i]];
-        }
-        return a;
-      }
-
       function startQuiz() {
-        quizDeck = svSrsSortDueFirst(shuffle([...letters]), (l) => "p1:" + l.id);
+        quizDeck = svSrsSortDueFirst(
+          svShuffle([...letters]),
+          (l) => "p1:" + l.id,
+        );
         quizIndex = 0;
         quizCorrectCount = 0;
         quizAgainPile = [];
@@ -1452,10 +1445,13 @@
 
       function restartQuiz() {
         if (quizAgainPile.length > 0) {
-          quizDeck = shuffle([...quizAgainPile]);
+          quizDeck = svShuffle([...quizAgainPile]);
           quizAgainPile = [];
         } else {
-          quizDeck = svSrsSortDueFirst(shuffle([...letters]), (l) => "p1:" + l.id);
+          quizDeck = svSrsSortDueFirst(
+            svShuffle([...letters]),
+            (l) => "p1:" + l.id,
+          );
         }
         quizIndex = 0;
         quizCorrectCount = 0;
@@ -1619,8 +1615,12 @@
         renderTrace();
       }
 
-      document.getElementById("traceClearBtn").addEventListener("click", traceClear);
-      document.getElementById("traceNextBtn").addEventListener("click", traceNext);
+      document
+        .getElementById("traceClearBtn")
+        .addEventListener("click", traceClear);
+      document
+        .getElementById("traceNextBtn")
+        .addEventListener("click", traceNext);
 
       // ===== NAV-BUTTONS (Quiz + Werkstatt) =====
       const origRender = render;

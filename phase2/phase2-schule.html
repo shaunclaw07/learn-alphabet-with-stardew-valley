@@ -859,6 +859,8 @@
       ];
 
       // #INCLUDE shared/voice-picker.js
+
+      // #INCLUDE shared/celebrate.js
       function sayWord(w) {
         speak(String(w).toLowerCase(), 0.85);
       }
@@ -1223,6 +1225,7 @@
           if (bNextNeeded >= w.silben.length) {
             document.getElementById("bHint").textContent =
               "🎉 Zusammen: " + w.id + "!";
+            svCorrect();
             setTimeout(() => sayWord(w.id), 500);
           } else {
             document.getElementById("bHint").textContent =
@@ -1230,6 +1233,7 @@
           }
         } else {
           // falsch
+          svStreakReset();
           chip.classList.add("wrong");
           setTimeout(() => chip.classList.remove("wrong"), 450);
           document.getElementById("bHint").textContent =
@@ -1259,6 +1263,7 @@
           document.getElementById("bHint").textContent =
             "Super gebaut — alle Wörter geschafft! Nochmal? Tippe 🧱 in der Leiste.";
           document.getElementById("bIndex").textContent = bDeck.length;
+          svFinish("Alle Wörter gebaut! 🏆");
           return;
         }
         renderBuilder();

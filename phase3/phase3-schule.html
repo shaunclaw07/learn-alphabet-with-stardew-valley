@@ -805,6 +805,8 @@
       ];
 
       // #INCLUDE shared/voice-picker.js
+
+      // #INCLUDE shared/celebrate.js
       function sayWord(w) {
         speak(String(w).toLowerCase(), 0.85);
       }
@@ -1152,10 +1154,12 @@
           document.getElementById("qHint").textContent = "🎉 Richtig gelesen!";
           qStars = Math.min(qDeck.length, qStars + 1);
           document.getElementById("qStars").textContent = "⭐".repeat(qStars);
+          svCorrect();
           sayWord(target.id);
           setTimeout(quizNext, 1300);
         } else {
           // falsch: das getippte Wort vorlesen ("das heißt ...")
+          svStreakReset();
           btn.classList.add("wrong");
           setTimeout(() => btn.classList.remove("wrong"), 450);
           document.getElementById("qHint").textContent =
@@ -1172,6 +1176,7 @@
           document.getElementById("qHint").textContent =
             "Super gelesen — alle Bilder geschafft! Nochmal? Tippe 🖼️ in der Leiste.";
           document.getElementById("qIndex").textContent = qDeck.length;
+          svFinish("Alle Bilder geschafft! 🏆");
           return;
         }
         renderQuiz();

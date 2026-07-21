@@ -973,6 +973,8 @@
 
       // #INCLUDE shared/voice-picker.js
 
+      // #INCLUDE shared/celebrate.js
+
       // ===== REIHENFOLGE & WOCHEN (entzerrt) =====
       // Prinzip: Vokale + „Zieh-Konsonanten" (M, L, S) zuerst, damit schon
       // in Woche 1 echte Wörter entstehen (OMA, MAMA). Die schwer zu
@@ -1308,10 +1310,12 @@
       function markCorrect() {
         quizCorrectCount++;
         document.getElementById("quizCorrect").textContent = quizCorrectCount;
+        svCorrect();
         advanceQuiz();
       }
 
       function markAgain() {
+        svStreakReset();
         quizAgainPile.push(quizDeck[quizIndex]);
         advanceQuiz();
       }
@@ -1335,6 +1339,7 @@
         document.getElementById("quizDone").classList.add("show");
         document.getElementById("quizRestartBtn").style.display =
           "inline-block";
+        svFinish("Alle geschafft! 🏆");
       }
 
       function restartQuiz() {
@@ -1435,8 +1440,10 @@
           document.getElementById("wsHint").textContent =
             "Super gelesen — alle Wörter geschafft!";
           document.getElementById("wsIndex").textContent = WS_WORDS.length;
+          svFinish("Alle Wörter gelesen! 🏆");
           return;
         }
+        svCorrect();
         renderWsWord();
       }
 

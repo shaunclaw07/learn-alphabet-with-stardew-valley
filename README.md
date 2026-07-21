@@ -7,9 +7,14 @@ verknüpft, damit das Lesenlernen Spaß macht und im Kopf bleibt.
 
 **🌐 Live:** http://learn-alphabet-with-stardew-valley.schaflabs.com/
 
-Die Seite ist **statisch** (reine HTML-Dateien, kein Build, keine Installation)
-und funktioniert auch offline per Doppelklick auf `index.html`. Vorgelesen wird
-über die **Sprachausgabe des Geräts** (Web Speech API) — offline und kostenlos.
+Die **fertigen** Seiten sind statisch (reine HTML-Dateien) und funktionieren
+auch offline per Doppelklick auf `index.html`. Vorgelesen wird über die
+**Sprachausgabe des Geräts** (Web Speech API) — offline und kostenlos. Es gibt
+einen **Dark Mode** (folgt automatisch der Systemeinstellung) und motivierendes
+Feedback: **Konfetti**, ein fröhlicher **Belohnungs-Ton** (abschaltbar) und
+**Lob-Sprüche** bei jeder richtigen Antwort, dazu **Serien** („🔥 in Folge"),
+einen **Tages-Streak** und ein **Gesamt-Zertifikat**, wenn alle Phasen geschafft
+sind.
 
 ---
 
@@ -171,10 +176,21 @@ alphabet/
 ## 🛠️ Für Mitwirkende
 
 Alle didaktischen und technischen **Konventionen** stehen in
-[`CLAUDE.md`](./CLAUDE.md) (z. B.: eine self-contained HTML-Datei pro Phase,
-Stardew-Design-Tokens, geteilte Vorlese-Engine, nur decodierbare Wörter aus den
-gelernten Buchstaben). Jeder Push auf `master` wird automatisch zu GitHub Pages
-deployt.
+[`CLAUDE.md`](./CLAUDE.md) (z. B.: eine HTML-Datei pro Phase, Stardew-Design-
+Tokens, geteilte `shared/`-Bausteine für Vorlese-Engine, Belohnungen, Dark Mode
+und PWA, nur decodierbare Wörter aus den gelernten Buchstaben).
+
+Die Source nutzt geteilte Blöcke; ein kleiner Node-Build fügt sie zu
+self-contained Seiten zusammen:
+
+```bash
+node build.js          # baut die Seiten nach dist/
+cd tests && npm ci && npx playwright install chromium && npx playwright test
+```
+
+Jeder Push auf `master` löst die CI aus: erst die **Playwright-Tests**, dann der
+Build, dann der **automatische Deploy zu GitHub Pages** (nur wenn die Tests grün
+sind).
 
 ---
 

@@ -34,6 +34,28 @@ wird lokal im Browser gespeichert (`localStorage`).
 
 ---
 
+## 🌟 Extra-Funktionen (über die vier Phasen hinaus)
+
+- **🔁 Kluge Wiederholung** — die App merkt sich pro Buchstabe/Wort, wie sicher
+  es sitzt, und spielt fällige Wackelkandidaten in den Quizzen **zuerst**
+  (Spaced Repetition). Die Startseite zeigt, wie viele Übungen zur Wiederholung
+  fällig sind.
+- **✏️ Schreib-Werkstatt** (Phase 1) — Buchstaben mit dem Finger **nachfahren**.
+  Der „✏️"-Button erscheint, sobald 5 Buchstaben als „kann ich" markiert sind;
+  der Buchstabe muss fast vollständig nachgefahren werden.
+- **🌱 Sammel-Farm** — für gelöste Übungen wachsen auf der Startseite nach und
+  nach Stardew-Tiere & -Pflanzen (🐔🥕🐄 …).
+- **🏅 Eltern-Lernjournal** — die Startseite zeigt, wie viele Übungen schon
+  „sicher" sind, plus einen **„🎯 Heute üben"-Link** zur passenden Phase.
+- **🐢 Tempo & 🔠 Große Schrift** — im Vorlese-Bereich lässt sich das Vorlese-
+  Tempo einstellen und eine größere, luftigere Schrift einschalten. Beides bleibt
+  über alle Phasen gespeichert.
+
+> Alle Einstellungen und der Fortschritt bleiben **lokal** im Browser — offline,
+> ohne Konto, ohne Werbung.
+
+---
+
 ## 🔊 Vorlese-Stimme einrichten (wichtig!)
 
 Die App liest Buchstaben, Silben und Wörter vor. Dafür wird eine **deutsche
@@ -191,6 +213,14 @@ cd tests && npm ci && npx playwright install chromium && npx playwright test
 Jeder Push auf `master` löst die CI aus: erst die **Playwright-Tests**, dann der
 Build, dann der **automatische Deploy zu GitHub Pages** (nur wenn die Tests grün
 sind).
+
+Die geplanten Zusatz-Features stehen als lebende Roadmap in
+[`docs/masterplan.md`](./docs/masterplan.md) (Wellen 1–5 umgesetzt, 6–7 offen).
+
+> **⚠️ Wichtig bei jeder Inhaltsänderung:** Der PWA-Service-Worker cached
+> **cache-first**. Wer eine gecachte Seite ändert (Phasen-HTML, `index.html`,
+> `lehrplan.html` oder einen `shared/`-Include), **muss `CACHE_VERSION` in
+> `sw.js` erhöhen** — sonst sehen zurückkehrende Nutzer weiter die alte Version.
 
 ---
 

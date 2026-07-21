@@ -23,6 +23,15 @@ Zweifel gegen den Lehrplan prüfen.
 | 3 | Stardew-**Wortschatz** | `phase3/phase3-schule.html` | ✅ fertig |
 | 4 | Erste **Sätze** & Dialoge | `phase4/phase4-schule.html` | ✅ fertig |
 
+**Feature-Roadmap (nach den Phasen):** `docs/masterplan.md` ist der lebende Plan
+für Zusatz-Features („Wellen"). Fertig: Welle 1 **Spaced Repetition**, 2
+**Sammel-Farm**, 3 **Eltern-Lernjournal**, 4 **Buchstaben-Tracing**, 5 **Tempo &
+Lesbarkeit**. Offen: 6 Mini-Geschichten, 7 vorproduzierte Audios. Ablauf pro
+Welle: Plan ausklappen (`docs/plan-welle-N-*.md`) → **Plan committen/pushen** →
+Agent im isolierten Worktree umsetzen lassen → Diff + eigener Testlauf
+reviewen → Fast-Forward nach `master`. (Plan **vor** dem Agenten-Start pushen,
+sonst basiert dessen Worktree auf `origin/master` und kennt den Plan nicht.)
+
 `index.html` (Root) ist die **Phasenauswahl** — Startbildschirm mit 4 Karten,
 zeigt Fortschritt pro Phase, sperrt noch nicht gebaute Phasen als „Bald
 verfügbar". Beim Anlegen einer neuen Phase: neue Karte in `index.html`
@@ -30,9 +39,9 @@ freischalten (`href` setzen, `soon` entfernen, `progressKey`/`total`/`einheit`
 ergänzen). Zusätzlich für die **PWA**: die neue Seite in die
 `APP_SHELL`-Precache-Liste in `sw.js` eintragen und `CACHE_VERSION` erhöhen.
 Die neue Phasen-HTML übernimmt den **kanonischen Satz `shared/`-Includes**
-(base.css, dark-mode.css, voice-picker.js, celebrate.js, pwa-head.html,
+(base.css, dark-mode.css, voice-picker.js, celebrate.js, srs.js, pwa-head.html,
 sw-register.js — siehe „Geteilte Bausteine"), ruft in den Übungen
-`svCorrect()`/`svFinish()`/`svStreakReset()` auf und wird ggf. in die
+`svCorrect(id?)`/`svWrong(id?)`/`svFinish()` auf und wird ggf. in die
 Seiten-Listen der Playwright-Tests (`tests/spec/*.spec.ts`) aufgenommen.
 
 ## Verbindliche Konventionen (für ALLE Phasen)
@@ -58,15 +67,20 @@ bleibt self-contained. Jede Phasen-Seite **und** `index.html` bindet den
   dark)`; jede neue Seite MUSS diesen Include am Ende des `<style>` haben.
 - `shared/voice-picker.js` — Vorlese-Engine (`speak()`, Voice-Picker, `showNoVoices()`).
 - `shared/celebrate.js` — Belohnungs-Feedback (Konfetti/Ton/Lob/Streaks).
+- `shared/srs.js` — **Spaced Repetition** (Leitner, 5 Boxen). API `window.svSrs*`:
+  `svSrsRecord(id, ok)`, `svSrsDue()`, `svSrsStats()`, `svSrsSortDueFirst(deck, keyFn)`.
+  `celebrate.js`' `svCorrect(id)`/`svWrong(id)` reichen die Item-ID durch; die
+  Quizze in Phase 1 & 3 sortieren ihr Deck fällige-zuerst über `svSrsSortDueFirst`.
 - `shared/farm.js` — **Sammel-Farm** (nur `index.html`): Katalog +
   Freischalt-Logik + Render der Farm-Kacheln (`svFarmSync`/`svFarmRender`).
 - `shared/trace.js` — **Buchstaben-Tracing** (nur Phase 1): Canvas-Engine, die
   den Zielbuchstaben als Font-Glyph in ein Raster (`GRID=24`) rendert und die
   Abdeckung beim Nachspuren misst (`window.svTrace` = `start`/`markAt`/
-  `coverage`/`reset`/`_cells`/`_done`). Bei `≥ THRESHOLD (0.55)` Abdeckung gilt
-  der Buchstabe als geschafft und meldet ans SRS via `svCorrect("p1:trace:<id>")`
-  (kein neuer `localStorage`-Key). Phase 1 hat dafür eine **Schreib-Werkstatt**
-  (Nav-Button „✏️", erscheint wie die Lese-Werkstatt ab 5 gelernten Buchstaben).
+  `coverage`/`reset`/`_cells`/`_done`). Bei `≥ THRESHOLD (0.95)` Abdeckung gilt
+  der Buchstabe als geschafft (fast vollständig nachfahren) und meldet ans SRS
+  via `svCorrect("p1:trace:<id>")` (kein neuer `localStorage`-Key). Phase 1 hat
+  dafür eine **Schreib-Werkstatt** (Nav-Button „✏️", erscheint wie die
+  Lese-Werkstatt ab 5 gelernten Buchstaben).
 - `shared/pwa-head.html` + `shared/sw-register.js` — PWA-`<head>` + SW-Registrierung.
 
 **Struktur**
@@ -144,10 +158,15 @@ bleibt self-contained. Jede Phasen-Seite **und** `index.html` bindet den
   sonst buchstabiert die Stimme Großbuchstaben. Anlaut-Prinzip: das Kind hört
   den Laut im echten Wort, nicht den Buchstaben-Namen.
 
-**Belohnungs-Feedback (`shared/celebrate.js`)**
-- Globale API, in jeder Übung an den passenden Stellen aufrufen: `svCorrect()`
+**Belohnungs-Feedback (`shared/celebrate.js`) + Wiederholung (SRS)**
+- Globale API, in jeder Übung an den passenden Stellen aufrufen: `svCorrect(id?)`
   bei richtiger Antwort (Ding + Konfetti + Lob-Toast + Serie), `svFinish(text)`
-  beim Abschluss (Fanfare + großes Konfetti), `svStreakReset()` bei falsch.
+  beim Abschluss (Fanfare + großes Konfetti), `svWrong(id?)` bei echtem
+  Item-Fehler (Serie zurücksetzen **und** SRS-Box auf 1), `svStreakReset()` nur
+  Serie zurücksetzen (für Nicht-Item-Stolperer, z. B. Silben-Bauer).
+- **Item-ID** (`p<phase>:<id>`) an `svCorrect`/`svWrong` übergeben, wenn die
+  Übung ein wiederholbares Item ist — dann fließt das Ergebnis ins SRS
+  (`shared/srs.js`) und die Quizze zeigen fällige Items zuerst.
 - Selbst-enthalten: injiziert eigenes CSS, den Ton-Aus-Button und den Toast;
   Konfetti läuft in einer clippenden Overlay-Ebene (kein horizontaler Scroll);
   respektiert `prefers-reduced-motion` und den Ton-Aus-Schalter. Offline, ohne
@@ -170,9 +189,11 @@ bleibt self-contained. Jede Phasen-Seite **und** `index.html` bindet den
   mehr Abstand, angewendet als `data-svfont` am `<html>`, ausgewertet in
   `shared/base.css`). Beide von `shared/voice-picker.js` (Welle 5) gepflegt und
   über den Tempo-Slider bzw. Schrift-Umschalter im Vorlese-Bereich bedienbar.
-- `index.html` zeigt Tages-Streak + **Sammel-Farm** + **Gesamt-Zertifikat**
-  (alle Phasen 100 %) und hat einen **Reset-Button**, der alle `*_progress`-Keys
-  + `sv_lesen_daily` + `sv_lesen_srs` + `sv_lesen_farm` löscht.
+- `index.html` zeigt Tages-Streak, fällige-Wiederholungen, **Eltern-Lernjournal**
+  (Meisterung aus `svSrsStats()` + „Heute üben"-Link auf die Phase mit den
+  meisten fälligen Items), **Sammel-Farm** und **Gesamt-Zertifikat** (alle
+  Phasen 100 %); der **Reset-Button** löscht alle `*_progress`-Keys +
+  `sv_lesen_daily` + `sv_lesen_srs` + `sv_lesen_farm`.
 
 **Didaktik / Decodability (WICHTIG)**
 - Nur Buchstaben verwenden, die in Phase 1 gelehrt wurden:
@@ -218,11 +239,19 @@ bleibt self-contained. Jede Phasen-Seite **und** `index.html` bindet den
   Push auf `master`: erst Playwright-Tests, dann `node build.js`, dann `dist/`
   deployen. Kein manueller Schritt.
 - Live: `https://learn-alphabet-with-stardew-valley.schaflabs.com/`.
-- **PWA/SW-Update:** `sw.js` wird von GitHub Pages mit fixer `Cache-Control`
-  ausgeliefert (nicht änderbar) — für zuverlässige Updates bei jeder Änderung an
-  gecachten Seiten **`CACHE_VERSION` in `sw.js` erhöhen**. Der SW-`install`
-  cached **ausfallsicher pro Ressource** (kein atomares `addAll`), damit eine
-  einzelne fehlende Datei die Installierbarkeit nicht killt.
+- **⚠️ PWA-Cache — PFLICHT bei JEDER Inhaltsänderung:** Der Service-Worker
+  liefert Seiten **cache-first** aus. Ändert man den Inhalt einer App-Shell-Seite
+  (jede Phasen-HTML, `index.html`, `lehrplan.html`, **oder einen `shared/`-Include**,
+  der dort inlined wird) **ohne `CACHE_VERSION` in `sw.js` zu erhöhen**, sehen
+  zurückkehrende/installierte Nutzer weiterhin die **alte gecachte** Version — das
+  neue Feature ist unsichtbar. Das ist in dieser Session passiert (Wellen 1–5
+  waren für gecachte Nutzer erst nach dem Bump auf `v5` sichtbar). Also: **jede**
+  Änderung an gecachten Seiten = `CACHE_VERSION` erhöhen. (Stand: `sv-lesen-v6`.)
+- `sw.js` wird von GitHub Pages mit fixer `Cache-Control` ausgeliefert (nicht
+  änderbar); der SW-`install` cached **ausfallsicher pro Ressource** (kein
+  atomares `addAll`), damit eine einzelne fehlende Datei die Installierbarkeit
+  nicht killt. **Robusteres Alternativ-Muster** (bei Bedarf): Navigationen auf
+  network-first umstellen, dann erscheinen Deploys ohne Versions-Bump.
 
 ## Git
 

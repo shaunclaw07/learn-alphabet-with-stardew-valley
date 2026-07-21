@@ -52,3 +52,34 @@ test.describe("Trace-Engine – Abdeckung", () => {
     expect(done).toBe(false);
   });
 });
+
+test.describe("Schreib-Werkstatt – Phase 1 UI", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto("/phase1/lese-schule.html");
+    // 5 gelernte Buchstaben freischalten (wie bei der Lese-Werkstatt)
+    await page.evaluate(() =>
+      localStorage.setItem(
+        "sv_lesen_phase1_progress",
+        JSON.stringify(["A", "E", "I", "O", "U"]),
+      ),
+    );
+    await page.reload();
+  });
+
+  test("Nav-Button öffnet die Schreib-Werkstatt mit Canvas", async ({ page }) => {
+    const nav = page.locator("#traceNavBtn");
+    await expect(nav).toBeVisible();
+    await nav.click();
+    await expect(page.locator("#traceCanvas")).toBeVisible();
+  });
+
+  test("kein horizontaler Scroll bei 320px", async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 700 });
+    await page.locator("#traceNavBtn").click();
+    const overflow = await page.evaluate(() => {
+      const doc = document.documentElement;
+      return doc.scrollWidth <= window.innerWidth + 5;
+    });
+    expect(overflow).toBe(true);
+  });
+});

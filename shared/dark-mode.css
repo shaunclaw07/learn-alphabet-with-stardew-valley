@@ -387,4 +387,12 @@
   .farm-hint {
     color: #8b7030;
   }
+  /* Schreib-Werkstatt (Tracing) */
+  .trace-letter {
+    color: #6a9a50;
+  }
+  .trace-canvas {
+    background: #2d2d44;
+    border-color: #8b7030;
+  }
 }

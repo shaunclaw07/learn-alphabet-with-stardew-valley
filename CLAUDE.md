@@ -47,7 +47,8 @@ Seiten-Listen der Playwright-Tests (`tests/spec/*.spec.ts`) aufgenommen.
 ## Verbindliche Konventionen (für ALLE Phasen)
 
 **Build-System (NEU seit 2026-07)**
-- Source-Dateien nutzen `<!-- #INCLUDE shared/datei -->`, `/* #INCLUDE shared/datei */` 
+
+- Source-Dateien nutzen `<!-- #INCLUDE shared/datei -->`, `/* #INCLUDE shared/datei */`
   und `// #INCLUDE shared/datei.js` Marker für geteilte Blöcke.
 - **`node build.js`** baut self-contained HTML-Dateien nach `dist/`.
 - `dist/` ist das Deployment-Ziel — NICHT direkt die Source-HTMLs.
@@ -61,6 +62,7 @@ Seiten-Listen der Playwright-Tests (`tests/spec/*.spec.ts`) aufgenommen.
 **Geteilte Bausteine (`shared/`)** — der Build inlint sie, das Endergebnis
 bleibt self-contained. Jede Phasen-Seite **und** `index.html` bindet den
 **kanonischen Satz** per Marker ein (neue Seiten 1:1 übernehmen):
+
 - `shared/base.css` — Design-Tokens + globale Touch-/Motion-/`prefers-reduced-
   motion`-Regeln (die **Responsive-Basis**).
 - `shared/dark-mode.css` — **Dark Mode** via `@media (prefers-color-scheme:
@@ -81,9 +83,16 @@ bleibt self-contained. Jede Phasen-Seite **und** `index.html` bindet den
   via `svCorrect("p1:trace:<id>")` (kein neuer `localStorage`-Key). Phase 1 hat
   dafür eine **Schreib-Werkstatt** (Nav-Button „✏️", erscheint wie die
   Lese-Werkstatt ab 5 gelernten Buchstaben).
+- `shared/reader-util.js` — `svShuffle`/`svScrollToId` (kleine, phasenübergreifende Helfer).
+- `shared/progress.js` — `svProgress.{init,has,toggle,size,all,updateBar}` (Fortschritt/Bar/Zertifikat; einziger Schreibzugriff auf den Fortschritts-Key).
+- `shared/speak-text.js` — `svSay.{word,renderSyllables,bySyllables,line}` (Silben-/Wort-/Satz-Sprachausgabe mit Highlight; baut auf `voice-picker.js`).
+- `shared/exercises.js` — `svFlash.{mount,read,flip,next}` (Blitz-Karten; Quiz/Builder bleiben pro Phase).
+- `shared/reader.js` — `svReader.makeWordTile(w, opts)` (Wort-Kachel für Silben-Phasen 2 & 3; baut auf `progress.js` + `speak-text.js`).
+- `shared/chrome-back-link.html` — Back-Link „← Übersicht" (gemeinsames HTML-Snippet).
 - `shared/pwa-head.html` + `shared/sw-register.js` — PWA-`<head>` + SW-Registrierung.
 
 **Struktur**
+
 - Eine Phase = **eine** HTML-Source-Datei in eigenem Ordner
   (`phaseN/…-schule.html`). Nach dem Build ist **alles inline** — kein externes
   Asset außer der Google-Fonts-`<link>`. Gemeinsame Blöcke leben in `shared/`
@@ -92,6 +101,7 @@ bleibt self-contained. Jede Phasen-Seite **und** `index.html` bindet den
   `../index.html`.
 
 **Design-Tokens** (immer gleich, damit alles wie EIN Kurs wirkt)
+
 - Fonts: `Press Start 2P` (Überschriften/Badges) + `Nunito` (Fließtext).
 - Farben: Grün `#7ec850`→`#5da03c`, Rahmen-Grün `#3d6b22`; Holz `#8b6914` /
   `#c49a2a`; Creme `#fffaf0` / `#f5eedc`; Gold `#ffd700`; Orange `#ff6b35`;
@@ -105,6 +115,7 @@ bleibt self-contained. Jede Phasen-Seite **und** `index.html` bindet den
   auf 4/8-Basis.
 
 **Mobile-First & Responsive (WICHTIG — Zielgerät ist Tablet/Smartphone)**
+
 - **Mobile-first bauen:** Basis-CSS = Smartphone, nach oben skalieren mit
   `min-width`-Media-Queries (nicht Desktop-first mit `max-width`-Patch).
   Einheitliche Breakpoints: `480px` (große Handys), `768px` (Tablet),
@@ -130,6 +141,7 @@ bleibt self-contained. Jede Phasen-Seite **und** `index.html` bindet den
   `docs/superpowers/plans/2026-07-20-mobile-first-ueberarbeitung.md`.
 
 **Dark Mode**
+
 - Kommt aus **`shared/base.css`** (Basis) + **`shared/dark-mode.css`**
   (`@media (prefers-color-scheme: dark)`), beide per `#INCLUDE`. Jede Seite —
   inkl. `index.html` — muss den `dark-mode.css`-Include am Ende des `<style>`
@@ -138,6 +150,7 @@ bleibt self-contained. Jede Phasen-Seite **und** `index.html` bindet den
   Karten/Panels in `shared/dark-mode.css` ergänzen, nicht pro Seite hart kodieren.
 
 **Audio (Vorlesen)**
+
 - Web Speech API (`speechSynthesis`), offline & kostenlos. Deutsche Stimme hat
   IMMER Vorrang; Voice-Picker + `isGermanVoice()`/`refreshVoices()`/`speak()`
   **plus** `showNoVoices()` und das Init-Polling aus Phase 1 **1:1 übernehmen**.
@@ -159,6 +172,7 @@ bleibt self-contained. Jede Phasen-Seite **und** `index.html` bindet den
   den Laut im echten Wort, nicht den Buchstaben-Namen.
 
 **Belohnungs-Feedback (`shared/celebrate.js`) + Wiederholung (SRS)**
+
 - Globale API, in jeder Übung an den passenden Stellen aufrufen: `svCorrect(id?)`
   bei richtiger Antwort (Ding + Konfetti + Lob-Toast + Serie), `svFinish(text)`
   beim Abschluss (Fanfare + großes Konfetti), `svWrong(id?)` bei echtem
@@ -173,6 +187,7 @@ bleibt self-contained. Jede Phasen-Seite **und** `index.html` bindet den
   Assets (WebAudio-Töne). Keine per-Phase-UI nötig — nur die 3 Aufrufe.
 
 **Fortschritt**
+
 - Pro Phase ein `localStorage`-Key: `sv_lesen_phase1_progress`,
   `sv_lesen_phase2_progress`, … — JSON-Array der erledigten IDs. `index.html`
   liest diese Keys für die Fortschrittsanzeige; beim Bauen einer Phase den Key
@@ -196,6 +211,7 @@ bleibt self-contained. Jede Phasen-Seite **und** `index.html` bindet den
   `sv_lesen_daily` + `sv_lesen_srs` + `sv_lesen_farm`.
 
 **Didaktik / Decodability (WICHTIG)**
+
 - Nur Buchstaben verwenden, die in Phase 1 gelehrt wurden:
   `M A L O S T E N I R U F H K W B G P D Z J`.
 - Im kind-lesbaren Kernwortschatz **keine Digraphen/Umlaute**: kein SCH, CH,
@@ -205,6 +221,7 @@ bleibt self-contained. Jede Phasen-Seite **und** `index.html` bindet den
 - Ton: motivierend, kurze Einheiten, „loben, loben, loben", kein Druck.
 
 **Sprache**
+
 - Alle Nutzertexte, Kommentare und Commit-Messages auf **Deutsch**.
 
 ## Verifizieren (Build + Playwright-Tests)
@@ -212,20 +229,24 @@ bleibt self-contained. Jede Phasen-Seite **und** `index.html` bindet den
 - **Bauen:** `node build.js` → `dist/`. Immer gegen `dist/` prüfen, nicht gegen
   die Source-HTMLs.
 - **Tests (Playwright, existiert!):**
+
   ```bash
   cd tests && npm ci && npx playwright install chromium && npx playwright test
   ```
+
   Suites in `tests/spec/*.spec.ts`: a11y, navigation, progress, pwa, responsive,
   structure. **Die CI blockt den Deploy, wenn Tests rot sind** — vor dem Push
   lokal grün machen. (Die WebServer-Zeilen mit `ConnectionAbortedError` sind
   harmloses Rauschen, kein Testfehler.)
 - **JS-Syntax schnell prüfen** (Chrome-Extension ist oft nicht verbunden), gegen
   die **gebauten** Dateien:
+
   ```bash
   node -e 'const fs=require("fs");const h=fs.readFileSync(process.argv[1],"utf8");
   [...h.matchAll(/<script>([\s\S]*?)<\/script>/g)].forEach((m,i)=>{try{new Function(m[1]);
   console.log("script#"+i+" OK")}catch(e){console.log("ERR:",e.message)}});' dist/phaseN/datei.html
   ```
+
 - Danach im Browser öffnen und Konsole prüfen. Live-Test mit „Claude in Chrome"
   nur, wenn die Extension verbunden ist — sonst dem Nutzer sagen, dass der
   visuelle Test aussteht (nichts als „getestet" behaupten, was nicht lief).
@@ -263,7 +284,7 @@ bleibt self-contained. Jede Phasen-Seite **und** `index.html` bindet den
 
 Neben den Apps gibt es Markdown-Lektionen und druckbare Materialien
 (`phase1/lektionen/`, `phase1/materialien/`, `phase1/phase1-druckversion.html`
-+ `.pdf`). **Jede Phase hat eine druckbare A4-HTML-Fassung**
+- `.pdf`). **Jede Phase hat eine druckbare A4-HTML-Fassung**
 (`phaseN/phaseN-druckversion.html`, gleicher Aufbau: Deckblatt → Seiten je
 Lektion/Thema → Ausschneide-Karten/Streifen → Zertifikat). Nur Phase 1 hat
 zusätzlich eine fertige `.pdf`; für die anderen druckt man per Browser

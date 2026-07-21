@@ -652,14 +652,14 @@
         <div class="f-subtitle">
           Lies das Wort — dann dreh die Karte um und schau, ob's stimmt!
         </div>
-        <div class="f-card" id="fCard" onclick="flashFlip()">
+        <div class="f-card" id="fCard" onclick="svFlash.flip()">
           <div class="f-word" id="fWord">SOMMER</div>
           <div class="f-emoji" id="fEmoji">🌞</div>
         </div>
         <div class="f-buttons">
-          <button class="f-btn read" onclick="flashRead()">🔊 Vorlesen</button>
-          <button class="f-btn flip" onclick="flashFlip()">🔄 Umdrehen</button>
-          <button class="f-btn next" onclick="flashNext()">▶ Weiter</button>
+          <button class="f-btn read" onclick="svFlash.read()">🔊 Vorlesen</button>
+          <button class="f-btn flip" onclick="svFlash.flip()">🔄 Umdrehen</button>
+          <button class="f-btn next" onclick="svFlash.next()">▶ Weiter</button>
         </div>
         <div class="f-progress">
           <div class="b-stars" id="fStars"></div>
@@ -815,6 +815,7 @@
       // #INCLUDE shared/reader-util.js
       // #INCLUDE shared/progress.js
       // #INCLUDE shared/speak-text.js
+      // #INCLUDE shared/exercises.js
 
       // ===== FORTSCHRITT =====
       // Nur "neue" Wörter zählen zum Fortschritt (keine Wiederholungen).
@@ -1114,64 +1115,16 @@
         if (qIdx >= qDeck.length) startQuiz();
       });
 
-      // ===== BLITZ-WÖRTER =====
-      let fDeck = [];
-      let fIdx = 0;
-      let fStars = 0;
-      let fFlipped = false;
 
-      function startFlash() {
-        fDeck = svShuffle([...WORDS]);
-        fIdx = 0;
-        fStars = 0;
-        document.getElementById("fStars").textContent = "";
-        document.getElementById("fTotal").textContent = fDeck.length;
-        renderFlash();
-      }
-
-      function renderFlash() {
-        const w = fDeck[fIdx];
-        fFlipped = false;
-        const card = document.getElementById("fCard");
-        card.classList.remove("flipped");
-        document.getElementById("fWord").textContent = w.id;
-        document.getElementById("fEmoji").textContent = w.emoji;
-        document.getElementById("fIndex").textContent = fIdx + 1;
-      }
-
-      function flashRead() {
-        const w = fDeck[fIdx];
-        if (w) svSay.word(w.id);
-      }
-
-      function flashFlip() {
-        const card = document.getElementById("fCard");
-        fFlipped = !fFlipped;
-        card.classList.toggle("flipped", fFlipped);
-        if (fFlipped) {
-          const w = fDeck[fIdx];
-          if (w) svSay.word(w.id);
-        }
-      }
-
-      function flashNext() {
-        fStars = Math.min(fDeck.length, fStars + 1);
-        document.getElementById("fStars").textContent = "⭐".repeat(fStars);
-        fIdx++;
-        if (fIdx >= fDeck.length) {
-          document.getElementById("fWord").textContent = "🏆";
-          document.getElementById("fEmoji").textContent = "🎉";
-          document.getElementById("fCard").classList.add("flipped");
-          document.getElementById("fIndex").textContent = fDeck.length;
-          return;
-        }
-        renderFlash();
-      }
 
       // ===== START =====
       render();
       startQuiz();
-      startFlash();
+      svFlash.mount({
+        items: WORDS, wordKey: "id", emojiKey: "emoji",
+        elIds: { stars: "fStars", total: "fTotal", index: "fIndex",
+                 card: "fCard", word: "fWord", emoji: "fEmoji" },
+      });
     </script>
     <script>
       // #INCLUDE shared/sw-register.js

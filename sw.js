@@ -1,6 +1,6 @@
 // Service Worker der Lese-Schule: Precache aller Seiten + Fonts für volles Offline-Erlebnis.
 // Bei NEUER PHASE: Seite zu APP_SHELL ergänzen UND CACHE_VERSION erhöhen.
-const CACHE_VERSION = "sv-lesen-v3";
+const CACHE_VERSION = "sv-lesen-v4";
 const PRECACHE = "precache-" + CACHE_VERSION;
 const RUNTIME = "runtime-" + CACHE_VERSION;
 
@@ -67,7 +67,18 @@ async function precacheFonts(cache) {
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(PRECACHE).then(async (cache) => {
-      await cache.addAll(APP_SHELL);
+      // Ausfallsicher: pro Ressource cachen. cache.addAll() ist atomar — eine
+      // einzige fehlende Datei ließe sonst die GESAMTE SW-Installation scheitern
+      // und Chrome bietet dann keine Installation an.
+      await Promise.all(
+        APP_SHELL.map(async (url) => {
+          try {
+            await cache.add(url);
+          } catch (_) {
+            // Einzelne Ressource darf fehlen — Rest wird trotzdem gecached.
+          }
+        })
+      );
       await precacheFonts(cache);
     }).then(() => self.skipWaiting())
   );

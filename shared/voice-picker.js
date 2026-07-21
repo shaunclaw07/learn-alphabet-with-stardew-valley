@@ -142,3 +142,63 @@ function spokenWord(mw) {
 function saySyllable(syl) {
   speak(String(syl).toLowerCase(), 0.7);
 }
+// ===== Bedienelemente (Welle 5): Tempo-Slider + Schrift-Umschalter =====
+function injectReadingSettings() {
+  const pick = document.getElementById("voicePick");
+  const wrap =
+    (pick && pick.closest(".voice-wrap")) ||
+    document.querySelector(".voice-wrap");
+  if (!wrap || document.getElementById("svSettings")) return;
+
+  const box = document.createElement("div");
+  box.id = "svSettings";
+  box.className = "sv-settings";
+
+  // Tempo
+  const row = document.createElement("label");
+  row.className = "sv-set-row";
+  const cap = document.createElement("span");
+  cap.textContent = "🐢 Tempo 🐇";
+  const slider = document.createElement("input");
+  slider.type = "range";
+  slider.id = "svRateSlider";
+  slider.min = "0.6";
+  slider.max = "1.3";
+  slider.step = "0.1";
+  slider.value = String(userRate);
+  slider.setAttribute("aria-label", "Vorlese-Tempo");
+  slider.addEventListener("input", () => {
+    userRate = parseFloat(slider.value) || 1;
+    localStorage.setItem(RATE_KEY, String(userRate));
+  });
+  slider.addEventListener("change", () => speak("So schnell lese ich vor."));
+  row.appendChild(cap);
+  row.appendChild(slider);
+  box.appendChild(row);
+
+  // Schrift
+  const fontBtn = document.createElement("button");
+  fontBtn.type = "button";
+  fontBtn.id = "svFontToggle";
+  fontBtn.className = "sv-font-toggle";
+  const syncFont = () => {
+    const on = localStorage.getItem(FONT_KEY) === "lesbar";
+    fontBtn.textContent = on ? "🔠 Große Schrift: an" : "🔠 Große Schrift: aus";
+    fontBtn.setAttribute("aria-pressed", on ? "true" : "false");
+  };
+  fontBtn.addEventListener("click", () => {
+    const on = localStorage.getItem(FONT_KEY) === "lesbar";
+    localStorage.setItem(FONT_KEY, on ? "normal" : "lesbar");
+    applyFont();
+    syncFont();
+  });
+  syncFont();
+  box.appendChild(fontBtn);
+
+  wrap.appendChild(box);
+}
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", injectReadingSettings);
+} else {
+  injectReadingSettings();
+}

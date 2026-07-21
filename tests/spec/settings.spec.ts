@@ -46,3 +46,30 @@ test.describe("Einstellungen – Lesbarkeit", () => {
     expect(lesbar).not.toBe(normal);
   });
 });
+
+test.describe("Einstellungen – Bedienelemente", () => {
+  test("Tempo-Slider speichert und bleibt nach Reload erhalten", async ({ page }) => {
+    await page.goto(PHASE);
+    const slider = page.locator("#svRateSlider");
+    await expect(slider).toBeVisible();
+    await slider.fill("1.2");
+    await slider.dispatchEvent("input");
+    expect(await page.evaluate(() => localStorage.getItem("sv_lesen_rate"))).toBe("1.2");
+    await page.reload();
+    await expect(page.locator("#svRateSlider")).toHaveValue("1.2");
+  });
+
+  test("Schrift-Umschalter aktiviert den Lesbar-Modus", async ({ page }) => {
+    await page.goto(PHASE);
+    await page.evaluate(() => localStorage.removeItem("sv_lesen_font"));
+    await page.reload();
+    const btn = page.locator("#svFontToggle");
+    await expect(btn).toBeVisible();
+    await btn.click();
+    expect(await page.evaluate(() => localStorage.getItem("sv_lesen_font"))).toBe("lesbar");
+    expect(
+      await page.evaluate(() => document.documentElement.getAttribute("data-svfont")),
+    ).toBe("lesbar");
+    await expect(btn).toHaveAttribute("aria-pressed", "true");
+  });
+});

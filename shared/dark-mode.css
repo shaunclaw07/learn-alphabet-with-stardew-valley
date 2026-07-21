@@ -395,4 +395,13 @@
     background: #2d2d44;
     border-color: #8b7030;
   }
+  /* Einstellungen (Tempo + Schrift) */
+  .sv-set-row {
+    color: #e0d6c2;
+  }
+  .sv-font-toggle {
+    background: #2d2d44;
+    border-color: #6b5a3e;
+    color: #e0d6c2;
+  }
 }

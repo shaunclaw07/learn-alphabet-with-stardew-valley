@@ -591,3 +591,45 @@ select:focus-visible,
   letter-spacing: 0.04em;
   line-height: 1.7;
 }
+
+/* Einstellungen (Tempo + Schrift) im Vorlese-Bereich */
+.sv-settings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+.sv-set-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #4a3728;
+}
+#svRateSlider {
+  min-height: var(--tap, 44px);
+  touch-action: manipulation;
+}
+.sv-font-toggle {
+  min-height: var(--tap, 44px);
+  padding: 6px 14px;
+  border: 2px solid #d7c9a8;
+  border-radius: 12px;
+  background: #fffaf0;
+  color: #8b6914;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.sv-font-toggle:active {
+  transform: scale(0.97);
+}
+.sv-font-toggle:focus-visible,
+#svRateSlider:focus-visible {
+  outline: 3px solid #ff6b35;
+  outline-offset: 2px;
+}

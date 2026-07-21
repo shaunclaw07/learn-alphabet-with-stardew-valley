@@ -658,7 +658,7 @@
     </script>
     <script>
       // Install-Button: nur zeigen, wenn der Browser die Installation anbietet.
-      {
+      (() => {
         let deferred = null;
         const btn = document.getElementById("pwa-install");
         if (!btn) return;
@@ -679,7 +679,7 @@
         window.addEventListener("appinstalled", () => {
           btn.hidden = true;
         });
-      }
+      })();
     </script>
   </body>
 </html>

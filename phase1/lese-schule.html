@@ -1308,7 +1308,7 @@
       }
 
       function startQuiz() {
-        quizDeck = shuffle([...letters]);
+        quizDeck = svSrsSortDueFirst(shuffle([...letters]), (l) => "p1:" + l.id);
         quizIndex = 0;
         quizCorrectCount = 0;
         quizAgainPile = [];
@@ -1365,12 +1365,12 @@
       function markCorrect() {
         quizCorrectCount++;
         document.getElementById("quizCorrect").textContent = quizCorrectCount;
-        svCorrect();
+        svCorrect("p1:" + quizDeck[quizIndex].id);
         advanceQuiz();
       }
 
       function markAgain() {
-        svStreakReset();
+        svWrong("p1:" + quizDeck[quizIndex].id);
         quizAgainPile.push(quizDeck[quizIndex]);
         advanceQuiz();
       }
@@ -1402,7 +1402,7 @@
           quizDeck = shuffle([...quizAgainPile]);
           quizAgainPile = [];
         } else {
-          quizDeck = shuffle([...letters]);
+          quizDeck = svSrsSortDueFirst(shuffle([...letters]), (l) => "p1:" + l.id);
         }
         quizIndex = 0;
         quizCorrectCount = 0;

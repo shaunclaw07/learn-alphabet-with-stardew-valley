@@ -76,7 +76,7 @@ Diese Regeln gelten implizit in jeder Aufgabe. Vollständig in `CLAUDE.md`.
 | 1 | Adaptive Wiederholung (Spaced Repetition) | ⭐⭐⭐ | M | — | ✅ |
 | 2 | Sammel-Farm (Belohnungs-Progression) | ⭐⭐⭐ | M | 1 (Signale) | ✅ |
 | 3 | Eltern-Lernjournal | ⭐⭐ | S–M | 1 (Daten) | ✅ |
-| 4 | Buchstaben-Tracing (Schreiben) | ⭐⭐ | M | — | ⬜ |
+| 4 | Buchstaben-Tracing (Schreiben) | ⭐⭐ | M | — | ✅ |
 | 5 | Barrierefreiheit & Tempo | ⭐⭐ | S | — | ⬜ |
 | 6 | Kinder-Profile (mehrere Kinder) | ⭐ | S | — | ⬜ |
 | 7 | Phase 5 — decodierbare Mini-Geschichten | ⭐⭐ | L | — | ⬜ |
@@ -229,7 +229,7 @@ liest `svSrsStats()` und `svSrsDue()`. Keine neue Persistenz.
 
 ---
 
-## Welle 4 — Buchstaben-Tracing (Schreiben) ⬜
+## Welle 4 — Buchstaben-Tracing (Schreiben) ✅
 
 **Ziel:** Neuer Übungstyp in Phase 1: Buchstaben mit dem Finger nachspuren
 (Canvas), mit einfachem Treffer-Feedback.
@@ -250,8 +250,18 @@ Startet über einen neuen Nav-Button in Phase 1, analog zur Lese-Werkstatt.
 - Touch **und** Maus funktionieren; `prefers-reduced-motion` respektiert.
 - Abschluss eines Buchstabens ruft `svCorrect("p1:trace:" + id)` (SRS-fähig).
 
-**High-Level-Aufgaben:** Pfad-Datenmodell je Buchstabe · Tracking + Feedback ·
-`trace.js` bauen/registrieren · Phase-1-Einbindung · Tests · Doku.
+**High-Level-Aufgaben:** ✅ erledigt — ausführlicher Plan:
+`docs/plan-welle-4-tracing.md`. **Design-Abweichung ggü. „Pfad je Buchstabe":**
+statt handgezeichneter Pfade nutzt die Engine den **Font-Glyph + Raster-
+Abdeckung** — gilt automatisch für alle 21 Buchstaben.
+- [x] `shared/trace.js` (Font-Glyph-Raster `GRID=24`, `THRESHOLD=0.55`,
+  `window.svTrace` = `start/markAt/coverage/reset/_cells/_done`) + Test.
+- [x] In `build.js` registriert; `// #INCLUDE`-Marker in `phase1/lese-schule.html`.
+- [x] Schreib-Werkstatt-Sektion (`#traceWrap`/`#traceCanvas`), CSS,
+  Dark-Override, Pointer-Wiring; Nav-Button „✏️" (`#traceNavBtn`) ab 5
+  Buchstaben — analog zur Lese-Werkstatt.
+- [x] Abschluss meldet `svCorrect("p1:trace:<id>")` ans SRS (kein neuer Key).
+- [x] `tests/spec/trace.spec.ts` (5 Tests); volle Suite grün (154).
 
 ---
 
@@ -380,6 +390,7 @@ Integritäts-Tests · Doku/Ausnahme in `CLAUDE.md`.
 | 2026-07-21 | 1 | `feature/srs-welle-1` | Spaced Repetition umgesetzt (7 Tasks, +11 Tests → 140 grün). |
 | 2026-07-21 | 2 | `feature/farm-welle-2` | Sammel-Farm umgesetzt (3 Tasks, +5 Tests → 145 grün). Freischalt-Regel `floor(totalDone/4)` statt „5 gemeisterte SRS-Items". |
 | 2026-07-21 | 3 | `feature/journal-welle-3` | Eltern-Lernjournal umgesetzt (+4 Tests → 149 grün). Meisterung aus `svSrsStats()`, „Heute üben" verlinkt fälligste Phase; keine neuen Keys. |
+| 2026-07-21 | 4 | `feature/tracing-welle-4` | Buchstaben-Tracing umgesetzt (+5 Tests → 154 grün). Font-Glyph-Abdeckung statt Pfad-Daten; neuer Baustein `shared/trace.js`; SRS-Kopplung `p1:trace:<id>`; kein neuer Key. Nebenbei Wochen-Trenner-Pill entnowrapt (Fix: horizontaler Scroll bei 320px). |
 
 ## Learnings (nach jeder Welle ergänzen)
 
@@ -415,3 +426,19 @@ Integritäts-Tests · Doku/Ausnahme in `CLAUDE.md`.
   eigene `display:`-Regel (`.dj-practice{display:inline-flex}`) wieder sichtbar —
   die UA-Regel `[hidden]{display:none}` verliert. Fix: explizites
   `.dj-practice[hidden]{display:none}`. Merke für künftige toggelbare Buttons.
+- **Welle 4:** Neuer Baustein `shared/trace.js`, **kein** neuer
+  `localStorage`-Key (Abschluss meldet über `svCorrect("p1:trace:<id>")` ans
+  bestehende SRS). **Bewusste Design-Entscheidung (gelockt):** Abdeckung über den
+  **Font-Glyph** statt handgezeichneter Pfade — der Buchstabe wird in ein
+  `GRID=24`-Raster gerendert, getroffene Zielzellen zählen; bei `≥ 0.55`
+  Abdeckung geschafft. Gilt automatisch für alle 21 Buchstaben (keine Pfad-Daten).
+- **Testbarkeit:** Die Pointer-Handler rufen intern `svTrace.markAt(x,y)`; die
+  Tests treiben genau diesen echten Code-Pfad deterministisch (kein Test-Only-
+  Bypass). Introspektion via `svTrace._cells()`/`_done()`.
+- **`touch-action: none` auf dem Canvas ist Pflicht** — sonst scrollt die Seite
+  beim Malen mit dem Finger statt zu zeichnen.
+- **Pre-existing-Fund:** Der lange Wochen-Trenner-Pill (`.wk-pill`,
+  `white-space: nowrap`) erzeugte bei 320px horizontalen Scroll (bislang nur
+  durch `body{overflow-x:hidden}` visuell kaschiert, weshalb der Responsive-Spec
+  ihn übersah). Der strengere Trace-320px-Test (`documentElement.scrollWidth`)
+  deckte ihn auf; Fix = `white-space: normal` + `min-width: 0` am Pill.

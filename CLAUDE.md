@@ -60,6 +60,13 @@ bleibt self-contained. Jede Phasen-Seite **und** `index.html` bindet den
 - `shared/celebrate.js` — Belohnungs-Feedback (Konfetti/Ton/Lob/Streaks).
 - `shared/farm.js` — **Sammel-Farm** (nur `index.html`): Katalog +
   Freischalt-Logik + Render der Farm-Kacheln (`svFarmSync`/`svFarmRender`).
+- `shared/trace.js` — **Buchstaben-Tracing** (nur Phase 1): Canvas-Engine, die
+  den Zielbuchstaben als Font-Glyph in ein Raster (`GRID=24`) rendert und die
+  Abdeckung beim Nachspuren misst (`window.svTrace` = `start`/`markAt`/
+  `coverage`/`reset`/`_cells`/`_done`). Bei `≥ THRESHOLD (0.55)` Abdeckung gilt
+  der Buchstabe als geschafft und meldet ans SRS via `svCorrect("p1:trace:<id>")`
+  (kein neuer `localStorage`-Key). Phase 1 hat dafür eine **Schreib-Werkstatt**
+  (Nav-Button „✏️", erscheint wie die Lese-Werkstatt ab 5 gelernten Buchstaben).
 - `shared/pwa-head.html` + `shared/sw-register.js` — PWA-`<head>` + SW-Registrierung.
 
 **Struktur**

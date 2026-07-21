@@ -36,3 +36,33 @@ test.describe("Farm-Engine – Freischalten", () => {
     expect(len).toBe(catLen);
   });
 });
+
+test.describe("Farm – Anzeige & Reset auf der Startseite", () => {
+  test("rendert alle Katalog-Kacheln, freigeschaltete mit Klasse 'on'", async ({ page }) => {
+    await page.goto("/index.html");
+    await page.evaluate(() =>
+      localStorage.setItem(
+        "sv_lesen_farm",
+        JSON.stringify({ unlocked: ["huhn", "karotte"] }),
+      ),
+    );
+    await page.reload();
+    const grid = page.locator("#farmGrid");
+    await expect(grid).toBeVisible();
+    const catLen = await page.evaluate(() => (window as any).svFarmCatalog.length);
+    await expect(grid.locator(".farm-tile")).toHaveCount(catLen);
+    await expect(grid.locator(".farm-tile.on")).toHaveCount(2);
+  });
+
+  test("Reset-Button löscht sv_lesen_farm", async ({ page }) => {
+    await page.goto("/index.html");
+    await page.evaluate(() =>
+      localStorage.setItem("sv_lesen_farm", JSON.stringify({ unlocked: ["huhn"] })),
+    );
+    page.on("dialog", (d) => d.accept());
+    await page.locator("#dashReset").click();
+    await expect
+      .poll(() => page.evaluate(() => localStorage.getItem("sv_lesen_farm")))
+      .toBeNull();
+  });
+});

@@ -347,4 +347,24 @@
   .eltern-hinweis .eh-body {
     color: #e0d6c2;
   }
+
+  /* Sammel-Farm */
+  .farm {
+    background: #252540;
+    border-color: #6b5a3e;
+  }
+  .farm h3 {
+    color: #6a9a50;
+  }
+  .farm-tile {
+    background: #1e1e34;
+    border-color: #4a4a5e;
+  }
+  .farm-tile.on {
+    background: #24361f;
+    border-color: #3a6628;
+  }
+  .farm-hint {
+    color: #8b7030;
+  }
 }

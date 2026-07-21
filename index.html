@@ -517,6 +517,54 @@
         margin: 6px 0 0;
       }
 
+      /* ===== Sammel-Farm ===== */
+      .farm {
+        max-width: 640px;
+        margin: 24px auto 0;
+        padding: 18px 16px;
+        background: #f5eedc;
+        border: 3px solid #d7c9a8;
+        border-radius: 16px;
+        text-align: center;
+      }
+      .farm h3 {
+        font-family: "Press Start 2P", cursive;
+        font-size: 0.8rem;
+        color: #5da03c;
+        margin: 0 0 12px;
+      }
+      .farm-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(44px, 1fr));
+        gap: 8px;
+      }
+      .farm-tile {
+        aspect-ratio: 1;
+        min-width: 44px;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.6rem;
+        background: #fffaf0;
+        border: 2px solid #e2d6b8;
+        border-radius: 10px;
+      }
+      .farm-tile:not(.on) {
+        opacity: 0.35;
+        filter: grayscale(1);
+      }
+      .farm-tile.on {
+        border-color: #7ec850;
+        background: #eef7e3;
+      }
+      .farm-hint {
+        margin-top: 12px;
+        font-weight: 700;
+        color: #8b6914;
+        font-size: 0.85rem;
+      }
+
       /* #INCLUDE shared/dark-mode.css */
     </style>
   </head>
@@ -572,6 +620,13 @@
           ↺ Fortschritt zurücksetzen
         </button>
       </div>
+    </div>
+
+    <!-- ===== SAMMEL-FARM ===== -->
+    <div class="farm" id="farm">
+      <h3>🌱 Deine Farm</h3>
+      <div class="farm-grid" id="farmGrid"></div>
+      <div class="farm-hint">Für jede Übung wächst deine Farm! 🌻</div>
     </div>
 
     <!-- ===== GESAMT-ZERTIFIKAT (alle Phasen 100%) ===== -->
@@ -791,6 +846,26 @@
           }
         } catch (e) {}
 
+        // Sammel-Farm: freischalten, rendern, neue Objekte feiern
+        try {
+          if (typeof svFarmSync === "function") {
+            const totalDone = phases.reduce(
+              (s, p) => (p.soon ? s : s + loadCount(p.progressKey)),
+              0,
+            );
+            const neu = svFarmSync(totalDone);
+            svFarmRender(document.getElementById("farmGrid"));
+            if (
+              neu.length > 0 &&
+              typeof svFinish === "function" &&
+              !sessionStorage.getItem("sv_farm_shown")
+            ) {
+              sessionStorage.setItem("sv_farm_shown", "1");
+              setTimeout(() => svFinish("Neu auf deiner Farm! 🎉"), 600);
+            }
+          }
+        } catch (e) {}
+
         // Fortschritt zurücksetzen (Eltern)
         const resetBtn = document.getElementById("dashReset");
         if (resetBtn) {
@@ -804,6 +879,7 @@
             });
             localStorage.removeItem("sv_lesen_daily");
             localStorage.removeItem("sv_lesen_srs");
+            localStorage.removeItem("sv_lesen_farm");
             location.reload();
           });
         }

@@ -582,3 +582,12 @@ select:focus-visible,
     opacity: 0.18;
   }
 }
+
+/* ===== Lesbarkeits-Modus (Welle 5): größere Schrift + mehr Abstand ===== */
+:root[data-svfont="lesbar"] {
+  font-size: 108%;
+}
+:root[data-svfont="lesbar"] body {
+  letter-spacing: 0.04em;
+  line-height: 1.7;
+}

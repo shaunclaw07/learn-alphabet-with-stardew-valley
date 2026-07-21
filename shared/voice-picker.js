@@ -3,6 +3,22 @@
 let voices = [];
 let chosenVoice = null;
 const VOICE_KEY = "sv_lesen_voice";
+const RATE_KEY = "sv_lesen_rate";
+const FONT_KEY = "sv_lesen_font";
+function readUserRate() {
+  const v = parseFloat(localStorage.getItem(RATE_KEY));
+  return isNaN(v) ? 1 : Math.min(1.5, Math.max(0.6, v));
+}
+let userRate = readUserRate();
+function svRateFor(base) {
+  return Math.min(2, Math.max(0.3, (base || 0.85) * userRate));
+}
+window.svUserRate = () => userRate;
+function applyFont() {
+  const f = localStorage.getItem(FONT_KEY) === "lesbar" ? "lesbar" : "normal";
+  document.documentElement.setAttribute("data-svfont", f);
+}
+applyFont();
 function isGermanVoice(v) {
   return /^de([-_]|$)/i.test(v.lang) || /deutsch|german/i.test(v.name);
 }
@@ -113,7 +129,7 @@ function speak(text, rate) {
   const u = new SpeechSynthesisUtterance(String(text));
   u.lang = (chosenVoice && chosenVoice.lang) || "de-DE";
   if (chosenVoice) u.voice = chosenVoice;
-  u.rate = rate || 0.85;
+  u.rate = svRateFor(rate);
   u.pitch = 1.05;
   speechSynthesis.speak(u);
 }

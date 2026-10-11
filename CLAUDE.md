@@ -277,10 +277,22 @@ bleibt self-contained. Jede Phasen-Seite **und** `index.html` bindet den
   cd tests && npm ci && npx playwright install chromium && npx playwright test
   ```
 
-  Suites in `tests/spec/*.spec.ts`: a11y, navigation, progress, pwa, responsive,
-  structure. **Die CI blockt den Deploy, wenn Tests rot sind** — vor dem Push
-  lokal grün machen. (Die WebServer-Zeilen mit `ConnectionAbortedError` sind
-  harmloses Rauschen, kein Testfehler.)
+  Suites in `tests/spec/*.spec.ts` (15 Stück, u. a. a11y, audio, navigation,
+  progress, pwa, responsive, structure, trace). **Die CI blockt den Deploy, wenn
+  Tests rot sind** — vor dem Push lokal grün machen. (Die WebServer-Zeilen mit
+  `ConnectionAbortedError` sind harmloses Rauschen, kein Testfehler.)
+- **Audio-Inhalt prüfen? Nicht per Spracherkennung allein.** Piper liest den
+  `piperText` deterministisch, damit ist der Inhalt über die Kette belegt; ein
+  STT-Durchlauf ist nur ein *Indiz*. Bei **isolierten Einzelwörtern** ist er
+  sogar irreführend: ohne Satzkontext rät Whisper ein plausibles Wort
+  („uhr" → „Uwe", „rot" → „Halt", „bett" → „bis zum nächsten Video"). Nutze
+  stattdessen den **Kontext-Gegencheck**: dasselbe Audio einmal mit dem
+  *richtigen* und einmal mit einem *fremden* Korpus-Wort als `initial_prompt`
+  transkribieren. Trägt das Audio den Text, bleibt es mit falschem Prompt beim
+  Original und wird mit richtigem Prompt exakt. Isolierte Einzellaute
+  (`s s s`, `mmmm`) sind per STT gar nicht prüfbar — Whisper halluziniert dort
+  durchgehend. Für Laut-Qualität statt Inhalt funktioniert STT dagegen sehr gut
+  (so wurde belegt: `ssss` klingt verwaschen, `s s s` klar).
 - **JS-Syntax schnell prüfen** (Chrome-Extension ist oft nicht verbunden), gegen
   die **gebauten** Dateien:
 

@@ -2,19 +2,12 @@ import { test, expect } from "@playwright/test";
 
 const PHASE = "/phase1/lese-schule.html";
 
-test.describe("Einstellungen – Tempo-Logik", () => {
-  test("svUserRate ist ohne Speicherung 1", async ({ page }) => {
+test.describe("Einstellungen – Vorlesen", () => {
+  test("die Stimme ist fest eingebaut (kein Stimmen-Dropdown, kein Tempo-Slider)", async ({ page }) => {
     await page.goto(PHASE);
-    await page.evaluate(() => localStorage.removeItem("sv_lesen_rate"));
-    await page.reload();
-    expect(await page.evaluate(() => (window as any).svUserRate())).toBe(1);
-  });
-
-  test("gespeichertes Tempo wird übernommen", async ({ page }) => {
-    await page.goto(PHASE);
-    await page.evaluate(() => localStorage.setItem("sv_lesen_rate", "1.2"));
-    await page.reload();
-    expect(await page.evaluate(() => (window as any).svUserRate())).toBeCloseTo(1.2, 5);
+    await expect(page.locator("#voicePick")).toHaveCount(0);
+    await expect(page.locator("#svRateSlider")).toHaveCount(0);
+    await expect(page.locator(".voice-info")).toBeVisible();
   });
 });
 
@@ -48,17 +41,6 @@ test.describe("Einstellungen – Lesbarkeit", () => {
 });
 
 test.describe("Einstellungen – Bedienelemente", () => {
-  test("Tempo-Slider speichert und bleibt nach Reload erhalten", async ({ page }) => {
-    await page.goto(PHASE);
-    const slider = page.locator("#svRateSlider");
-    await expect(slider).toBeVisible();
-    await slider.fill("1.2");
-    await slider.dispatchEvent("input");
-    expect(await page.evaluate(() => localStorage.getItem("sv_lesen_rate"))).toBe("1.2");
-    await page.reload();
-    await expect(page.locator("#svRateSlider")).toHaveValue("1.2");
-  });
-
   test("Schrift-Umschalter aktiviert den Lesbar-Modus", async ({ page }) => {
     await page.goto(PHASE);
     await page.evaluate(() => localStorage.removeItem("sv_lesen_font"));

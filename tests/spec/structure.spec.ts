@@ -81,16 +81,18 @@ test.describe("HTML-Struktur – Phasen", () => {
         await expect(backLink).toBeVisible();
       });
 
-      test(`${phase.path} hat einen Voice-Picker`, async ({ page }) => {
-        await page.goto(phase.path);
-        const select = page.locator("select").first();
-        await expect(select).toBeVisible();
-      });
-
       test(`${phase.path} hat eine sichtbare Überschrift`, async ({ page }) => {
         await page.goto(phase.path);
         const heading = page.locator("h1").first();
         await expect(heading).toBeVisible();
+      });
+
+      test(`${phase.path} hat die Audio-Engine (svAudio)`, async ({ page }) => {
+        await page.goto(phase.path);
+        const ok = await page.evaluate(
+          () => typeof (window as any).svAudio?.speak === "function",
+        );
+        expect(ok).toBe(true);
       });
     });
   }

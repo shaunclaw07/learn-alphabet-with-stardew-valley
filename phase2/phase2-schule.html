@@ -699,19 +699,11 @@
       <div class="progress-label" id="progressLabel">0 von 15 Wörtern ⭐</div>
     </div>
 
-    <!-- ===== VOICE PICKER ===== -->
+    <!-- ===== VORLESEN (Stimme fest eingebaut — kein Browser-TTS) ===== -->
     <div class="voice-wrap">
-      <span>🔊 Vorlese-Stimme:</span>
-      <select id="voicePick" aria-label="Vorlese-Stimme"></select>
-      <div id="voiceStatus" style="margin-top: 6px; font-size: 0.82rem"></div>
-      <div class="voice-hint" id="voiceHint" style="display: none">
-        ⚠️ <strong>Keine deutsche Stimme gefunden</strong> — die Wörter klingen
-        sonst englisch. So installierst du eine (einmalig):
-        <strong
-          >Windows → Einstellungen → Zeit &amp; Sprache → Sprache → „Deutsch" →
-          Optionen → Sprache/Stimme herunterladen</strong
-        >. Danach den Browser neu starten und hier oben die deutsche Stimme
-        auswählen.
+      <span>🔊 Vorlesen:</span>
+      <div class="voice-info">
+        Die Stimme ist fest eingebaut und läuft offline — auch im Kids-Modus.
       </div>
     </div>
 
@@ -862,6 +854,7 @@
             '<h3>👨‍🏫 Blitz-Runde</h3><p>Jetzt geht es um <strong>Tempo</strong>: Wort zeigen, er liest, dann Bild aufdecken. Übt das mit den <strong>Blitz-Wörtern</strong> unten. 5 richtig = kleine Belohnung im Spiel!</p><div class="say">Kein Buchstabieren mehr — das ganze Wort auf einen Blick. Das ist echtes Lesen!</div>' },
       ];
 
+      // #INCLUDE shared/audio.js
       // #INCLUDE shared/voice-picker.js
 
       // #INCLUDE shared/celebrate.js

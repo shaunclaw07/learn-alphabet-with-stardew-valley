@@ -1,194 +1,61 @@
-// ===== AUDIO (Web Speech API — offline, kostenlos) =====
-// Ermöglicht selbstständiges Lernen: das Kind HÖRT den Laut/das Wort.
-let voices = [];
-let chosenVoice = null;
-const VOICE_KEY = "sv_lesen_voice";
-const RATE_KEY = "sv_lesen_rate";
-const FONT_KEY = "sv_lesen_font";
-function readUserRate() {
-  const v = parseFloat(localStorage.getItem(RATE_KEY));
-  return isNaN(v) ? 1 : Math.min(1.5, Math.max(0.6, v));
-}
-let userRate = readUserRate();
-function svRateFor(base) {
-  return Math.min(2, Math.max(0.3, (base || 0.85) * userRate));
-}
-window.svUserRate = () => userRate;
-function applyFont() {
-  const f = localStorage.getItem(FONT_KEY) === "lesbar" ? "lesbar" : "normal";
-  document.documentElement.setAttribute("data-svfont", f);
-}
-applyFont();
-function isGermanVoice(v) {
-  return /^de([-_]|$)/i.test(v.lang) || /deutsch|german/i.test(v.name);
-}
-function updateVoiceStatus() {
-  const st = document.getElementById("voiceStatus");
-  if (!st) return;
-  if (!chosenVoice) {
-    st.textContent = "";
-    return;
-  }
-  const ok = isGermanVoice(chosenVoice);
-  st.textContent =
-    (ok ? "✅ Aktiv: " : "❌ Aktiv (nicht Deutsch!): ") +
-    chosenVoice.name +
-    " · " +
-    chosenVoice.lang;
-  st.style.color = ok ? "#3d6b22" : "#b23b1e";
-  st.style.fontWeight = "800";
-}
-function buildVoicePicker(german) {
-  const sel = document.getElementById("voicePick");
-  const hint = document.getElementById("voiceHint");
-  if (!sel) return;
-  // Alle Stimmen zeigen (deutsche zuerst) — so ist sichtbar, ob es
-  // überhaupt eine deutsche gibt.
-  const list = [...german, ...voices.filter((v) => !isGermanVoice(v))];
-  sel.replaceChildren();
-  list.forEach((v) => {
-    const o = document.createElement("option");
-    o.value = v.name;
-    o.textContent = (isGermanVoice(v) ? "🇩🇪 " : "🌐 ") + v.name;
-    if (chosenVoice && v.name === chosenVoice.name) o.selected = true;
-    sel.appendChild(o);
-  });
-  sel.onchange = () => {
-    chosenVoice = voices.find((v) => v.name === sel.value) || chosenVoice;
-    if (chosenVoice) localStorage.setItem(VOICE_KEY, chosenVoice.name);
-    updateVoiceStatus();
-    speak("Hallo, ich lese dir vor!"); // Hörprobe
-  };
-  if (hint) hint.style.display = german.length ? "none" : "block";
-  updateVoiceStatus();
-}
-// Zeigt Klartext, wenn das Gerät gar keine Stimme liefert (typisch:
-// Amazon-Kids-Modus gibt die Web Speech API nicht frei, oder es ist
-// keine TTS-Engine installiert).
-function showNoVoices() {
-  const sel = document.getElementById("voicePick");
-  const st = document.getElementById("voiceStatus");
-  if (sel) {
-    sel.replaceChildren();
-    const o = document.createElement("option");
-    o.textContent = "— keine Vorlese-Stimme verfügbar —";
-    sel.appendChild(o);
-    sel.disabled = true;
-  }
-  if (st) {
-    st.innerHTML =
-      "🔇 <strong>Kein Vorlesen verfügbar.</strong> Bitte die App " +
-      "<strong>außerhalb des Kids-Modus</strong> öffnen und unter " +
-      "Einstellungen → Bedienungshilfen → Text-to-Speech eine deutsche " +
-      "Stimme installieren.";
-    st.style.color = "#b23b1e";
-    st.style.fontWeight = "800";
-  }
-}
-function refreshVoices() {
-  if (!("speechSynthesis" in window)) return;
-  voices = speechSynthesis.getVoices() || [];
-  if (!voices.length) return;
-  const sel = document.getElementById("voicePick");
-  if (sel) sel.disabled = false;
-  const german = voices.filter(isGermanVoice);
-  const saved = localStorage.getItem(VOICE_KEY);
-  // Deutsche Stimme hat IMMER Vorrang. Nur wenn eine gespeicherte Wahl
-  // selbst deutsch ist (oder es gar keine deutsche gibt), wird sie geehrt.
-  chosenVoice =
-    german.find((v) => v.name === saved) ||
-    german[0] ||
-    voices.find((v) => v.name === saved) ||
-    chosenVoice ||
-    voices[0] ||
-    null;
-  buildVoicePicker(german);
-}
-// Fire OS & Co. feuern "voiceschanged" oft unzuverlässig — daher die
-// Stimmen mehrfach nachladen; bleibt die Liste dauerhaft leer, einen
-// Klartext-Hinweis zeigen statt still ein leeres Dropdown zu lassen.
-if ("speechSynthesis" in window) {
-  let voiceTries = 0;
-  const pollVoices = () => {
-    refreshVoices();
-    if (voices.length) return;
-    if (++voiceTries >= 12) {
-      showNoVoices();
-      return;
-    }
-    setTimeout(pollVoices, 250);
-  };
-  pollVoices();
-  speechSynthesis.onvoiceschanged = refreshVoices;
-} else {
-  showNoVoices();
-}
-function speak(text, rate) {
-  if (!("speechSynthesis" in window) || !text) return;
-  speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(String(text));
-  u.lang = (chosenVoice && chosenVoice.lang) || "de-DE";
-  if (chosenVoice) u.voice = chosenVoice;
-  u.rate = svRateFor(rate);
-  u.pitch = 1.05;
-  speechSynthesis.speak(u);
-}
-// "Hof & Huhn" -> "Hof" (ein sauber sprechbares Anlaut-Wort)
+/* shared/voice-picker.js — Vorlese-Helfer + Lesbarkeits-Einstellung.
+
+   Das Vorlesen ist NICHT mehr die Web Speech API: die Stimme ist vorproduziert
+   und wird von shared/audio.js abgespielt. Hier bleiben nur
+
+   - `spokenWord(mw)` und die globalen Helfer `speak(text, rate)` /
+     `saySyllable(syl)` — Signatur unverändert, damit die Phasen-Seiten
+     unangetastet bleiben. `rate` wird nicht mehr ausgewertet: das Sprechtempo
+     steckt in der Aufnahme (siehe scripts/generate-audio.mjs, LENGTH_SCALE).
+   - der Umschalter „Große Schrift“ (Lesbarkeits-Modus). */
+
+// „Hof & Huhn“ → „Hof“ (ein sauber sprechbares Anlaut-Wort)
 function spokenWord(mw) {
   return String(mw).split("&")[0].trim();
 }
-// Silbe als Laut sprechen. Kleinschreibung, damit eine deutsche Stimme
-// "ma"/"me"/"mi" als Silbe liest (Großbuchstaben werden buchstabiert).
-function saySyllable(syl) {
-  speak(String(syl).toLowerCase(), 0.7);
+
+// Text vorlesen. Gibt ein Promise zurück (Ende der Wiedergabe).
+function speak(text, rate) {
+  void rate; // Tempo kommt aus der Audiodatei
+  return window.svAudio.speak(text);
 }
-// ===== Bedienelemente (Welle 5): Tempo-Slider + Schrift-Umschalter =====
+
+// Silbe als Laut vorsprechen. Kleinschreibung, damit „ma“/„me“/„mi“
+// als Silbe gesprochen werden (nicht buchstabiert).
+function saySyllable(syl) {
+  return speak(String(syl).toLowerCase());
+}
+
+// ===== Lesbarkeits-Modus (größere Schrift, mehr Abstand) =====
+const SV_FONT_KEY = "sv_lesen_font";
+function applyFont() {
+  const f = localStorage.getItem(SV_FONT_KEY) === "lesbar" ? "lesbar" : "normal";
+  document.documentElement.setAttribute("data-svfont", f);
+}
+applyFont();
+
+// Hängt den Schrift-Umschalter in den Vorlese-Bereich (ersetzt den früheren
+// Stimmen-/Tempo-Block — beides ist mit der festen Stimme hinfällig).
 function injectReadingSettings() {
-  const pick = document.getElementById("voicePick");
-  const wrap =
-    (pick && pick.closest(".voice-wrap")) ||
-    document.querySelector(".voice-wrap");
+  const wrap = document.querySelector(".voice-wrap");
   if (!wrap || document.getElementById("svSettings")) return;
 
   const box = document.createElement("div");
   box.id = "svSettings";
   box.className = "sv-settings";
 
-  // Tempo
-  const row = document.createElement("label");
-  row.className = "sv-set-row";
-  const cap = document.createElement("span");
-  cap.textContent = "🐢 Tempo 🐇";
-  const slider = document.createElement("input");
-  slider.type = "range";
-  slider.id = "svRateSlider";
-  slider.min = "0.6";
-  slider.max = "1.3";
-  slider.step = "0.1";
-  slider.value = String(userRate);
-  slider.setAttribute("aria-label", "Vorlese-Tempo");
-  slider.addEventListener("input", () => {
-    userRate = parseFloat(slider.value) || 1;
-    localStorage.setItem(RATE_KEY, String(userRate));
-  });
-  slider.addEventListener("change", () => speak("So schnell lese ich vor."));
-  row.appendChild(cap);
-  row.appendChild(slider);
-  box.appendChild(row);
-
-  // Schrift
   const fontBtn = document.createElement("button");
   fontBtn.type = "button";
   fontBtn.id = "svFontToggle";
   fontBtn.className = "sv-font-toggle";
   const syncFont = () => {
-    const on = localStorage.getItem(FONT_KEY) === "lesbar";
+    const on = localStorage.getItem(SV_FONT_KEY) === "lesbar";
     fontBtn.textContent = on ? "🔠 Große Schrift: an" : "🔠 Große Schrift: aus";
     fontBtn.setAttribute("aria-pressed", on ? "true" : "false");
   };
   fontBtn.addEventListener("click", () => {
-    const on = localStorage.getItem(FONT_KEY) === "lesbar";
-    localStorage.setItem(FONT_KEY, on ? "normal" : "lesbar");
+    const on = localStorage.getItem(SV_FONT_KEY) === "lesbar";
+    localStorage.setItem(SV_FONT_KEY, on ? "normal" : "lesbar");
     applyFont();
     syncFont();
   });

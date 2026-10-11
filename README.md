@@ -8,8 +8,9 @@ verknüpft, damit das Lesenlernen Spaß macht und im Kopf bleibt.
 **🌐 Live:** <http://learn-alphabet-with-stardew-valley.schaflabs.com/>
 
 Die **fertigen** Seiten sind statisch (reine HTML-Dateien) und funktionieren
-auch offline per Doppelklick auf `index.html`. Vorgelesen wird über die
-**Sprachausgabe des Geräts** (Web Speech API) — offline und kostenlos. Es gibt
+auch offline per Doppelklick auf `index.html`. Vorgelesen wird mit einer
+**fest eingebauten Stimme** (vorproduzierte Audios, kein Browser-TTS) — offline
+und ohne jede Einrichtung. Es gibt
 einen **Dark Mode** (folgt automatisch der Systemeinstellung) und motivierendes
 Feedback: **Konfetti**, ein fröhlicher **Belohnungs-Ton** (abschaltbar) und
 **Lob-Sprüche** bei jeder richtigen Antwort, dazu **Serien** („🔥 in Folge"),
@@ -47,83 +48,30 @@ wird lokal im Browser gespeichert (`localStorage`).
   nach Stardew-Tiere & -Pflanzen (🐔🥕🐄 …).
 - **🏅 Eltern-Lernjournal** — die Startseite zeigt, wie viele Übungen schon
   „sicher" sind, plus einen **„🎯 Heute üben"-Link** zur passenden Phase.
-- **🐢 Tempo & 🔠 Große Schrift** — im Vorlese-Bereich lässt sich das Vorlese-
-  Tempo einstellen und eine größere, luftigere Schrift einschalten. Beides bleibt
-  über alle Phasen gespeichert.
+- **🔠 Große Schrift** — im Vorlese-Bereich lässt sich eine größere, luftigere
+  Schrift einschalten (Lesbarkeits-Modus). Die Einstellung bleibt über alle
+  Phasen gespeichert.
 
 > Alle Einstellungen und der Fortschritt bleiben **lokal** im Browser — offline,
 > ohne Konto, ohne Werbung.
 
 ---
 
-## 🔊 Vorlese-Stimme einrichten (wichtig!)
+## 🔊 Vorlesen — funktioniert sofort
 
-Die App liest Buchstaben, Silben und Wörter vor. Dafür wird eine **deutsche
-Stimme** benötigt — sonst klingen die Laute englisch. Die Stimmen kommen vom
-**Betriebssystem**, nicht von der App. Einmal eingerichtet, merkt sich die Seite
-die Wahl.
+Die Stimme ist **fest in der App eingebaut**: 211 kurze Audiodateien
+(Buchstaben, Silben, Wörter, Sätze), die lokal im Browser gespeichert werden.
+Es muss **nichts eingerichtet werden** — kein Stimmen-Download, keine
+Geräte-Sprachausgabe, kein Konto.
 
-> In der App oben im Feld **„🔊 Vorlese-Stimme"** die deutsche Stimme (🇩🇪,
-> `de-DE`) auswählen. Bei **„✅ Aktiv: … de-DE"** ist alles korrekt.
-
-### 💻 Desktop (Chrome / Edge unter Windows)
-
-- **Google Chrome** bringt in der Regel bereits eine **„Google Deutsch"**-Stimme
-  mit — einfach oben in der Stimmenauswahl auswählen.
-- Falls keine deutsche Stimme auftaucht (z. B. in Edge oder anderen Browsern),
-  eine deutsche Windows-Stimme installieren:
-  1. `Windows-Einstellungen → Zeit & Sprache → Sprache & Region`
-  2. Bei **Deutsch** auf `…` → **Sprachoptionen** → **Sprache/Stimme
-     herunterladen**
-  3. **Browser neu starten** und die deutsche Stimme in der App auswählen.
-- **macOS**: `Systemeinstellungen → Bedienungshilfen → Gesprochene Inhalte →
-  Systemstimme → Anpassen…` → eine deutsche Stimme laden, danach Browser neu
-  starten.
-
-### 📱 Android (Chrome)
-
-Android-Chrome nutzt die **System-Sprachausgabe (Text-to-Speech)**. Die deutsche
-Stimme wird also **im Android-TTS-Modul** installiert, nicht in Chrome:
-
-1. **Play Store**: „**Speech Services by Google**" (Sprachausgabe von Google)
-   installieren bzw. aktualisieren.
-2. **Sprachausgabe-Einstellungen** öffnen (Pfad je nach Gerät):
-   - `Einstellungen → System → Sprachen & Eingabe → Sprachausgabe`, oder
-   - `Einstellungen → Bedienungshilfen → Sprachausgabe (Text-in-Sprache)`
-   - (Notfalls in den Einstellungen nach **„Sprachausgabe"** suchen.)
-3. **Bevorzugte Engine** auf **„Speech Services by Google"** stellen
-   (Hersteller-Engines wie Samsung haben oft kein Deutsch).
-4. Auf das **Zahnrad** neben der Engine → **„Sprachdaten installieren"** →
-   **Deutsch** herunterladen (optional in höherer Qualität).
-5. **Chrome schließen und neu starten**, Seite neu laden, deutsche Stimme
-   auswählen.
-
-**Kommt keine deutsche Stimme?** Prüfen, dass wirklich die *Google*-Engine aktiv
-ist; Stimmen brauchen ggf. WLAN + freien Speicher; danach hilft ein **Neustart
-des Geräts**.
-
-### 🍎 iOS (Safari / Chrome)
-
-iOS nutzt ebenfalls die Systemstimmen. Unter `Einstellungen → Bedienungshilfen →
-Gesprochene Inhalte → Stimmen → Deutsch` eine deutsche Stimme laden.
-
-### 🔥 Amazon Fire Tablet
-
-Zwei Stolperfallen speziell auf Fire-Tablets:
-
-1. **Amazon-Kids-Modus blockiert das Vorlesen.** Der kindersichere Browser im
-   Kids-Modus gibt die Web Speech API **nicht** frei — das Stimmen-Dropdown
-   bleibt dann leer, egal welche Stimmen installiert sind. Die App im
-   **normalen (Erwachsenen-)Profil** im Silk-Browser öffnen. (Die App nur für
-   den Kids-Modus freizugeben reicht nicht.)
-2. **Deutsche TTS-Stimme.** Unter `Einstellungen → Bedienungshilfen →
-   Text-to-Speech-Ausgabe` die Engine und eine deutsche Sprache wählen bzw.
-   herunterladen. Fire OS hat ohne Play Store oft nur Englisch — hier ist die
-   deutsche Stimme leider zäh.
-
-> Findet die App gar keine Stimme, zeigt sie das jetzt im Klartext an
-> („🔇 Kein Vorlesen verfügbar …") statt eines leeren Dropdowns — dann ist
-> meist der Kids-Modus die Ursache.
+- **Buchstaben** werden als **gezogener Laut** vorgespielt („aaaa", „mmmm"),
+  nicht als Buchstabenname — genau so, wie man Lesen lernt.
+- **Silben** kommen langsam gezogen, **Wörter und Sätze** in normalem Tempo.
+- Das Vorlesen klappt **offline** und auch im **Amazon-Kids-Modus**. Dort blieb
+  es früher leer, weil der kindersichere Browser die Sprachausgabe des Geräts
+  sperrt — mit den eingebauten Audios ist das erledigt.
+- Auf **jedem Gerät gleich** — unabhängig davon, welche Stimmen das
+  Betriebssystem installiert hat.
 
 ---
 
@@ -173,6 +121,8 @@ als fertige **PDF** bei.
 ```
 alphabet/
 ├── index.html                     Startseite / Phasenauswahl
+├── audio/                         Vorlese-Stimme (211 MP3 + manifest.json)
+├── scripts/generate-audio.mjs     erzeugt audio/ aus dem Code-Korpus (Piper)
 ├── phase1/
 │   ├── lese-schule.html           Phase 1 (interaktiv)
 │   ├── lektionen/                 Papier-Lektionen (Markdown)
@@ -216,8 +166,9 @@ Build, dann der **automatische Deploy zu GitHub Pages** (nur wenn die Tests grü
 sind).
 
 Die Zusatz-Funktionen der „Wellen 1–5" (kluge Wiederholung, Sammel-Farm,
-Eltern-Lernjournal, Schreib-Werkstatt, Tempo & große Schrift) sind umgesetzt und
-oben unter **„Extra-Funktionen"** beschrieben. Das verhaltens-erhaltende **Refactoring „Gemeinsame Lese-Engine"**
+Eltern-Lernjournal, Schreib-Werkstatt, große Schrift) sowie **Welle 7
+(vorproduzierte Audios)** sind umgesetzt und oben unter **„Extra-Funktionen"**
+beschrieben. Das verhaltens-erhaltende **Refactoring „Gemeinsame Lese-Engine"**
 (Wellen 1–7) ist abgeschlossen (Juli 2026). Die Pläne liegen in
 [`docs/plan-refactoring-shared-engine.md`](./docs/plan-refactoring-shared-engine.md).
 

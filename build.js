@@ -24,6 +24,7 @@ function loadShared(name) {
 const includes = {
   "shared/base.css": loadShared("base.css"),
   "shared/dark-mode.css": loadShared("dark-mode.css"),
+  "shared/audio.js": loadShared("audio.js"),
   "shared/voice-picker.js": loadShared("voice-picker.js"),
   "shared/celebrate.js": loadShared("celebrate.js"),
   "shared/srs.js": loadShared("srs.js"),
@@ -133,6 +134,7 @@ function walk(dir, base = "") {
       entry.name === "tests" ||
       entry.name === "node_modules" ||
       entry.name === "docs" ||
+      entry.name === "scripts" ||
       entry.name === ".github" ||
       (entry.name.endsWith(".js") && base === "" && entry.name !== "sw.js") // root-level helper scripts, but NOT sw.js
     )

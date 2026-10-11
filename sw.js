@@ -1,6 +1,6 @@
 // Service Worker der Lese-Schule: Precache aller Seiten + Fonts für volles Offline-Erlebnis.
 // Bei NEUER PHASE: Seite zu APP_SHELL ergänzen UND CACHE_VERSION erhöhen.
-const CACHE_VERSION = "sv-lesen-v11";
+const CACHE_VERSION = "sv-lesen-v12";
 const PRECACHE = "precache-" + CACHE_VERSION;
 const RUNTIME = "runtime-" + CACHE_VERSION;
 
@@ -63,6 +63,33 @@ async function precacheFonts(cache) {
   }
 }
 
+// ─── Audio-Precaching: Liste kommt aus audio/manifest.json ───
+// Die Dateiliste wird NICHT hier gepflegt (sonst driftet sie) — sie wird von
+// scripts/generate-audio.mjs aus dem Code-Korpus erzeugt.
+// In Chargen cachen: 200+ parallele Requests würden den Browser überlasten.
+async function precacheAudio(cache) {
+  try {
+    const resp = await fetch("/audio/manifest.json");
+    if (!resp.ok) return;
+    const daten = await resp.json();
+    const files = daten && daten.files ? daten.files : [];
+    const CHARGE = 16;
+    for (let i = 0; i < files.length; i += CHARGE) {
+      await Promise.all(
+        files.slice(i, i + CHARGE).map(async (f) => {
+          try {
+            await cache.add("/audio/" + f);
+          } catch (_) {
+            // Einzelne Datei darf fehlen — der Rest wird trotzdem gecached.
+          }
+        })
+      );
+    }
+  } catch (_) {
+    // Ohne Manifest läuft die App weiter; Ton kommt dann aus dem Runtime-Cache.
+  }
+}
+
 // ─── Install ─────────────────────────────────────────────────────────
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -80,6 +107,7 @@ self.addEventListener("install", (event) => {
         })
       );
       await precacheFonts(cache);
+      await precacheAudio(cache);
     }).then(() => self.skipWaiting())
   );
 });

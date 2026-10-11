@@ -6,7 +6,6 @@ test.describe("Progress (localStorage)", () => {
     await page.goto("/index.html");
     await page.evaluate(() => {
       localStorage.removeItem("sv_lesen_phase1_progress");
-      localStorage.removeItem("sv_lesen_voice");
     });
   });
 
@@ -43,16 +42,11 @@ test.describe("Progress (localStorage)", () => {
     expect(JSON.parse(progress!)).toEqual(["a", "e"]);
   });
 
-  test("Voice-Präferenz wird gespeichert", async ({ page }) => {
+  test("Vorlese-Engine ist fest eingebaut (unabhängig von Gerätestimmen)", async ({ page }) => {
     await page.goto("/phase1/lese-schule.html");
-    await page.evaluate(() => {
-      localStorage.setItem("sv_lesen_voice", "Google Deutsch");
-    });
-
-    await page.reload();
-    const voice = await page.evaluate(() =>
-      localStorage.getItem("sv_lesen_voice"),
+    const ok = await page.evaluate(
+      () => typeof (window as any).svAudio?.speak === "function",
     );
-    expect(voice).toBe("Google Deutsch");
+    expect(ok).toBe(true);
   });
 });

@@ -206,7 +206,7 @@ select:focus-visible,
   color: #6b4f2a;
 }
 
-/* ===== VOICE PICKER ===== */
+/* ===== VORLESEN ===== */
 .voice-wrap {
   max-width: 700px;
   margin: 12px auto 0;
@@ -216,27 +216,10 @@ select:focus-visible,
   color: #6b4f2a;
   font-size: 0.9rem;
 }
-.voice-wrap select {
-  font-family: "Nunito", sans-serif;
-  font-weight: 700;
-  padding: 4px 8px;
-  border-radius: 8px;
-  border: 2px solid #8b6914;
-  background: #fffaf0;
-  color: #4a3728;
-  margin-left: 6px;
-  max-width: 100%;
-}
-.voice-hint {
-  margin-top: 8px;
-  background: #fff3d6;
-  border: 2px dashed #c49a2a;
-  border-radius: 10px;
-  padding: 8px 12px;
+.voice-info {
+  margin-top: 4px;
   font-weight: 600;
-  font-size: 0.82rem;
-  line-height: 1.45;
-  text-align: left;
+  font-size: 0.85rem;
 }
 
 /* ===== MAIN LAYOUT ===== */
@@ -504,15 +487,6 @@ select:focus-visible,
   .voice-wrap {
     color: #b0a090;
   }
-  .voice-wrap select {
-    background: #2d2d44;
-    color: #e0d6c2;
-    border-color: #6b5a3e;
-  }
-  .voice-hint {
-    background: #2a2535;
-    border-color: #8b7030;
-  }
 
   .nav-row {
     background: #1a1a2eee;
@@ -592,7 +566,7 @@ select:focus-visible,
   line-height: 1.7;
 }
 
-/* Einstellungen (Tempo + Schrift) im Vorlese-Bereich */
+/* Einstellungen (Schrift) im Vorlese-Bereich */
 .sv-settings {
   display: flex;
   flex-wrap: wrap;
@@ -600,18 +574,6 @@ select:focus-visible,
   justify-content: center;
   align-items: center;
   margin-top: 10px;
-}
-.sv-set-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 700;
-  font-size: 0.85rem;
-  color: #4a3728;
-}
-#svRateSlider {
-  min-height: var(--tap, 44px);
-  touch-action: manipulation;
 }
 .sv-font-toggle {
   min-height: var(--tap, 44px);
@@ -628,8 +590,7 @@ select:focus-visible,
 .sv-font-toggle:active {
   transform: scale(0.97);
 }
-.sv-font-toggle:focus-visible,
-#svRateSlider:focus-visible {
+.sv-font-toggle:focus-visible {
   outline: 3px solid #ff6b35;
   outline-offset: 2px;
 }

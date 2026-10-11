@@ -25,8 +25,11 @@ Zweifel gegen den Lehrplan prüfen.
 
 **Feature-Roadmap (nach den Phasen):** `docs/masterplan.md` ist der lebende Plan
 für Zusatz-Features („Wellen"). Fertig: Welle 1 **Spaced Repetition**, 2
-**Sammel-Farm**, 3 **Eltern-Lernjournal**, 4 **Buchstaben-Tracing**, 5 **Tempo &
-Lesbarkeit**. Offen: 6 Mini-Geschichten, 7 vorproduzierte Audios.
+**Sammel-Farm**, 3 **Eltern-Lernjournal**, 4 **Buchstaben-Tracing**, 5 **Lesbarkeit**
+(der Tempo-Slider ist mit der vorproduzierten Stimme entfallen) und jetzt
+**7 Vorproduzierte Audios (Piper)** — das Browser-TTS ist vollständig ersetzt
+(siehe Abschnitt „Audio"). Offen: 6 Mini-Geschichten.
+Plan der Welle: `docs/plan-audio-vorproduktion-piper.md`.
 **Refactoring „Gemeinsame Lese-Engine" (Wellen 1–7):** ✅ abgeschlossen
 (Juli 2026). Die Phasen teilen jetzt sechs neue `shared/`-Engine-Module
 (reader-util, progress, speak-text, exercises, reader, chrome-back-link) —
@@ -72,7 +75,13 @@ bleibt self-contained. Jede Phasen-Seite **und** `index.html` bindet den
   motion`-Regeln (die **Responsive-Basis**).
 - `shared/dark-mode.css` — **Dark Mode** via `@media (prefers-color-scheme:
   dark)`; jede neue Seite MUSS diesen Include am Ende des `<style>` haben.
-- `shared/voice-picker.js` — Vorlese-Engine (`speak()`, Voice-Picker, `showNoVoices()`).
+- `shared/audio.js` — **Abspiel-Engine** (`window.svAudio` = `slug`/`url`/`speak`/
+  `sequence`/`stop`/`available`). Die **einzige** Stelle im Projekt, die Ton
+  erzeugt; spielt `audio/<slug>.mp3` und wartet `ended`-Events ab.
+- `shared/voice-picker.js` — nur noch `speak()`/`saySyllable()`/`spokenWord()` als
+  dünne Wrapper auf `svAudio` plus der Lesbarkeits-Umschalter (`#svFontToggle`).
+  Die Signatur von `speak(text, rate)` bleibt, damit die Phasen-Seiten unverändert
+  bleiben.
 - `shared/celebrate.js` — Belohnungs-Feedback (Konfetti/Ton/Lob/Streaks).
 - `shared/srs.js` — **Spaced Repetition** (Leitner, 5 Boxen). API `window.svSrs*`:
   `svSrsRecord(id, ok)`, `svSrsDue()`, `svSrsStats()`, `svSrsSortDueFirst(deck, keyFn)`.
@@ -154,27 +163,37 @@ bleibt self-contained. Jede Phasen-Seite **und** `index.html` bindet den
 - Neue Farbflächen immer **in beiden Modi** denken: Dark-Overrides für neue
   Karten/Panels in `shared/dark-mode.css` ergänzen, nicht pro Seite hart kodieren.
 
-**Audio (Vorlesen)**
+**Audio (vorproduziert — kein Browser-TTS)**
 
-- Web Speech API (`speechSynthesis`), offline & kostenlos. Deutsche Stimme hat
-  IMMER Vorrang; Voice-Picker + `isGermanVoice()`/`refreshVoices()`/`speak()`
-  **plus** `showNoVoices()` und das Init-Polling aus Phase 1 **1:1 übernehmen**.
-- **Robustes Stimmen-Laden (Pflicht):** `voiceschanged` feuert auf Fire OS /
-  manchen Tablets unzuverlässig — Stimmen im Init per `setTimeout`-Loop
-  mehrfach nachladen (~12×/250 ms). Bleibt `getVoices()` dauerhaft leer,
-  `showNoVoices()` aufrufen (sichtbarer Klartext-Hinweis + `select` disablen)
-  statt still ein leeres Dropdown zu lassen. Häufigste Ursache eines leeren
-  Dropdowns: **Amazon-Kids-Modus** gibt die Web Speech API nicht frei.
-- Gespeicherte Stimme ist **phasenübergreifend**: `localStorage`-Key
-  `sv_lesen_voice`.
-- **Sprech-Tempo (Welle 5):** `speak()` skaliert das Basis-Tempo mit dem
-  Nutzer-Multiplikator aus `sv_lesen_rate` (`svRateFor(base)` =
-  `clamp(base * userRate, 0.3, 2)`, Default 1). Der Tempo-Slider im
-  Vorlese-Bereich (injiziert von `voice-picker.js` in `.voice-wrap`) schreibt
-  diesen Key; die relativen Phasen-Tempi bleiben erhalten.
-- Silben/Wörter zum Sprechen **kleinschreiben** (`speak(text.toLowerCase())`) —
-  sonst buchstabiert die Stimme Großbuchstaben. Anlaut-Prinzip: das Kind hört
-  den Laut im echten Wort, nicht den Buchstaben-Namen.
+- Die Stimme ist **vorproduziert**: jeder Vorlese-Text liegt als
+  `audio/<slug>.mp3` im Repo, erzeugt von **`scripts/generate-audio.mjs`**
+  (Piper, lokal & offline). Zur Laufzeit spielt **`shared/audio.js`**
+  (`window.svAudio`) sie ab — **`speechSynthesis` kommt im Code nicht mehr vor**.
+  Damit läuft das Vorlesen auch im **Amazon-Kids-Modus** (der die Web Speech API
+  nicht freigibt) und ohne installierte Gerätestimme.
+- **Den Korpus NIE von Hand pflegen.** `generate-audio.mjs` liest die Strings aus
+  den Datenstrukturen der vier Phasen-HTMLs und schreibt `scripts/audio_corpus.json`
+  (+ `audio/manifest.json` für den Service Worker). Kommen Wörter/Silben dazu:
+  Generator laufen lassen, sonst fehlt der Ton — `tests/spec/audio.spec.ts`
+  deckt diesen Fall ab.
+- **Dateiname = Slug des Textes** (`svAudio.slug()`): lowercase, Leerzeichen → `-`,
+  nur `[a-z0-9-]`. Einbuchstabige Silben teilen sich die Datei mit dem Buchstaben
+  (`a.mp3` = der gezogene Laut aus dem `laut`-Feld — didaktisch gewollt, statt
+  eines zufälligen Buchstabennamens der Gerätestimme).
+- **Sprechtempo steckt in der Aufnahme** (`--length-scale`: Laut 1,7 · Silbe 1,35 ·
+  Wort/Satz 1,15), es gibt **keinen Tempo-Slider** mehr. Die Aufrufe
+  `speak(text, rate)` behalten ihre Signatur, `rate` wird ignoriert.
+- **Reihenfolge hängt am `ended`-Event, nie an `setTimeout`** — Audiolängen
+  schwanken (Silbe 0,4 s, Satz 2 s). Neue Sequenzen immer mit
+  `await svAudio.speak(...)` bauen; Vorbild ist `shared/speak-text.js`.
+- Fehlt eine Datei, wird **einmal** gewarnt und weitergespielt (kein Stillstand).
+- Erhalten bleibt der **Lesbarkeits-Modus** (`sv_lesen_font`, `#svFontToggle` im
+  Vorlese-Bereich). Entfallen: `sv_lesen_voice`, `sv_lesen_rate`, `#voicePick`,
+  `#svRateSlider`.
+- **Umgebung:** Der Generator legt bei Bedarf selbst ein venv (`uv`) plus
+  Stimmenmodell unter `~/.cache/sv-audio/` an. Reproduktion:
+  `python3 -m pip install` unnötig — nur `node scripts/generate-audio.mjs`.
+  Stimme wechseln: `node scripts/generate-audio.mjs --voice de_DE-kerstin-low --force`.
 
 **Belohnungs-Feedback (`shared/celebrate.js`) + Wiederholung (SRS)**
 
@@ -197,18 +216,20 @@ bleibt self-contained. Jede Phasen-Seite **und** `index.html` bindet den
   `sv_lesen_phase2_progress`, … — JSON-Array der erledigten IDs. `index.html`
   liest diese Keys für die Fortschrittsanzeige; beim Bauen einer Phase den Key
   dort eintragen.
-- Weitere **phasenübergreifende** Keys: `sv_lesen_voice` (Stimme),
-  `sv_lesen_muted` (Belohnungs-Ton an/aus), `sv_lesen_daily` (Tages-Streak
+- Weitere **phasenübergreifende** Keys: `sv_lesen_muted` (Belohnungs-Ton an/aus),
+  `sv_lesen_daily` (Tages-Streak
   `{last,count}`, von `celebrate.js` beim ersten Richtig pro Tag gepflegt),
   `sv_lesen_srs` (Spaced-Repetition-Daten `ItemId → {box,due,seen,correct}`,
   von `shared/srs.js` gepflegt; Item-ID-Schema `p<phase>:<ID>`),
   `sv_lesen_farm` (Sammel-Farm `{unlocked:[keys]}`, von `shared/farm.js`
-  gepflegt; schaltet je 4 erledigte Aufgaben ein Farm-Objekt frei),
-  `sv_lesen_rate` (Sprech-Tempo-Multiplikator, Zahl 0.6–1.3, Default 1) und
+  gepflegt; schaltet je 4 erledigte Aufgaben ein Farm-Objekt frei) und
   `sv_lesen_font` (`"normal"`/`"lesbar"` — Lesbarkeits-Modus: größere Schrift +
   mehr Abstand, angewendet als `data-svfont` am `<html>`, ausgewertet in
-  `shared/base.css`). Beide von `shared/voice-picker.js` (Welle 5) gepflegt und
-  über den Tempo-Slider bzw. Schrift-Umschalter im Vorlese-Bereich bedienbar.
+  `shared/base.css`), gepflegt von `shared/voice-picker.js` über den
+  Schrift-Umschalter im Vorlese-Bereich.
+  **Entfallen mit dem Audio-Umbau:** `sv_lesen_voice` (Stimmenwahl) und
+  `sv_lesen_rate` (Sprech-Tempo) — die Stimme ist fest eingebaut, das Tempo
+  steckt in der Aufnahme.
 - `index.html` zeigt Tages-Streak, fällige-Wiederholungen, **Eltern-Lernjournal**
   (Meisterung aus `svSrsStats()` + „Heute üben"-Link auf die Phase mit den
   meisten fälligen Items), **Sammel-Farm** und **Gesamt-Zertifikat** (alle

@@ -140,6 +140,37 @@ test.describe("Abspiel-Engine", () => {
     expect(fertig).toBe(true);
     expect(fehler).toEqual([]);
   });
+
+  /* Regressionstest: Wird während einer laufenden Sequenz erneut gesprochen
+     (Silben-Chip, Wort-Span, Blitz-Karte), muss die alte Sequenz ABBRECHEN —
+     nicht ewig auf ein „ended“ warten, das nie kommt, weil stop() die Handler
+     der laufenden Wiedergabe entfernt. Genau hier feuerte der frühere
+     Audio-Spion „ended“ sofort und deckte den Fall deshalb nicht ab. */
+  test("schnelles Tippen während einer Sequenz lässt sie nicht hängen", async ({ page }) => {
+    await page.addInitScript(() => {
+      (window as any).__played = [];
+      const Orig = (window as any).Audio;
+      (window as any).Audio = class extends Orig {
+        constructor(src?: string) {
+          super(src);
+          (window as any).__played.push(String(src));
+        }
+        play() {
+          return Promise.resolve(); // „ended“ feuert NIE von allein
+        }
+        pause() {}
+      };
+    });
+    await page.goto("/phase2/phase2-schule.html");
+    const ergebnis = await page.evaluate(async () => {
+      const sequenz = (window as any).svSay.bySyllables(["TO", "MA", "TE"], "TOMATE", null);
+      await new Promise((r) => setTimeout(r, 60));
+      (window as any).speak("HOF"); // neuer Tipp mitten in der Sequenz
+      const zeitlimit = new Promise((r) => setTimeout(() => r("HAENGT"), 2000));
+      return Promise.race([sequenz.then(() => "beendet"), zeitlimit]);
+    });
+    expect(ergebnis, "alte Sequenz muss beim neuen Tipp abbrechen statt zu hängen").toBe("beendet");
+  });
 });
 
 test.describe("Keine Web Speech API mehr", () => {

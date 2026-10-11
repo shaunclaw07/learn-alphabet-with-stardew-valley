@@ -28,18 +28,22 @@
     return PREFIX + slug(text) + ".mp3";
   }
 
-  let current = null;
+  let current = null; // { el, finish } — finish(ok) beendet das laufende speak()
 
+  /* Bricht die laufende Wiedergabe ab UND löst ihr Promise auf (resolve(false)).
+     Ohne diesen resolve() bliebe jedes `await speak(...)` in einer Sequenz für
+     immer stehen, wenn während der Sequenz erneut gesprochen wird. */
   function stop() {
-    if (current) {
-      try {
-        current.onended = current.onerror = null;
-        current.pause();
-      } catch (_) {
-        /* egal */
-      }
-      current = null;
+    const c = current;
+    if (!c) return;
+    current = null;
+    try {
+      c.el.onended = c.el.onerror = null;
+      c.el.pause();
+    } catch (_) {
+      /* egal */
     }
+    c.finish(false);
   }
 
   /* Fehlt eine Datei, darf nichts hängen bleiben: einmal warnen, Promise
@@ -52,42 +56,51 @@
     }
   }
 
+  /* Spielt einen Text. Löst mit true auf (zu Ende gespielt) oder false
+     (abgebrochen durch einen neueren Aufruf / fehlende Datei). Sequenzen
+     brechen bei false ab, damit ein neuer Tipp nicht sofort überschrieben wird. */
   function speak(text, opts) {
     const o = opts || {};
     stop();
     return new Promise((resolve) => {
-      if (!text) return resolve();
+      if (!text) return resolve(true);
       const a = new Audio(url(text));
-      current = a;
       let fertig = false;
-      const beenden = () => {
+      const beenden = (ok) => {
         if (fertig) return;
         fertig = true;
+        if (current && current.el === a) current = null;
         a.onended = null;
         a.onerror = null;
-        if (o.onend) o.onend();
-        resolve();
+        if (ok && o.onend) o.onend();
+        resolve(ok);
       };
-      a.onended = beenden;
+      current = { el: a, finish: beenden };
+      a.onended = () => beenden(true);
       a.onerror = () => {
         fehlschlag(text, "Datei nicht ladbar");
-        beenden();
+        beenden(false);
       };
       const p = a.play();
       if (p && p.catch) p.catch(() => {
         // 404 oder Autoplay-Sperre — beides darf nicht blockieren.
         fehlschlag(text, "play() abgelehnt");
-        beenden();
+        beenden(false);
       });
     });
   }
 
-  /* Spielt Texte/Items streng nacheinander. items: string | {text, ...} */
+  /* Spielt Texte/Items streng nacheinander. items: string | {text, ...}
+     Rückgabe: false, sobald der Ablauf durch einen neueren speak() abgebrochen
+     wurde (der Aufrufer soll dann nichts weiter starten). */
   async function sequence(items, opts) {
     for (const it of items || []) {
       const t = typeof it === "string" ? it : it && it.text;
-      if (t) await speak(t, opts);
+      if (!t) continue;
+      const ok = await speak(t, opts);
+      if (!ok) return false;
     }
+    return true;
   }
 
   /* Nur für Tests/Diagnose: liegt die Datei vor? */

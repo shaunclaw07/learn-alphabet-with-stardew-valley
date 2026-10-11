@@ -26,6 +26,9 @@
 	}
 
 	// Einsilbige (kurze) Wörter: nur einmal als Ganzes sprechen (aus Ph3).
+	// speak() löste false auf, wenn inzwischen etwas anderes gesprochen wurde —
+	// dann bricht der Ablauf ab (sonst liefe die alte Sequenz weiter und
+	// überschriebe die neue Eingabe).
 	async function bySyllables(silben, wordText, sylSpans, opts) {
 		void opts;
 		if (!silben || silben.length <= 1) {
@@ -37,7 +40,11 @@
 		for (let i = 0; i < silben.length; i++) {
 			if (sylSpans) sylSpans.forEach((s) => s.classList.remove("lit"));
 			if (sylSpans && sylSpans[i]) sylSpans[i].classList.add("lit");
-			await saySyllable(silben[i]);
+			const ok = await saySyllable(silben[i]);
+			if (!ok) {
+				if (sylSpans) sylSpans.forEach((s) => s.classList.remove("lit"));
+				return;
+			}
 		}
 		await word(wordText);
 		if (sylSpans) sylSpans.forEach((s) => s.classList.remove("lit"));
@@ -48,11 +55,15 @@
 		for (let i = 0; i < words.length; i++) {
 			spans.forEach((s) => s.classList.remove("lit"));
 			if (spans[i]) spans[i].classList.add("lit");
-			await word(words[i], 0.8);
+			const ok = await word(words[i], 0.8);
+			if (!ok) {
+				spans.forEach((s) => s.classList.remove("lit"));
+				return;
+			}
 		}
 		spans.forEach((s) => s.classList.remove("lit"));
-		await speak(words.join(" ").toLowerCase(), 0.85);
-		if (done) done();
+		const fertig = await speak(words.join(" ").toLowerCase(), 0.85);
+		if (fertig && done) done();
 	}
 
 	window.svSay = { word, renderSyllables, bySyllables, line };

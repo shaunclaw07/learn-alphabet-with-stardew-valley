@@ -64,9 +64,12 @@ Die Stimme ist **fest in der App eingebaut**: 211 kurze Audiodateien
 Es muss **nichts eingerichtet werden** — kein Stimmen-Download, keine
 Geräte-Sprachausgabe, kein Konto.
 
-- **Buchstaben** werden als **gezogener Laut** vorgespielt („aaaa", „mmmm"),
-  nicht als Buchstabenname — genau so, wie man Lesen lernt.
-- **Silben** kommen langsam gezogen, **Wörter und Sätze** in normalem Tempo.
+- **Buchstaben** werden als **Laut** vorgespielt, nicht als Buchstabenname — genau
+  so, wie man Lesen lernt. Vokale und Nasale als gezogener Laut („aaaa", „mmmm"),
+  Plosive und Frikative als **drei Impulse** („k k k", „s s s") — ein gedehnter
+  Zischlaut verwäscht hörbar.
+- **Silben** kommen deutlich gedehnt, **Wörter und Sätze** etwas langsamer als
+  normal, aber mit erhaltener Satzmelodie.
 - Das Vorlesen klappt **offline** und auch im **Amazon-Kids-Modus**. Dort blieb
   es früher leer, weil der kindersichere Browser die Sprachausgabe des Geräts
   sperrt — mit den eingebauten Audios ist das erledigt.

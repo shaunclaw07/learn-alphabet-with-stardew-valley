@@ -6,11 +6,15 @@
  *   1. Korpus aus den Datenstrukturen der vier Phasen-HTMLs ableiten
  *      (NICHT handpflegen — sonst driftet er bei neuen Wörtern).
  *   2. Je String eine MP3 erzeugen: Piper (lokal, offline) → WAV → ffmpeg → MP3.
- *   3. Idempotent: vorhandene Dateien werden übersprungen.
+ *   3. Idempotent: eine Datei wird nur neu erzeugt, wenn sie fehlt ODER ihr
+ *      Inhalt nicht mehr zum Korpus passt. Der Abgleich läuft über
+ *      scripts/audio_versionen.json (Stimme + Sprechtext + Tempo je Slug) —
+ *      nicht über die blosse Existenz der MP3. Sonst bliebe eine geänderte
+ *      Text- oder Tempo-Angabe wirkungslos, ohne dass man es merkt.
  *
  * Aufrufe:
- *   node scripts/generate-audio.mjs           # fehlende Dateien erzeugen
- *   node scripts/generate-audio.mjs --check   # nur melden, was fehlt (Exit 1)
+ *   node scripts/generate-audio.mjs           # fehlende/veraltete Dateien erzeugen
+ *   node scripts/generate-audio.mjs --check   # nur melden, was fehlt/veraltet ist (Exit 1)
  *   node scripts/generate-audio.mjs --force   # alles neu erzeugen
  *   node scripts/generate-audio.mjs --voice de_DE-kerstin-low
  *
@@ -23,19 +27,25 @@
 import fs from "node:fs";
 import path from "node:path";
 import os from "node:os";
+import { createHash } from "node:crypto";
 import { execFileSync, spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const OUT_DIR = path.join(ROOT, "audio");
 const CORPUS_FILE = path.join(ROOT, "scripts", "audio_corpus.json");
+/* Fingerabdrücke je Slug. Nötig, weil die blosse Existenz der MP3 nicht sagt,
+   ob ihr INHALT noch zum Korpus passt: ändert man `laut`-Text oder Tempo,
+   existiert die Datei weiter, ist aber veraltet — ohne diese Prüfung würde ein
+   normaler Lauf still nichts tun und `--check` fälschlich "alles da" melden. */
+const VERSIONS_FILE = path.join(ROOT, "scripts", "audio_versionen.json");
 
 const DEFAULT_VOICE = "de_DE-thorsten-high";
 const BITRATE = "64k";
 const SAMPLE_RATE = "22050";
 
 // Tempo je Rolle: kindgerecht gezogen bzw. langsam.
-const LENGTH_SCALE = { laut: 1.7, silbe: 1.35, wort: 1.15, satz: 1.15, merk: 1.15 };
+const LENGTH_SCALE = { laut: 1.7, silbe: 1.75, wort: 1.35, satz: 1.35, merk: 1.35 };
 // Rollen-Rang (kleiner = höhere Priorität). Bei Mehrfach-Rolle gewinnt die langsamste.
 const ROLLE_RANG = { laut: 0, silbe: 1, merk: 2, wort: 3, satz: 4 };
 
@@ -181,10 +191,36 @@ function ensureVoice() {
 
 // ==== Erzeugen ====
 
-function synthesize(entry) {
+/** Was die Datei hörbar bestimmt: Stimme, Sprechtext, Tempo. */
+function fingerprint(entry) {
+  return createHash("sha1").update(`${VOICE}|${entry.piperText}|${entry.lengthScale}`).digest("hex").slice(0, 16);
+}
+
+function ladeVersionen() {
+  try {
+    return JSON.parse(fs.readFileSync(VERSIONS_FILE, "utf8"));
+  } catch {
+    return {};
+  }
+}
+
+/** Nur schreiben, wenn sich etwas ändert (Idempotenz, kein Rauschen im Git). */
+function schreibeVersionen(versionen) {
+  const inhalt = JSON.stringify(versionen, null, 1) + "\n";
+  if (fs.existsSync(VERSIONS_FILE) && fs.readFileSync(VERSIONS_FILE, "utf8") === inhalt) return;
+  fs.writeFileSync(VERSIONS_FILE, inhalt);
+}
+
+/** true, wenn die Datei existiert UND inhaltlich zum Korpus-Eintrag passt. */
+function istAktuell(entry, versionen) {
+  const out = path.join(OUT_DIR, entry.slug + ".mp3");
+  return fs.existsSync(out) && versionen[entry.slug] === fingerprint(entry);
+}
+
+function synthesize(entry, versionen) {
   fs.mkdirSync(TMP, { recursive: true });
   const out = path.join(OUT_DIR, entry.slug + ".mp3");
-  if (fs.existsSync(out) && !FORCE) return "skip";
+  if (istAktuell(entry, versionen) && !FORCE) return "skip";
   const wav = path.join(TMP, entry.slug + ".wav");
   const piper = spawnSync(
     PIPER,
@@ -216,12 +252,17 @@ function main() {
   const nachRolle = corpus.reduce((a, e) => ((a[e.rolle] = (a[e.rolle] || 0) + 1), a), {});
   console.log(`Korpus: ${corpus.length} Strings`, nachRolle);
 
-  const fehlend = corpus.filter((e) => !fs.existsSync(path.join(OUT_DIR, e.slug + ".mp3")));
+  const versionen = ladeVersionen();
+  const veraltet = corpus.filter((e) => !istAktuell(e, versionen));
   if (CHECK_ONLY) {
-    if (!fehlend.length) { console.log("✅ alle Audiodateien vorhanden"); return; }
-    console.log(`❌ ${fehlend.length} Audiodateien fehlen:`);
-    for (const e of fehlend.slice(0, 20)) console.log("   ", e.slug);
-    if (fehlend.length > 20) console.log(`    … und ${fehlend.length - 20} weitere`);
+    if (!veraltet.length) { console.log("✅ alle Audiodateien vorhanden und aktuell"); return; }
+    const fehltGanz = veraltet.filter((e) => !fs.existsSync(path.join(OUT_DIR, e.slug + ".mp3"))).length;
+    console.log(`❌ ${veraltet.length} Audiodateien fehlen oder sind veraltet (${fehltGanz} fehlen ganz, ${veraltet.length - fehltGanz} veraltet):`);
+    for (const e of veraltet.slice(0, 20)) {
+      const da = fs.existsSync(path.join(OUT_DIR, e.slug + ".mp3"));
+      console.log("   ", e.slug, da ? "(veraltet)" : "(fehlt)");
+    }
+    if (veraltet.length > 20) console.log(`    … und ${veraltet.length - 20} weitere`);
     process.exit(1);
   }
 
@@ -229,11 +270,12 @@ function main() {
   ensureVoice();
   let made = 0, skipped = 0;
   for (const e of corpus) {
-    const r = synthesize(e);
+    const r = synthesize(e, versionen);
     if (r === "made") { made++; if (made % 25 === 0) console.log(`· ${made} erzeugt …`); }
     else skipped++;
   }
   fs.rmSync(TMP, { recursive: true, force: true });
+  schreibeVersionen(Object.fromEntries(corpus.map((e) => [e.slug, fingerprint(e)])));
   const bytes = corpus.reduce((a, e) => a + (fs.existsSync(path.join(OUT_DIR, e.slug + ".mp3")) ? fs.statSync(path.join(OUT_DIR, e.slug + ".mp3")).size : 0), 0);
   console.log(`Fertig: ${made} neu, ${skipped} übersprungen · ${corpus.length} Dateien · ${(bytes / 1024 / 1024).toFixed(2)} MB`);
 }

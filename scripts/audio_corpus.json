@@ -11,28 +11,28 @@
   "appText": "alex",
   "piperText": "alex",
   "rolle": "merk",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "am",
   "appText": "am",
   "piperText": "am",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "an",
   "appText": "an",
   "piperText": "an",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "angel",
   "appText": "angel",
   "piperText": "angel",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "b",
@@ -46,56 +46,56 @@
   "appText": "ba",
   "piperText": "ba",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "be",
   "appText": "be",
   "piperText": "be",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "bee",
   "appText": "bee",
   "piperText": "bee",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "bett",
   "appText": "bett",
   "piperText": "bett",
   "rolle": "merk",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "bi",
   "appText": "bi",
   "piperText": "bi",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "bin",
   "appText": "bin",
   "piperText": "bin",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "bo",
   "appText": "bo",
   "piperText": "bo",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "bu",
   "appText": "bu",
   "piperText": "bu",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "d",
@@ -109,105 +109,105 @@
   "appText": "da",
   "piperText": "da",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "das",
   "appText": "das",
   "piperText": "das",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "das-feld-ist-gut",
   "appText": "das feld ist gut",
   "piperText": "das feld ist gut",
   "rolle": "satz",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "das-pferd-ist-am-hof",
   "appText": "das pferd ist am hof",
   "piperText": "das pferd ist am hof",
   "rolle": "satz",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "de",
   "appText": "de",
   "piperText": "de",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "den",
   "appText": "den",
   "piperText": "den",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "der",
   "appText": "der",
   "piperText": "der",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "der-hund-ist-da",
   "appText": "der hund ist da",
   "piperText": "der hund ist da",
   "rolle": "satz",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "der-tee-ist-warm",
   "appText": "der tee ist warm",
   "piperText": "der tee ist warm",
   "rolle": "satz",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "di",
   "appText": "di",
   "piperText": "di",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "do",
   "appText": "do",
   "piperText": "do",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "dorf",
   "appText": "dorf",
   "piperText": "dorf",
   "rolle": "merk",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "du",
   "appText": "du",
   "piperText": "du",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "dun",
   "appText": "dun",
   "piperText": "dun",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "dunkel",
   "appText": "dunkel",
   "piperText": "dunkel",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "e",
@@ -221,40 +221,40 @@
   "appText": "en",
   "piperText": "en",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "ente",
   "appText": "ente",
   "piperText": "ente",
   "rolle": "merk",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "erd",
   "appText": "erd",
   "piperText": "erd",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "erdbeere",
   "appText": "erdbeere",
   "piperText": "erdbeere",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "es",
   "appText": "es",
   "piperText": "es",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "f",
   "appText": "f",
-  "piperText": "ffff",
+  "piperText": "f f f",
   "rolle": "laut",
   "lengthScale": 1.7
  },
@@ -263,63 +263,63 @@
   "appText": "fa",
   "piperText": "fa",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "fe",
   "appText": "fe",
   "piperText": "fe",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "fel",
   "appText": "fel",
   "piperText": "fel",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "feld",
   "appText": "feld",
   "piperText": "feld",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "fi",
   "appText": "fi",
   "piperText": "fi",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "fluss",
   "appText": "fluss",
   "piperText": "fluss",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "fo",
   "appText": "fo",
   "piperText": "fo",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "fruehling",
   "appText": "frühling",
   "piperText": "frühling",
   "rolle": "merk",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "fu",
   "appText": "fu",
   "piperText": "fu",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "g",
@@ -333,96 +333,96 @@
   "appText": "ga",
   "piperText": "ga",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "ge",
   "appText": "ge",
   "piperText": "ge",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "gel",
   "appText": "gel",
   "piperText": "gel",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "gi",
   "appText": "gi",
   "piperText": "gi",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "go",
   "appText": "go",
   "piperText": "go",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "gold",
   "appText": "gold",
   "piperText": "gold",
   "rolle": "merk",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "gu",
   "appText": "gu",
   "piperText": "gu",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "gus",
   "appText": "gus",
   "piperText": "gus",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "gus-ist-da",
   "appText": "gus ist da",
   "piperText": "gus ist da",
   "rolle": "satz",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "gus-ist-im-laden",
   "appText": "gus ist im laden",
   "piperText": "gus ist im laden",
   "rolle": "satz",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "gut",
   "appText": "gut",
   "piperText": "gut",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "guten",
   "appText": "guten",
   "piperText": "guten",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "guten-tag",
   "appText": "guten tag",
   "piperText": "guten tag",
   "rolle": "satz",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "h",
   "appText": "h",
-  "piperText": "hhhh",
+  "piperText": "h h h",
   "rolle": "laut",
   "lengthScale": 1.7
  },
@@ -431,119 +431,119 @@
   "appText": "ha",
   "piperText": "ha",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "hal",
   "appText": "hal",
   "piperText": "hal",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "hallo",
   "appText": "hallo",
   "piperText": "hallo",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "hallo-gus",
   "appText": "hallo gus",
   "piperText": "hallo gus",
   "rolle": "satz",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "hallo-sam",
   "appText": "hallo sam",
   "piperText": "hallo sam",
   "rolle": "satz",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "hase",
   "appText": "hase",
   "piperText": "hase",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "hast",
   "appText": "hast",
   "piperText": "hast",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "hast-du-gold",
   "appText": "hast du gold",
   "piperText": "hast du gold",
   "rolle": "satz",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "hat",
   "appText": "hat",
   "piperText": "hat",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "he",
   "appText": "he",
   "piperText": "he",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "herbst",
   "appText": "herbst",
   "piperText": "herbst",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "hi",
   "appText": "hi",
   "piperText": "hi",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "ho",
   "appText": "ho",
   "piperText": "ho",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "hof",
   "appText": "hof",
   "piperText": "hof",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "hu",
   "appText": "hu",
   "piperText": "hu",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "huhn",
   "appText": "huhn",
   "piperText": "huhn",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "hund",
   "appText": "hund",
   "piperText": "hund",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "i",
@@ -557,35 +557,35 @@
   "appText": "im",
   "piperText": "im",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "im-sommer-ist-es-warm",
   "appText": "im sommer ist es warm",
   "piperText": "im sommer ist es warm",
   "rolle": "satz",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "im-winter-ist-es-dunkel",
   "appText": "im winter ist es dunkel",
   "piperText": "im winter ist es dunkel",
   "rolle": "satz",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "iridium",
   "appText": "iridium",
   "piperText": "iridium",
   "rolle": "merk",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "ist",
   "appText": "ist",
   "piperText": "ist",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "j",
@@ -599,56 +599,56 @@
   "appText": "ja",
   "piperText": "ja",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "ja-da-ist-gold",
   "appText": "ja da ist gold",
   "piperText": "ja da ist gold",
   "rolle": "satz",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "ja-tee-ist-gut",
   "appText": "ja tee ist gut",
   "piperText": "ja tee ist gut",
   "rolle": "satz",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "jas",
   "appText": "jas",
   "piperText": "jas",
   "rolle": "merk",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "je",
   "appText": "je",
   "piperText": "je",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "ji",
   "appText": "ji",
   "piperText": "ji",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "jo",
   "appText": "jo",
   "piperText": "jo",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "ju",
   "appText": "ju",
   "piperText": "ju",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "k",
@@ -662,77 +662,77 @@
   "appText": "ka",
   "piperText": "ka",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "kar",
   "appText": "kar",
   "piperText": "kar",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "kartoffel",
   "appText": "kartoffel",
   "piperText": "kartoffel",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "kat",
   "appText": "kat",
   "piperText": "kat",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "katze",
   "appText": "katze",
   "piperText": "katze",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "ke",
   "appText": "ke",
   "piperText": "ke",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "kel",
   "appText": "kel",
   "piperText": "kel",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "ki",
   "appText": "ki",
   "piperText": "ki",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "ko",
   "appText": "ko",
   "piperText": "ko",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "ku",
   "appText": "ku",
   "piperText": "ku",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "kuh",
   "appText": "kuh",
   "piperText": "kuh",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "l",
@@ -746,63 +746,63 @@
   "appText": "la",
   "piperText": "la",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "laden",
   "appText": "laden",
   "piperText": "laden",
   "rolle": "merk",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "lama",
   "appText": "lama",
   "piperText": "lama",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "le",
   "appText": "le",
   "piperText": "le",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "lewis",
   "appText": "lewis",
   "piperText": "lewis",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "li",
   "appText": "li",
   "piperText": "li",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "linus",
   "appText": "linus",
   "piperText": "linus",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "lo",
   "appText": "lo",
   "piperText": "lo",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "lu",
   "appText": "lu",
   "piperText": "lu",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "m",
@@ -816,112 +816,112 @@
   "appText": "ma",
   "piperText": "ma",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "mag",
   "appText": "mag",
   "piperText": "mag",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "magst",
   "appText": "magst",
   "piperText": "magst",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "magst-du-tee",
   "appText": "magst du tee",
   "piperText": "magst du tee",
   "rolle": "satz",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "mama",
   "appText": "mama",
   "piperText": "mama",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "maru",
   "appText": "maru",
   "piperText": "maru",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "maru-ist-da",
   "appText": "maru ist da",
   "piperText": "maru ist da",
   "rolle": "satz",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "me",
   "appText": "me",
   "piperText": "me",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "melone",
   "appText": "melone",
   "piperText": "melone",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "men",
   "appText": "men",
   "piperText": "men",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "mer",
   "appText": "mer",
   "piperText": "mer",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "mi",
   "appText": "mi",
   "piperText": "mi",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "milch",
   "appText": "milch",
   "piperText": "milch",
   "rolle": "merk",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "mine",
   "appText": "mine",
   "piperText": "mine",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "mo",
   "appText": "mo",
   "piperText": "mo",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "mu",
   "appText": "mu",
   "piperText": "mu",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "n",
@@ -935,56 +935,56 @@
   "appText": "na",
   "piperText": "na",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "nacht",
   "appText": "nacht",
   "piperText": "nacht",
   "rolle": "merk",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "nase",
   "appText": "nase",
   "piperText": "nase",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "ne",
   "appText": "ne",
   "piperText": "ne",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "ni",
   "appText": "ni",
   "piperText": "ni",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "no",
   "appText": "no",
   "piperText": "no",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "nu",
   "appText": "nu",
   "piperText": "nu",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "nus",
   "appText": "nus",
   "piperText": "nus",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "o",
@@ -998,14 +998,14 @@
   "appText": "obst",
   "piperText": "obst",
   "rolle": "merk",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "oma",
   "appText": "oma",
   "piperText": "oma",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "p",
@@ -1019,49 +1019,49 @@
   "appText": "pa",
   "piperText": "pa",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "pam",
   "appText": "pam",
   "piperText": "pam",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "pe",
   "appText": "pe",
   "piperText": "pe",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "pferd",
   "appText": "pferd",
   "piperText": "pferd",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "pi",
   "appText": "pi",
   "piperText": "pi",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "po",
   "appText": "po",
   "piperText": "po",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "pu",
   "appText": "pu",
   "piperText": "pu",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "r",
@@ -1075,61 +1075,61 @@
   "appText": "ra",
   "piperText": "ra",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "re",
   "appText": "re",
   "piperText": "re",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "ri",
   "appText": "ri",
   "piperText": "ri",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "ro",
   "appText": "ro",
   "piperText": "ro",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "robin",
   "appText": "robin",
   "piperText": "robin",
   "rolle": "merk",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "robin-mag-tee",
   "appText": "robin mag tee",
   "piperText": "robin mag tee",
   "rolle": "satz",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "rot",
   "appText": "rot",
   "piperText": "rot",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "ru",
   "appText": "ru",
   "piperText": "ru",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "s",
   "appText": "s",
-  "piperText": "ssss",
+  "piperText": "s s s",
   "rolle": "laut",
   "lengthScale": 1.7
  },
@@ -1138,112 +1138,112 @@
   "appText": "sa",
   "piperText": "sa",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "sam",
   "appText": "sam",
   "piperText": "sam",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "sam-hat-gold",
   "appText": "sam hat gold",
   "piperText": "sam hat gold",
   "rolle": "satz",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "sam-und-pam-sind-da",
   "appText": "sam und pam sind da",
   "piperText": "sam und pam sind da",
   "rolle": "satz",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "samen",
   "appText": "samen",
   "piperText": "samen",
   "rolle": "merk",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "se",
   "appText": "se",
   "piperText": "se",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "see",
   "appText": "see",
   "piperText": "see",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "sen",
   "appText": "sen",
   "piperText": "sen",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "sense",
   "appText": "sense",
   "piperText": "sense",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "si",
   "appText": "si",
   "piperText": "si",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "sind",
   "appText": "sind",
   "piperText": "sind",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "so",
   "appText": "so",
   "piperText": "so",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "som",
   "appText": "som",
   "piperText": "som",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "sommer",
   "appText": "sommer",
   "piperText": "sommer",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "strand",
   "appText": "strand",
   "piperText": "strand",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "su",
   "appText": "su",
   "piperText": "su",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "t",
@@ -1257,77 +1257,77 @@
   "appText": "ta",
   "piperText": "ta",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "tag",
   "appText": "tag",
   "piperText": "tag",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "te",
   "appText": "te",
   "piperText": "te",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "tee",
   "appText": "tee",
   "piperText": "tee",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "ter",
   "appText": "ter",
   "piperText": "ter",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "ti",
   "appText": "ti",
   "piperText": "ti",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "to",
   "appText": "to",
   "piperText": "to",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "tof",
   "appText": "tof",
   "piperText": "tof",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "tomate",
   "appText": "tomate",
   "piperText": "tomate",
   "rolle": "merk",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "tor",
   "appText": "tor",
   "piperText": "tor",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "tu",
   "appText": "tu",
   "piperText": "tu",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "u",
@@ -1341,14 +1341,14 @@
   "appText": "uhr",
   "piperText": "uhr",
   "rolle": "merk",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "und",
   "appText": "und",
   "piperText": "und",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "w",
@@ -1362,75 +1362,75 @@
   "appText": "wa",
   "piperText": "wa",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "wald",
   "appText": "wald",
   "piperText": "wald",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "warm",
   "appText": "warm",
   "piperText": "warm",
   "rolle": "wort",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "we",
   "appText": "we",
   "piperText": "we",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "wi",
   "appText": "wi",
   "piperText": "wi",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "win",
   "appText": "win",
   "piperText": "win",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "winter",
   "appText": "winter",
   "piperText": "winter",
   "rolle": "merk",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "wis",
   "appText": "wis",
   "piperText": "wis",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "wo",
   "appText": "wo",
   "piperText": "wo",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "wu",
   "appText": "wu",
   "piperText": "wu",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "z",
   "appText": "z",
-  "piperText": "ts",
+  "piperText": "ts ts ts",
   "rolle": "laut",
   "lengthScale": 1.7
  },
@@ -1439,41 +1439,41 @@
   "appText": "za",
   "piperText": "za",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "ze",
   "appText": "ze",
   "piperText": "ze",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "zelt",
   "appText": "zelt",
   "piperText": "zelt",
   "rolle": "merk",
-  "lengthScale": 1.15
+  "lengthScale": 1.35
  },
  {
   "slug": "zi",
   "appText": "zi",
   "piperText": "zi",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "zo",
   "appText": "zo",
   "piperText": "zo",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  },
  {
   "slug": "zu",
   "appText": "zu",
   "piperText": "zu",
   "rolle": "silbe",
-  "lengthScale": 1.35
+  "lengthScale": 1.75
  }
 ]

@@ -180,9 +180,26 @@ bleibt self-contained. Jede Phasen-Seite **und** `index.html` bindet den
   nur `[a-z0-9-]`. Einbuchstabige Silben teilen sich die Datei mit dem Buchstaben
   (`a.mp3` = der gezogene Laut aus dem `laut`-Feld — didaktisch gewollt, statt
   eines zufälligen Buchstabennamens der Gerätestimme).
-- **Sprechtempo steckt in der Aufnahme** (`--length-scale`: Laut 1,7 · Silbe 1,35 ·
-  Wort/Satz 1,15), es gibt **keinen Tempo-Slider** mehr. Die Aufrufe
-  `speak(text, rate)` behalten ihre Signatur, `rate` wird ignoriert.
+- **Dehnbare und undehnbare Laute werden unterschiedlich gesprochen.** Vokale und
+  Nasale/Liquide als gezogener Laut (`aaaa`, `mmmm`). Plosive und Frikative als
+  **drei Impulse** (`k k k`, `s s s`) — ein gedehnter Zischlaut verwäscht
+  hörbar (per Spracherkennung belegt: `ssss` wurde als „Yes, yes, yes" erkannt,
+  `s s s` als klares „SSS"). Für Z ebenso `ts ts ts`: `z z z` spricht Piper als
+  Buchstabennamen („zett") aus, nicht als den Laut /ts/. Diese Texte stehen im
+  `laut`-Feld in `phase1/lese-schule.html` und werden im UI **angezeigt**
+  („Sprich: …") — Anzeige und Stimme sind dadurch zwangsläufig identisch.
+- **Sprechtempo steckt in der Aufnahme** (`LENGTH_SCALE` in
+  `scripts/generate-audio.mjs`: Laut 1,7 · Silbe 1,75 · Wort/Satz/Merkwort 1,35,
+  im `--length-scale`-Wertebereich ist höher = langsamer), es gibt **keinen
+  Tempo-Slider** mehr. Die Aufrufe `speak(text, rate)` behalten ihre Signatur,
+  `rate` wird ignoriert. Die Staffelung ist absichtlich: Silben sind die Brücke
+  zwischen Laut und Wort und profitieren am meisten von Dehnung, Sätze nicht —
+  dort trägt die Satzmelodie das Verständnis.
+- **Neu erzeugt wird nur, was fehlt ODER veraltet ist.** Der Abgleich läuft über
+  `scripts/audio_versionen.json` (Fingerabdruck aus Stimme + Sprechtext + Tempo
+  je Slug), **nicht** über die blosse Existenz der MP3. Wer Text oder Tempo
+  ändert und den Generator ohne `--force` laufen lässt, bekommt die Dateien
+  korrekt neu; `--check` meldet fehlende UND veraltete Dateien mit Exit 1.
 - **Reihenfolge hängt am `ended`-Event, nie an `setTimeout`** — Audiolängen
   schwanken (Silbe 0,4 s, Satz 2 s). Neue Sequenzen immer mit
   `await svAudio.speak(...)` bauen; Vorbild ist `shared/speak-text.js`.
